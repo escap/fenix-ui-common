@@ -2,7 +2,6 @@ FENIX Common resources
 
 
 #Fenix common CSS
-```
 css/
 ├── base
 │   ├── fonts
@@ -34,4 +33,3 @@ css/
 │   └── _fx-variables.scss
 └── vendor
     └── _fx-jqwidgets-fenix.scss
-```
