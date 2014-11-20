@@ -1,4 +1,4 @@
-/* Fenix UI  DSD Editor  CSS - Mixins */
+/* Fenix - Mixins */
 
 @mixin retina-image($img-url, $real-width, $real-height) {
   width: $real-width;
@@ -161,5 +161,19 @@
 }
 
 
-
+@mixin fx-obj-box{
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background-color: white;
+  border-color: #D8D8D8;
+  border-image: none;
+  @include fx-border-radius(3px);
+  border-style: solid;
+  border-width: 1px 1px 2px;
+  margin: 10px 0 20px;
+  padding: 20px;
+  width: auto;
+}
 
