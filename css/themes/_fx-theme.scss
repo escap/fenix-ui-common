@@ -232,24 +232,6 @@ body{
   }
 }
 
-.btn{
-  background-color:$fx-cool-blue;
-  color: white;
-  border-color: transparent;
-  &:hover{
-    background-color: transparent;
-    color: $fx-cool-blue;
-    border-color: $fx-cool-blue;
-  }
-  &:active{
-    background-color: transparent;
-    color: $fx-cool-blue;
-    border-color: $fx-cool-blue;
-    @include fx-box-shadow(0, 0, 0, white);
-  }
-
-}
-
 /*================= Packry =================*/
 .fx-analysis-item {
   width: 50%;
@@ -296,11 +278,6 @@ body{
     padding: 0;
   }
 }
-
-
-
-
-
 
 
 /* End of copied from "home host" */

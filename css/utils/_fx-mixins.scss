@@ -1,5 +1,19 @@
 /* Fenix - Mixins */
 
+
+@mixin fx-anchor-plain{
+  color: $fenix-text;
+  &:hover {
+    text-decoration: none;
+  }
+  &:active {
+    text-decoration: none;
+  }
+  &:focus {
+    text-decoration: none;
+  }
+}
+
 @mixin retina-image($img-url, $real-width, $real-height) {
   width: $real-width;
   height: $real-height;
@@ -121,6 +135,12 @@
   }
 }
 
+@mixin fx-noshadow{
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
 
 /* Animations */
 @mixin animate {
@@ -175,5 +195,88 @@
   margin: 10px 0 20px;
   padding: 20px;
   width: auto;
+}
+
+
+@mixin fx-btn-filled{
+  background-color: $fx-cool-blue;
+  color: white;
+  border-color: transparent;
+  font: $standard-text;
+
+  &:hover {
+    background-color: transparent;
+    color: $fx-cool-blue;
+    border-color: $fx-cool-blue;
+  }
+  &:active {
+    background-color: transparent;
+    color: $fx-cool-blue;
+    border-color: $fx-cool-blue;
+    @include fx-box-shadow(0, 0, 0, white);
+  }
+}
+
+@mixin fx-btn-border{
+  background-color: transparent;
+  color: $fx-cool-blue;
+  border-color: $fx-cool-blue;
+  font: $standard-text;
+
+  &:hover {
+    background-color: $fx-cool-blue;
+    color: white;
+    border-color: $fx-cool-blue;
+  }
+  &:active {
+    background-color: $fx-cool-blue;
+    color: white;
+    border-color: $fx-cool-blue;
+    @include fx-box-shadow(0, 0, 0, white);
+  }
+}
+
+@mixin fx-btn-transparent{
+  background-color: transparent;
+  color: $fenix-text;
+  border-color: transparent;
+  font: $standard-text;
+
+  &:hover {
+    background-color: transparent;
+    color: $fenix-text;
+    border-color: transparent;
+  }
+  &:active {
+    background-color: transparent;
+    color: $fenix-text;
+    border-color: transparent;
+    @include fx-box-shadow(0, 0, 0, white);
+  }
+}
+
+@mixin fx-btn-reset{
+  background-color: transparent;
+  color: $fenix-text;
+  border-color: transparent;
+  font: $standard-text;
+
+  &:hover {
+    background-color: transparent;
+    color: $fenix-text;
+    border-color: transparent;
+  }
+  &:active {
+    background-color: transparent;
+    color: $fenix-text;
+    border-color: transparent;
+    @include fx-box-shadow(0, 0, 0, white);
+  }
+}
+
+@mixin fx-small-icons($locX:0,$locY:0){
+  height: 15px;
+  width: 15px;
+  background: url("img/fenix-catalog-sprite-small.png") no-repeat $locX $locY;
 }
 

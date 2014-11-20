@@ -1,1 +1,10 @@
-/* Fenix - Buttons */
+/* Fenix - Buttons Component */
+
+
+.btn {
+  @include fx-btn-filled;
+}
+
+.fx-button-reset{
+  @include fx-btn-reset;
+}

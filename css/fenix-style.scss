@@ -1,5 +1,5 @@
 /* Fenix Interface Style */
-/* Produced By Fenix Team and Mentaltoy 2014 All rights reserved */
+/* Produced By Fenix Team and Mentaltoy 2014 All rights reserved*/
 
 /* Utils */
 @import 'utils/fx-utils';
@@ -7,13 +7,16 @@
 /* Base */
 @import 'base/fx-fonts-import';
 @import 'base/fx-typography';
-
-/* Pages */
-@import 'pages/fx-home';
+@import 'base/fx-reset';
 
 /* Components */
 @import 'components/fx-buttons';
+@import 'components/fx-fieldset';
+@import 'components/fx-labels';
+@import 'components/fx-modular-form';
 @import 'components/fx-navigation';
+@import 'components/fx-panel';
+@import 'components/fx-popover';
 @import 'components/fx-sidebar';
 @import 'components/fx-widgets';
 @import 'components/fx-widgets-stack';

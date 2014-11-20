@@ -7,6 +7,11 @@ body{
 
 a{
   color: $fx-cool-blue;
+
+  &:focus{
+    outline: none;
+  }
+
 }
 
 .navbar-default .navbar-nav > li > a{
