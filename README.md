@@ -1,7 +1,8 @@
-FENIX Common resources
+FENIX UI Common
+============
+common resources for Fenix components
 
-
-#Fenix common CSS
+#CSS
 ```
 css/
 ├── base
