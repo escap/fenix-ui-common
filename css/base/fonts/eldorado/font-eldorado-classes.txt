@@ -3953,7 +3953,7 @@
 .icojam_button_delete_2:before {
 	content: "\eb25";
 }
-.icojam_button_foward_1:before {
+.icojam_document_text:before {
 	content: "\eb26";
 }
 .icojam_button_foward_2:before {

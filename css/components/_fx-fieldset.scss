@@ -2,4 +2,12 @@
 
 fieldset {
   border: 0;
+
+  .fx-fieldset-subtitle{
+    label {
+      font-size: $small-text;
+    }
+  }
 }
+
+

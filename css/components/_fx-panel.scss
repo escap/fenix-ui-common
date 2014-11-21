@@ -30,8 +30,14 @@
         text-transform: uppercase;
       }
 
+
+
     }
 
+  }
+
+  .panel-heading.fx-active-panel .panel-title a {
+      color: $fx-cool-blue;
   }
 
   .panel-body{
@@ -40,6 +46,10 @@
       @include fx-btn-transparent;
       text-align: left;
       position: relative;
+
+      span.fa{
+        margin-right: 10px;
+      }
     }
 
   }

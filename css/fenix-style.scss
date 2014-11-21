@@ -1,5 +1,5 @@
 /* Fenix Interface Style */
-/* Produced By Fenix Team and Mentaltoy 2014 All rights reserved*/
+/* Produced By Fenix Team and Mentaltoy 2014 All rights reserved */
 
 /* Utils */
 @import 'utils/fx-utils';
@@ -11,8 +11,11 @@
 
 /* Components */
 @import 'components/fx-buttons';
+@import 'components/fx-datepicker';
 @import 'components/fx-fieldset';
+@import 'components/fx-inputs';
 @import 'components/fx-labels';
+@import 'components/fx-legend';
 @import 'components/fx-modular-form';
 @import 'components/fx-navigation';
 @import 'components/fx-panel';
@@ -22,8 +25,17 @@
 @import 'components/fx-widgets-stack';
 
 /* Vendor */
-@import 'vendor/fx-jqwidgets-fenix';
-
+@import 'vendor/fx-introjs';
+@import 'vendor/fx-jqwidgets';
+@import 'vendor/fx-jstree';
 
 /* Theme */
 @import 'themes/fx-theme';
+
+
+
+
+
+
+
+
