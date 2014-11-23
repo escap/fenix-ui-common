@@ -5,7 +5,9 @@ $host-menu-height : 50px;
 
 // Typography
 $small-text : 12px;
-$standard-text : normal normal 300 14px/normal 'Roboto Condensed';
+$standard-text-size: 14px;
+$standard-text : normal normal 300 $standard-text-size/normal 'Roboto Condensed';
+$standard-text-bold : normal normal 500 14px/normal 'Roboto Condensed';
 $standard-text-big : normal normal 300 16px/normal 'Roboto Condensed';
 
 $fx-text-h1: normal normal 100 36px/normal 'Roboto';
@@ -42,6 +44,11 @@ $fenix-thin-border: 1px solid $fenix-hr;
 // Specials
 $white-alpha: rgba(255, 255, 255, 0.9);
 $black-alpha : rgba(0, 0, 0, 0.8);
+
+
+// Background
+// background: color position/size repeat origin clip attachment image|initial|inherit;
+$fx-site-bg: $fenix-light-bg;
 
 // Border Radius
 $fx-border-radius: 10px;

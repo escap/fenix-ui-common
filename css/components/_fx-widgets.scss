@@ -10,18 +10,18 @@
   position: relative;
 
   .nav-tabs > li > a:hover, .nav-tabs > li > a:focus, .nav-tabs > li > a:active{
-    background-color: white;
+    background-color: transparent;
     color: $fx-cool-blue;
-    border-left-color: transparent;
-    border-top-color: transparent;
-    border-right-color: transparent;
+    border-color: transparent;
   }
 
   .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+    background-color: white;
     color: $fx-cool-blue;
     border-left-color: $fenix-hr;
     border-top-color: $fenix-hr;
     border-right-color: $fenix-hr;
+    border-bottom-color: white;
   }
 
 
@@ -43,7 +43,7 @@
   background-color: $fenix-hr;
   width: 100%;
   position: absolute;
-  top: 45px;
+  top: 42px;
   left: 0px;
 }
 
@@ -53,7 +53,7 @@
   height: 350px;
 }
 
-.fx-widget .nav > li > a {padding:3px 3px 7px 3px;}
+.fx-widget .nav > li > a {padding:3px 3px 6px 3px;}
 
 .fx-icon{
   width: 35px;
@@ -95,5 +95,5 @@
 }
 
 .fx-widget-icons{
-  font-size: 26px;
+  font-size: 24px;
 }

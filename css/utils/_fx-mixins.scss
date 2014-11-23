@@ -310,3 +310,16 @@
   background: url("img/fenix-catalog-sprite-small.png") no-repeat $locX $locY;
 }
 
+@mixin fx-circle-number{
+    color: white;
+    display: inline-block;
+    font: $standard-text-bold;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    text-align: center;
+    background-color: $fx-cool-blue;
+    @include fx-border-radius(100%);
+    @include fx-transfor-me(translate(0, -50%));
+}
+
