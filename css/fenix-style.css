@@ -246,11 +246,20 @@
 .fa-calendar:before {
   content: "\f073"; }
 
+.fa-twitter-square:before {
+  content: "\f081"; }
+
+.fa-facebook-square:before {
+  content: "\f082"; }
+
 .fa-globe:before {
   content: "\f0ac"; }
 
 .fa-wrench:before {
   content: "\f0ad"; }
+
+.fa-google-plus-square:before {
+  content: "\f0d4"; }
 
 .fa-google-plus:before {
   content: "\f0d5"; }
@@ -633,7 +642,7 @@ div[data-module="region"] .fx-catalog-modular-form-content {
     .panel-group .panel-body .btn span.fa {
       margin-right: 10px; }
 
-.fx-panel-plus, .fx-panel-minus, .fx-panel-info, .fx-panel-required {
+.fx-panel-plus, .fx-panel-minus, .fx-panel-required {
   display: inline-block;
   margin-right: 25px; }
 
@@ -651,8 +660,7 @@ div[data-module="region"] .fx-catalog-modular-form-content {
   height: 15px;
   width: 15px;
   background: url("img/fenix-catalog-sprite-small.png") no-repeat 0 0;
-  float: right;
-  margin-top: 10px; }
+  float: right; }
 
 .fx-panel-required {
   height: 15px;

@@ -56,7 +56,7 @@
 
 }
 
-.fx-panel-plus, .fx-panel-minus, .fx-panel-info , .fx-panel-required {
+.fx-panel-plus, .fx-panel-minus, .fx-panel-required {
   display: inline-block;
   margin-right: 25px;
 }
@@ -72,7 +72,7 @@
 .fx-panel-info {
   @include fx-small-icons(0,0);
   float: right;
-  margin-top: 10px;
+  //margin-top: 10px;
 }
 
 .fx-panel-required {
