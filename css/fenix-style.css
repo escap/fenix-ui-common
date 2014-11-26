@@ -1,5 +1,8 @@
 /* Fenix Interface Style */
 /* Produced By Fenix Team and Mentaltoy 2014 All rights reserved */
+/* Variables */
+/* Style with no variables */
+/* Fenix Style No Variables */
 /* Utils */
 /* Base */
 /* Fenix Fonts Import */
@@ -314,6 +317,7 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small
 
 /* Fenix - Reset */
 /* Components */
+/* Fenix - Components Index */
 /* Fenix - Buttons Component */
 /** avoid dotted lines when clicking on button**/
 input[type="button"] {
@@ -452,10 +456,10 @@ legend {
   background-color: white;
   border-color: #d8d8d8;
   border-image: none;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  border-radius: 10px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0;
   border-style: solid;
   border-width: 1px 1px 2px;
   margin: 10px 0 20px;
@@ -550,10 +554,10 @@ div[data-module="region"] .fx-catalog-modular-form-content {
   background-color: white;
   border-color: #d8d8d8;
   border-image: none;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  border-radius: 10px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0;
   border-style: solid;
   border-width: 1px 1px 2px;
   margin: 10px 0 20px;
@@ -674,6 +678,88 @@ div[data-module="region"] .fx-catalog-modular-form-content {
 .popover {
   width: 200px; }
 
+/* Fenix - Resume Bar Component */
+.fx-resume-bar {
+  padding-right: 150px;
+  background-color: #f8f8f8;
+  position: relative; }
+
+#fx-resume {
+  background-color: white;
+  padding-top: 20px;
+  min-height: 60px; }
+
+.fx-resume-title {
+  color: red;
+  padding-left: 15px;
+  padding-top: 5px;
+  font: normal normal 400 10px/normal "Roboto";
+  position: absolute;
+  top: 0; }
+
+.fx-resume-noitem {
+  padding-left: 15px;
+  position: absolute;
+  top: 15px; }
+
+#fx-catalog-submit-btn {
+  color: white;
+  text-transform: uppercase;
+  background-color: red;
+  width: 150px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0; }
+  #fx-catalog-submit-btn.disabled {
+    background-color: #f8f8f8;
+    opacity: 1; }
+
+.fx-resume-item-selected {
+  position: relative;
+  border-top: 5px solid white;
+  border-bottom: 5px solid white; }
+  .fx-resume-item-selected .fx-resume-module-title {
+    display: inline-block;
+    width: 20%;
+    padding-left: 15px; }
+    .fx-resume-item-selected .fx-resume-module-title em {
+      font: normal normal 400 10px/normal "Roboto";
+      color: red;
+      font-size: 12px;
+      /* Not expected */
+      position: absolute;
+      top: 0; }
+  .fx-resume-item-selected .fx-resume-module-list-holder {
+    display: inline-block;
+    max-width: 80%;
+    padding-right: 15px; }
+    .fx-resume-item-selected .fx-resume-module-list-holder .fx-resume-module-list {
+      display: inline-block;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      -ms-border-radius: 0;
+      border-radius: 0;
+      border: 1px solid #d8d8d8; }
+
+.fx-resume-obj-close {
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  background: url("img/fenix-catalog-sprite-small.png") no-repeat -45px 0;
+  cursor: pointer;
+  position: relative;
+  top: 3px; }
+
+.fx-resume-list-obj {
+  display: inline-block; }
+  .fx-resume-list-obj .fx-resume-obj-value {
+    display: inline;
+    margin-right: 7px; }
+
 /* Fenix - Sidebar Component */
 .bs-docs-sidebar.affix {
   position: static; }
@@ -746,10 +832,10 @@ div[data-module="region"] .fx-catalog-modular-form-content {
   background-color: white;
   height: 100%;
   padding: 5px 10px 10px 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  border-radius: 10px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0;
   border: 1px solid #d8d8d8;
   border-bottom: 3px solid #d8d8d8;
   position: relative; }
@@ -799,10 +885,10 @@ div[data-module="region"] .fx-catalog-modular-form-content {
   background-color: white;
   height: 35px;
   width: 40px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  border-radius: 10px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   border: 1px solid #d8d8d8; }

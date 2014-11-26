@@ -1,36 +1,11 @@
 /* Fenix Interface Style */
 /* Produced By Fenix Team and Mentaltoy 2014 All rights reserved */
 
-/* Utils */
-@import 'utils/fx-utils';
+/* Variables */
+@import 'themes/fx-variables';
 
-/* Base */
-@import 'base/fx-fonts-import';
-@import 'base/fx-typography';
-@import 'base/fx-reset';
-
-/* Components */
-@import 'components/fx-buttons';
-@import 'components/fx-circle-number';
-@import 'components/fx-datepicker';
-@import 'components/fx-fieldset';
-@import 'components/fx-inputs';
-@import 'components/fx-labels';
-@import 'components/fx-legend';
-@import 'components/fx-modular-form';
-@import 'components/fx-navigation';
-@import 'components/fx-obj-box';
-@import 'components/fx-panel';
-@import 'components/fx-popover';
-@import 'components/fx-sidebar';
-@import 'components/fx-well';
-@import 'components/fx-widgets';
-@import 'components/fx-widgets-stack';
-
-/* Vendor */
-@import 'vendor/fx-introjs';
-@import 'vendor/fx-jqwidgets';
-@import 'vendor/fx-jstree';
+/* Style with no variables */
+@import 'fenix-style-no-variables';
 
 /* Theme */
 @import 'themes/fx-theme';
