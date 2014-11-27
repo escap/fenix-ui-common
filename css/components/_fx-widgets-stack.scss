@@ -1,4 +1,10 @@
 /* Fenix - Widgets Stack Component */
+
+
+#fx-widgets-stack {
+  z-index: 2 !important;
+}
+
 #fx-sessionstore-base{
   overflow-x: hidden;
   position: absolute;
@@ -56,6 +62,7 @@
   .fx-widget-icons{
     color: $fx-cool-blue;
     margin-right: 5px;
+    cursor: pointer;
   }
 
   #fx-ws-close-btn{
