@@ -21,6 +21,7 @@
   .panel-heading {
     background-color: transparent;
     @include fx-border-radius(0);
+    padding: 10px;
 
     .panel-title{
       font: $standard-text-big;
