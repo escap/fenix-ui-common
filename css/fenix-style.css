@@ -599,7 +599,7 @@ div[data-module="region"] .fx-catalog-modular-form-content {
 
 .navbar-default .navbar-nav > li > a {
   color: #666666;
-  border-bottom: 1px solid white; }
+  border-bottom: 1px solid transparent; }
 
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
   background-color: red; }
