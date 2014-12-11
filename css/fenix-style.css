@@ -1586,7 +1586,8 @@ div[data-module="region"] .fx-catalog-modular-form-content {
   display: none;
   /* It hides folder icon */ }
 
-.jstree-default .jstree-node, .jstree-default .jstree-icon {
+.jstree-default .jstree-node,
+.jstree-default .jstree-icon {
   background-image: url("img/treejs-32px.png"); }
 
 .jstree-default .jstree-wholerow-clicked {
