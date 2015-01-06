@@ -6,10 +6,12 @@ define(function () {
         "HOST": "//fenix.fao.org"
     };
 
-    function _resolve(obj, ph) {
+    function _resolve(obj, opts) {
 
-        if (typeof ph !== 'undefined'){
-            placeholders = _deepExtend(placeholders, ph);
+        if (typeof opts !== 'undefined'){
+            if (opts.hasOwnProperty('placeholders')){
+                placeholders = _deepExtend(placeholders, opts.placeholders);
+            }
         }
 
         if (Array.isArray(obj)) {
@@ -19,6 +21,22 @@ define(function () {
         } else {
             _configure(obj);
         }
+
+        if (typeof opts !== 'undefined'){
+
+            if (opts.hasOwnProperty('config')){
+                _preConfigure(opts.config);
+            }
+        }
+    }
+
+    function _preConfigure(conf) {
+
+        if (conf.hasOwnProperty('paths') ) {
+            conf.paths = _compilePaths(conf.paths);
+        }
+
+        requirejs.config(conf);
     }
 
     function _configure(obj) {
