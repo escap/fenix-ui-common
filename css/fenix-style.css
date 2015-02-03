@@ -281,6 +281,9 @@
 .fa-th:before {
   content: "\f00a"; }
 
+.fa-home:before {
+  content: "\f015"; }
+
 .fa-clock-o:before {
   content: "\f017"; }
 
