@@ -138,6 +138,33 @@
   border-radius: $radius;
 }
 
+@mixin fx-no-border-radius{
+  -moz-border-radius-topleft: 0;
+  -webkit-border-top-left-radius: 0;
+  border-top-left-radius: 0;
+
+  -moz-border-radius-topright: 0;
+  -webkit-border-top-right-radius: 0;
+  border-top-right-radius: 0;
+
+  -moz-border-radius-bottomright: 0;
+  -webkit-border-bottom-right-radius: 0;
+  border-bottom-right-radius:0;
+
+  -moz-border-radius-bottomleft: 0;
+  -webkit-border-bottom-left-radius: 0;
+  border-bottom-left-radius: 0;
+
+
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0;
+
+
+}
+
+
 @mixin fx-box-shadow($top, $left, $blur, $color, $inset: false) {
   @if $inset {
     -webkit-box-shadow:inset $top $left $blur $color;
