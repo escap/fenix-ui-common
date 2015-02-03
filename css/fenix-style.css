@@ -1610,6 +1610,11 @@ div[data-module="region"] .fx-catalog-modular-form-content {
   -ms-border-radius: 0;
   border-radius: 0; }
 
+.leaflet-bar a, .leaflet-bar a:hover {
+  height: 23px;
+  width: 23px;
+  line-height: 23px; }
+
 .leaflet-bar a:first-child, .leaflet-bar a:last-child {
   -moz-border-radius-topleft: 0;
   -webkit-border-top-left-radius: 0;
@@ -1631,7 +1636,8 @@ div[data-module="region"] .fx-catalog-modular-form-content {
   -moz-border-radius: 100%;
   -ms-border-radius: 100%;
   border-radius: 100%;
-  margin: 7px; }
+  border-color: transparent;
+  margin: 5px; }
 
 .leaflet-control-zoom-in,
 .leaflet-control-zoom-out {
@@ -1642,7 +1648,7 @@ div[data-module="region"] .fx-catalog-modular-form-content {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  line-height: 1;
+  text-indent: 0;
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
@@ -1658,12 +1664,12 @@ div[data-module="region"] .fx-catalog-modular-form-content {
 
 .leaflet-control-zoom-in:before {
   color: red;
-  font-size: 26px;
+  font-size: 24px;
   content: "\eb2a"; }
 
 .leaflet-control-zoom-out:before {
   color: red;
-  font-size: 26px;
+  font-size: 24px;
   content: "\eb28"; }
 
 /* Theme */

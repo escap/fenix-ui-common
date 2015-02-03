@@ -5,11 +5,18 @@
   @include fx-border-radius(0);
 }
 
+.leaflet-bar a, .leaflet-bar a:hover{
+  height: 23px;
+  width: 23px;
+  line-height: 23px;
+}
+
 
 .leaflet-bar a:first-child, .leaflet-bar a:last-child{
   @include fx-no-border-radius;
   @include fx-border-radius(100%);
-  margin: 7px;
+  border-color: transparent;
+  margin: 5px;
 }
 
 .leaflet-control-zoom-in,
@@ -21,7 +28,8 @@
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  line-height: 1;
+
+  text-indent: 0;
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -41,12 +49,12 @@
 
 .leaflet-control-zoom-in:before {
   color: $fx-cool-blue;
-  font-size: 26px;
+  font-size: 24px;
   content: "\eb2a";
 }
 
 .leaflet-control-zoom-out:before {
   color: $fx-cool-blue;
-  font-size: 26px;
+  font-size: 24px;
   content: "\eb28";
 }
