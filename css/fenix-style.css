@@ -845,10 +845,10 @@ div[data-module="region"] .fx-catalog-modular-form-content {
   position: relative; }
 
 .navbar-default {
-  background-color: #ffffff; }
+  background-color: white; }
 
 .nav-pills li a {
-  color: #336601; }
+  color: #666666; }
 
 .navbar-brand {
   background-image: url("img/fenix-ico.svg");
@@ -872,7 +872,6 @@ div[data-module="region"] .fx-catalog-modular-form-content {
 .navbar .lang_picker li a, .navbar .lang_picker li a:hover {
   color: #666666;
   display: inline-block;
-  font-size: 12px;
   line-height: 1.7;
   padding: 0 5px;
   text-align: center;
@@ -880,10 +879,7 @@ div[data-module="region"] .fx-catalog-modular-form-content {
 
 .navbar .lang_picker li a:hover, .navbar .lang_picker li a.selected {
   background-color: #666666;
-  border-radius: 22px;
-  color: white;
-  height: 22px;
-  width: 22px; }
+  color: white; }
 
 .navbar .lang_picker li:last-child {
   border-right: medium none; }
