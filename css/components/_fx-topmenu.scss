@@ -34,7 +34,7 @@
   float: right;
 }
 .navbar .lang_picker li a, .navbar .lang_picker li a:hover {
-  color: $fenix-text;
+
 //  display: inline-block;
 //
 //  line-height: 1.7;
@@ -43,9 +43,9 @@
   text-decoration: none;
 }
 .navbar .lang_picker li a:hover, .navbar .lang_picker li a.selected {
-  background-color: $fenix-text;
 
-  color: white;
+
+
 
 }
 .navbar .lang_picker li:last-child {

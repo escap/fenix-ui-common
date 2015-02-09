@@ -58,6 +58,9 @@
 .icojam_copybook_2:before {
   content: "\e7b5"; }
 
+.icojam_user:before {
+  content: "\ebbb"; }
+
 /* Roboto */
 /* Roboto Import */
 /* Roboto Regular */
@@ -859,13 +862,8 @@ div[data-module="region"] .fx-catalog-modular-form-content {
   float: right; }
 
 .navbar .lang_picker li a, .navbar .lang_picker li a:hover {
-  color: #666666;
   text-align: center;
   text-decoration: none; }
-
-.navbar .lang_picker li a:hover, .navbar .lang_picker li a.selected {
-  background-color: #666666;
-  color: white; }
 
 .navbar .lang_picker li:last-child {
   border-right: medium none; }
