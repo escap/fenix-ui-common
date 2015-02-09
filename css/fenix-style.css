@@ -599,9 +599,6 @@ div[data-module="region"] .fx-catalog-modular-form-content {
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
   border-color: red; }
 
-.navbar-default .navbar-nav > li > a {
-  color: #666666; }
-
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
   background-color: red; }
 
@@ -853,8 +850,6 @@ div[data-module="region"] .fx-catalog-modular-form-content {
   display: block; }
 
 .navbar .lang_picker {
-  height: 22px;
-  margin-top: 13px;
   text-transform: uppercase; }
 
 .navbar .lang_picker li {
