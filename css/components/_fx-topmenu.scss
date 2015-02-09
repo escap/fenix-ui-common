@@ -8,7 +8,7 @@
   position: relative;
 }
 .navbar-default {
-  background-color: white;
+//  background-color: white;
 }
 .nav-pills li a {
   color: $fenix-text;
@@ -17,11 +17,12 @@
   background-image: url("img/fenix-ico.svg");
   background-position: 0 3px;
   background-repeat: no-repeat;
-  background-size: 44px 44px;
+  background-size: 100% 100%;
   display: block;
-  height: 50px;
-  padding: 0;
-  width: 50px;
+//  min-height: 50px;
+//  padding: 0;
+//  min-width: 50px;
+
 }
 .navbar .lang_picker {
   height: 22px;
@@ -34,10 +35,10 @@
 }
 .navbar .lang_picker li a, .navbar .lang_picker li a:hover {
   color: $fenix-text;
-  display: inline-block;
-
-  line-height: 1.7;
-  padding: 0 5px;
+//  display: inline-block;
+//
+//  line-height: 1.7;
+//  padding: 0 5px;
   text-align: center;
   text-decoration: none;
 }

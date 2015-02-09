@@ -596,13 +596,8 @@ div[data-module="region"] .fx-catalog-modular-form-content {
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
   border-color: red; }
 
-.nav > li > a {
-  padding: 15px 10px 14px 10px;
-  /* Necessary for the border-bottom */ }
-
 .navbar-default .navbar-nav > li > a {
-  color: #666666;
-  border-bottom: 1px solid transparent; }
+  color: #666666; }
 
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
   background-color: red; }
@@ -844,9 +839,6 @@ div[data-module="region"] .fx-catalog-modular-form-content {
 .navbar .container {
   position: relative; }
 
-.navbar-default {
-  background-color: white; }
-
 .nav-pills li a {
   color: #666666; }
 
@@ -854,11 +846,8 @@ div[data-module="region"] .fx-catalog-modular-form-content {
   background-image: url("img/fenix-ico.svg");
   background-position: 0 3px;
   background-repeat: no-repeat;
-  background-size: 44px 44px;
-  display: block;
-  height: 50px;
-  padding: 0;
-  width: 50px; }
+  background-size: 100% 100%;
+  display: block; }
 
 .navbar .lang_picker {
   height: 22px;
@@ -871,9 +860,6 @@ div[data-module="region"] .fx-catalog-modular-form-content {
 
 .navbar .lang_picker li a, .navbar .lang_picker li a:hover {
   color: #666666;
-  display: inline-block;
-  line-height: 1.7;
-  padding: 0 5px;
   text-align: center;
   text-decoration: none; }
 
