@@ -1,26 +1,11 @@
 /* Fenix Interface Style */
 /* Produced By Fenix Team and Mentaltoy 2014 All rights reserved */
 
-/* Utils */
-@import 'utils/fx-utils';
+/* Variables */
+@import 'themes/fx-variables';
 
-/* Base */
-@import 'base/fx-fonts-import';
-@import 'base/fx-typography';
-
-/* Pages */
-@import 'pages/fx-home';
-
-/* Components */
-@import 'components/fx-buttons';
-@import 'components/fx-navigation';
-@import 'components/fx-sidebar';
-@import 'components/fx-widgets';
-@import 'components/fx-widgets-stack';
-
-/* Vendor */
-@import 'vendor/fx-jqwidgets-fenix';
-
+/* Style with no variables */
+@import 'fenix-style-no-variables';
 
 /* Theme */
 @import 'themes/fx-theme';

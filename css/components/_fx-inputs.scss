@@ -1,0 +1,4 @@
+/* Fenix - Inputs Component */
+
+/* remove x icon in IE 10+ */
+input[type=text]::-ms-clear { display: none; }

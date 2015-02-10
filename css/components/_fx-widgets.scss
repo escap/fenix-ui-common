@@ -1,24 +1,49 @@
-/* Widgets container
--------------------------------------------------- */
+/* Fenix - Widgets Component */
+
 .fx-widget{
-  background-color: #FFFFFF;
+  background-color: white;
   height: 100%;
-  padding: 10px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  border: 1px solid #dddddd;
-  border-bottom: 3px solid #dddddd;
+  padding: 5px 10px 10px 10px;
+  @include fx-border-radius($fx-border-radius);
+  border: 1px solid $fenix-hr;
+  border-bottom: 3px solid  $fenix-hr;
   position: relative;
+
+  .nav-tabs > li > a:hover, .nav-tabs > li > a:focus, .nav-tabs > li > a:active{
+    background-color: transparent;
+    color: $fx-cool-blue;
+    border-color: transparent;
+  }
+
+  .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+    background-color: white;
+    color: $fx-cool-blue;
+    border-left-color: $fenix-hr;
+    border-top-color: $fenix-hr;
+    border-right-color: $fenix-hr;
+    border-bottom-color: white;
+  }
+
+
+  .nav-tabs{
+    border-bottom: transparent;
+    li {
+      a{
+        cursor: pointer;
+        color: $fenix-text;
+      }
+    }
+  }
+
 }
 
 .fx-widget:before{
   content: "";
   height: 1px;
-  background-color: #dddddd;
+  background-color: $fenix-hr;
   width: 100%;
   position: absolute;
-  top: 56px;
+  top: 42px;
   left: 0px;
 }
 
@@ -28,7 +53,7 @@
   height: 350px;
 }
 
-.fx-widget .nav > li > a {padding:3px;}
+.fx-widget .nav > li > a {padding:3px 3px 6px 3px;}
 
 .fx-icon{
   width: 35px;
@@ -37,15 +62,24 @@
 }
 .fx-handle{
   cursor: move;
-  position: relative;
-  top: 4px;
-  height: 29px;
-  width: 128px;
-  background: url("img/drag.png");
-}
+  position: absolute;
+  top: 0;
+  background-color: white;
+  height: 35px;
+  width: 40px;
+  @include fx-border-radius($fx-border-radius);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid $fenix-hr;
 
-.fx-analysis-item{
-  padding-bottom: 20px;
+  &:before{
+    content:'';
+    position: absolute;
+    @include fx-small-icons(-15px, 0);
+    top:3px;
+    left:12px;
+  }
+
 }
 
 .widget-grid-container{
@@ -53,95 +87,13 @@
 }
 
 .fx-analysis-item{
-  padding: 10px;
-}
-
-
-.nav-tabs{
-  border-bottom: transparent;
-  li {
-    a{
-      cursor: pointer;
-    }
-  }
+  padding: 22px 10px 10px 10px;
 }
 
 .tab-content{
   padding-top: 10px;
 }
 
-/* Icons Standard state */
-.fx-icon-clone{
-  background: url("img/icons-sprite.png") no-repeat -350px 0px;
-}
-.fx-icon-remove{
-  background: url("img/icons-sprite.png") no-repeat -385px 0px;
-}
-.fx-icon-resize{
-  background: url("img/icons-sprite.png") no-repeat -210px 0px;
-}
-.fx-icon-movetosession{
-  background: url("img/icons-sprite.png") no-repeat -315px 0px;
-}
-.fx-icon-metadata{
-  background: url("img/icons-sprite.png") no-repeat 0px 0px;
-}
-.fx-icon-map{
-  background: url("img/icons-sprite.png") no-repeat -280px 0px;
-}
-.fx-icon-table{
-  background: url("img/icons-sprite.png") no-repeat -175px 0px;
-}
-.fx-icon-chart{
-  background: url("img/icons-sprite.png") no-repeat -35px 0px;
-}
-.fx-icon-download{
-  background: url("img/icons-sprite.png") no-repeat -245px 0px;
-}
-.fx-icon-add{
-  background: url("img/icons-sprite.png") no-repeat -455px 0px;
-}
-.fx-icon-data{
-  background: url("img/icons-sprite.png") no-repeat -490px 0px;
-}
-.fx-icon-metadata{
-  background: url("img/icons-sprite.png") no-repeat -525px 0px;
-}
-
-/* Icons Over state */
-.fx-icon-clone:hover{
-  background: url("img/icons-sprite.png") no-repeat -350px -35px;
-}
-.fx-icon-remove:hover{
-  background: url("img/icons-sprite.png") no-repeat -385px -35px;
-}
-.fx-icon-resize:hover{
-  background: url("img/icons-sprite.png") no-repeat -210px -35px;
-}
-.fx-icon-movetosession:hover{
-  background: url("img/icons-sprite.png") no-repeat -315px -35px;
-}
-.fx-icon-metadata:hover{
-  background: url("img/icons-sprite.png") no-repeat 0px -35px;
-}
-.fx-icon-map:hover{
-  background: url("img/icons-sprite.png") no-repeat -280px -35px;
-}
-.fx-icon-table:hover{
-  background: url("img/icons-sprite.png") no-repeat -175px -35px;
-}
-.fx-icon-chart:hover{
-  background: url("img/icons-sprite.png") no-repeat -35px -35px;
-}
-.fx-icon-download:hover{
-  background: url("img/icons-sprite.png") no-repeat -245px -35px;
-}
-.fx-icon-add:hover{
-  background: url("img/icons-sprite.png") no-repeat -455px -35px;
-}
-.fx-icon-data:hover{
-  background: url("img/icons-sprite.png") no-repeat -490px -35px;
-}
-.fx-icon-metadata:hover{
-  background: url("img/icons-sprite.png") no-repeat -525px -35px;
+.fx-widget-icons{
+  font-size: 24px;
 }

@@ -3953,7 +3953,7 @@
 .icojam_button_delete_2:before {
 	content: "\eb25";
 }
-.icojam_button_foward_1:before {
+.icojam_document_text:before {
 	content: "\eb26";
 }
 .icojam_button_foward_2:before {
@@ -3965,10 +3965,7 @@
 .icojam_button_minus_2:before {
 	content: "\eb29";
 }
-.icojam_button_new_1:before {
-	content: "\eb2a";
-}
-.icojam_button_new_2:before {
+button_new_2:before {
 	content: "\eb2b";
 }
 .icojam_button_pause_1:before {
