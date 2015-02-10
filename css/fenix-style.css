@@ -600,7 +600,8 @@ div[data-module="region"] .fx-catalog-modular-form-content {
   border-color: red; }
 
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
-  background-color: red; }
+  background-color: transparent;
+  color: #666666; }
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
   color: red; }
