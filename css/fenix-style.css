@@ -61,6 +61,9 @@
 .icojam_user:before {
   content: "\ebbb"; }
 
+.icojam_air_conditioning_external:before {
+  content: "\e600"; }
+
 /* Icons */
 .icojam_fla:before {
   content: "\e777"; }
