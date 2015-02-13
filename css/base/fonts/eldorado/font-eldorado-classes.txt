@@ -2834,9 +2834,6 @@
 .icojam_player_2:before {
 	content: "\e9b0";
 }
-.icojam_presentation:before {
-	content: "\e9b1";
-}
 .icojam_preview_cover_flow:before {
 	content: "\e9b2";
 }
@@ -3251,9 +3248,7 @@
 .icojam_cup_22:before {
 	content: "\ea3b";
 }
-.icojam_document:before {
-	content: "\ea3c";
-}
+
 .icojam_eye_12:before {
 	content: "\ea3d";
 }
@@ -3311,9 +3306,7 @@
 .icojam_languages:before {
 	content: "\ea4f";
 }
-.icojam_link_1:before {
-	content: "\ea50";
-}
+
 .icojam_link_2:before {
 	content: "\ea51";
 }

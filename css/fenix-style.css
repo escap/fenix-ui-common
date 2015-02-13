@@ -200,6 +200,15 @@
 .icojam_zip:before {
   content: "\e7a3"; }
 
+.icojam_presentation:before {
+  content: "\e9b1"; }
+
+.icojam_document:before {
+  content: "\ea3c"; }
+
+.icojam_link_1:before {
+  content: "\ea50"; }
+
 /* Roboto */
 /* Roboto Import */
 /* Roboto Regular */
