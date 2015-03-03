@@ -138,6 +138,17 @@
   border-radius: $radius;
 }
 
+
+@mixin fx-no-border{
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  border-left: none;
+
+  border: none;
+}
+
+
 @mixin fx-no-border-radius{
   -moz-border-radius-topleft: 0;
   -webkit-border-top-left-radius: 0;
@@ -163,6 +174,10 @@
 
 
 }
+
+
+
+
 
 
 @mixin fx-box-shadow($top, $left, $blur, $color, $inset: false) {
