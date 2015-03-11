@@ -1272,6 +1272,14 @@ div[data-module="region"] .fx-catalog-modular-form-content {
   position: relative; }
 
 /* Vendor */
+/* Fenix - Facebook Patch */
+#fb-root {
+  display: none; }
+
+/* To fill the container and nothing else */
+.fb_iframe_widget, .fb_iframe_widget span, .fb_iframe_widget span iframe[style] {
+  width: 100% !important; }
+
 /* Fenix - Intro Js */
 .introjs-helperNumberLayer {
   background: none;
