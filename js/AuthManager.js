@@ -1,7 +1,7 @@
 define([
     'jquery',
-    'text!config/authorized_users.json',
-    'text!html/loginForm.html',
+    'text!../config/authorized_users.json',
+    'text!../html/loginModal.html',
     'bootstrap',
     'amplify'
 ], function ($, AuthUsers, template) {
