@@ -1,7 +1,7 @@
 define([
     'jquery',
     'text!../config/authorized_users.json',
-    'text!../html/loginModal.html',
+    'text!../html/auth_modal.html',
     'bootstrap',
     'amplify'
 ], function ($, AuthUsers, template) {
@@ -10,18 +10,18 @@ define([
 
     var s = {
         //login
-        FORM_LOGIN: '#afo-login-form',
-        MODAL_LOGIN: '#afo-login-modal',
-        EMAIL_LOGIN: '#afo-login-form-inputEmail',
-        PASSWORD_LOGIN: '#afo-login-form-inputPassword',
-        ERROR_CONTAINER_LOGIN: '#afo-login-form-error-container',
-        SUBMIT_LOGIN : "#afo-login-form-submit",
+        FORM_LOGIN: '#fx-login-form',
+        MODAL_LOGIN: '#fx-login-modal',
+        EMAIL_LOGIN: '#fx-login-form-inputEmail',
+        PASSWORD_LOGIN: '#fx-login-form-inputPassword',
+        ERROR_CONTAINER_LOGIN: '#fx-login-form-error-container',
+        SUBMIT_LOGIN : "#fx-login-form-submit",
         //logout
-        FORM_LOGOUT: '#afo-logout-form',
-        MODAL_LOGOUT: '#afo-logout-modal',
-        ERROR_CONTAINER_LOGOUT: '#afo-logout-form-error-container',
-        SUBMIT_LOGOUT : "#afo-logout-form-submit",
-        CANCEL_LOGOUT : "#afo-logout-form-cancel"
+        FORM_LOGOUT: '#fx-logout-form',
+        MODAL_LOGOUT: '#fx-logout-modal',
+        ERROR_CONTAINER_LOGOUT: '#fx-logout-form-error-container',
+        SUBMIT_LOGOUT : "#fx-logout-form-submit",
+        CANCEL_LOGOUT : "#fx-logout-form-cancel"
     };
 
     function AuthManager(){
