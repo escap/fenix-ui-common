@@ -209,6 +209,12 @@
 .icojam_link_1:before {
   content: "\ea50"; }
 
+.icojam_base_search_in:before {
+  content: "\e65e"; }
+
+.icojam_add:before {
+  content: "\e656"; }
+
 /* Roboto */
 /* Roboto Import */
 /* Roboto Regular */
