@@ -215,6 +215,15 @@
 .icojam_add:before {
   content: "\e656"; }
 
+.icojam_delete:before {
+  content: "\e66a"; }
+
+.icojam_cancel_1:before {
+  content: "\eb55"; }
+
+.icojam_home2:before {
+  content: "\e7c1"; }
+
 /* Roboto */
 /* Roboto Import */
 /* Roboto Regular */
