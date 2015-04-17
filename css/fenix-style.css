@@ -516,7 +516,7 @@ body {
   font: normal normal 300 14px/normal "Roboto Condensed"; }
 
 a {
-  color: red; }
+  color: #0076ff; }
   a:focus {
     outline: none; }
   a:active {
@@ -528,24 +528,24 @@ a {
 
 h1 {
   font: normal normal 100 36px/normal "Roboto";
-  color: red; }
+  color: #0076ff; }
 
 h2 {
   font: normal normal 100 26px/normal "Roboto";
-  color: #d92626; }
+  color: #2679d9; }
 
 h3 {
   font: normal normal 300 28px/normal "Roboto";
-  color: #bf4040; }
+  color: #407bbf; }
 
 h4 {
   font: normal normal 500 14px/normal "Roboto Condensed";
-  color: #a65959; }
+  color: #597da6; }
 
 h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small, h1 .small, h2 .small, h3 .small, h4 .small, h5 .small, h6 .small, .h1 .small, .h2 .small, .h3 .small, .h4 .small, .h5 .small, .h6 .small {
   font-family: Roboto;
   font-weight: 700;
-  color: red;
+  color: #0076ff;
   text-transform: uppercase;
   font-size: 12px; }
 
@@ -572,18 +572,18 @@ input[type="button"]::-moz-focus-inner {
   border: 0; }
 
 .btn {
-  background-color: red;
+  background-color: #0076ff;
   color: white;
   border-color: transparent;
   font: normal normal 300 14px/normal "Roboto Condensed"; }
   .btn:hover {
     background-color: transparent;
-    color: red;
-    border-color: red; }
+    color: #0076ff;
+    border-color: #0076ff; }
   .btn:active {
     background-color: transparent;
-    color: red;
-    border-color: red;
+    color: #0076ff;
+    border-color: #0076ff;
     -webkit-box-shadow: 0 0 0 white;
     -moz-box-shadow: 0 0 0 white;
     box-shadow: 0 0 0 white; }
@@ -620,8 +620,8 @@ input[type="button"]::-moz-focus-inner {
 , .btn-primary.disabled.active
 , .btn-primary[disabled].active
 , fieldset[disabled] .btn-primary.active {
-  background-color: #bf4040;
-  border-color: #bf4040; }
+  background-color: #407bbf;
+  border-color: #407bbf; }
 
 /* Fenix - Circle Number Component */
 .fx-circle-number {
@@ -632,7 +632,7 @@ input[type="button"]::-moz-focus-inner {
   width: 20px;
   line-height: 20px;
   text-align: center;
-  background-color: red;
+  background-color: #0076ff;
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
   -ms-border-radius: 100%;
@@ -650,9 +650,9 @@ input[type="button"]::-moz-focus-inner {
     -ms-border-radius: 0;
     border-radius: 0; }
   .datepicker .datepicker-days .day.active {
-    background-color: red; }
+    background-color: #0076ff; }
   .datepicker .datepicker-days .day.today:before {
-    border-bottom-color: red; }
+    border-bottom-color: #0076ff; }
   .datepicker .datepicker-days .day.active.today:before {
     border-bottom-color: white; }
 
@@ -827,7 +827,7 @@ legend {
   top: 4px;
   left: 30px;
   font-weight: 300;
-  color: #bf4040; }
+  color: #407bbf; }
 
 .fx-catalog-modular-form-content {
   padding: 10px 10px 10px 10px;
@@ -842,17 +842,17 @@ div[data-module="region"] .fx-catalog-modular-form-content {
   border-width: 0; }
 
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
-  border-color: red; }
+  border-color: #0076ff; }
 
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
   background-color: transparent;
   color: #666666; }
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-  color: red; }
+  color: #0076ff; }
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-  border-bottom: 1px solid red; }
+  border-bottom: 1px solid #0076ff; }
 
 /* Fenix - Object Box Component */
 .obj-box, .obj-box-radius10, .obj-box-title {
@@ -882,7 +882,7 @@ div[data-module="region"] .fx-catalog-modular-form-content {
 .obj-box-title {
   padding-top: 5px; }
   .obj-box-title h4 {
-    color: red;
+    color: #0076ff;
     font: normal normal 500 14px/normal "Roboto Condensed"; }
 
 /* Fenix - Panel Component */
@@ -921,7 +921,7 @@ div[data-module="region"] .fx-catalog-modular-form-content {
         .panel-group .panel-heading .panel-title a:focus {
           text-decoration: none; }
   .panel-group .panel-heading.fx-active-panel .panel-title a {
-    color: red; }
+    color: #0076ff; }
   .panel-group .panel-body .btn {
     background-color: transparent;
     color: #666666;
@@ -1014,13 +1014,13 @@ input[type="radio"] + label {
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
     border-radius: 100%;
-    border: 0 solid red;
+    border: 0 solid #0076ff;
     position: relative;
     top: 4px;
     left: -4px; }
 
 input[type="radio"]:checked + label {
-  color: red; }
+  color: #0076ff; }
   input[type="radio"]:checked + label:before {
     border-width: 5px; }
 
@@ -1059,13 +1059,13 @@ input[type="checkbox"] + label {
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
     border-radius: 100%;
-    border: 0 solid red;
+    border: 0 solid #0076ff;
     position: relative;
     top: 4px;
     left: -4px; }
 
 input[type="checkbox"]:checked + label {
-  color: red; }
+  color: #0076ff; }
   input[type="checkbox"]:checked + label:before {
     border-width: 5px; }
 
@@ -1096,7 +1096,7 @@ input[type="checkbox"]:checked + label {
   min-height: 60px; }
 
 .fx-resume-title {
-  color: red;
+  color: #0076ff;
   padding-left: 15px;
   padding-top: 5px;
   font: normal normal 400 10px/normal "Roboto";
@@ -1111,7 +1111,7 @@ input[type="checkbox"]:checked + label {
 #fx-catalog-submit-btn {
   color: white;
   text-transform: uppercase;
-  background-color: red;
+  background-color: #0076ff;
   width: 150px;
   position: absolute;
   bottom: 0;
@@ -1134,7 +1134,7 @@ input[type="checkbox"]:checked + label {
     padding-left: 15px; }
     .fx-resume-item-selected .fx-resume-module-title em {
       font: normal normal 400 10px/normal "Roboto";
-      color: red;
+      color: #0076ff;
       font-size: 12px;
       /* Not expected */
       position: absolute;
@@ -1215,14 +1215,14 @@ input[type="checkbox"]:checked + label {
 
 .bs-docs-sidebar .nav > li > a:hover, .bs-docs-sidebar .nav > li > a:focus {
   background-color: transparent;
-  border-left: 1px solid red;
-  color: red;
+  border-left: 1px solid #0076ff;
+  color: #0076ff;
   text-decoration: none; }
 
 .bs-docs-sidebar .nav > .active > a, .bs-docs-sidebar .nav > .active:hover > a, .bs-docs-sidebar .nav > .active:focus > a {
   background-color: transparent;
-  border-left: 1px solid red;
-  color: red;
+  border-left: 1px solid #0076ff;
+  color: #0076ff;
   font-weight: 700; }
 
 .bs-docs-sidebar .nav .nav {
@@ -1279,11 +1279,11 @@ input[type="checkbox"]:checked + label {
   position: relative; }
   .fx-widget .nav-tabs > li > a:hover, .fx-widget .nav-tabs > li > a:focus, .fx-widget .nav-tabs > li > a:active {
     background-color: transparent;
-    color: red;
+    color: #0076ff;
     border-color: transparent; }
   .fx-widget .nav-tabs > li.active > a, .fx-widget .nav-tabs > li.active > a:hover, .fx-widget .nav-tabs > li.active > a:focus {
     background-color: white;
-    color: red;
+    color: #0076ff;
     border-left-color: #d8d8d8;
     border-top-color: #d8d8d8;
     border-right-color: #d8d8d8;
@@ -1396,15 +1396,15 @@ input[type="checkbox"]:checked + label {
   display: none; }
 
 .fx-closepanel-container {
-  border-bottom: 1px solid red;
+  border-bottom: 1px solid #0076ff;
   padding: 5px 10px; }
   .fx-closepanel-container .fx-widget-icons {
-    color: red;
+    color: #0076ff;
     margin-right: 5px;
     cursor: pointer; }
   .fx-closepanel-container #fx-ws-close-btn {
     text-transform: uppercase;
-    color: red;
+    color: #0076ff;
     cursor: pointer;
     line-height: 1;
     display: inline-block;
@@ -1429,7 +1429,7 @@ input[type="checkbox"]:checked + label {
   list-style-type: none;
   padding: 16px 16px 35px 16px;
   position: relative;
-  border-bottom: 1px solid red; }
+  border-bottom: 1px solid #0076ff; }
 
 .fx-sessionstore-item-title {
   text-transform: uppercase;
@@ -1474,7 +1474,7 @@ input[type="checkbox"]:checked + label {
   width: 20px;
   line-height: 20px;
   text-align: center;
-  background-color: red;
+  background-color: #0076ff;
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
   -ms-border-radius: 100%;
@@ -1493,7 +1493,7 @@ input[type="checkbox"]:checked + label {
 
 .introjs-button:hover, .introjs-button:active, .introjs-button:focus {
   text-shadow: none;
-  color: red;
+  color: #0076ff;
   text-decoration: none; }
 
 /* Fenix - JQwidgets */
@@ -1510,14 +1510,14 @@ input[type="checkbox"]:checked + label {
   color: #666666;
   text-shadow: none;
   border-color: transparent;
-  background-color: #ffe5e5;
-  background-image: -moz-linear-gradient(top, #ffe5e5, #ffe5e5);
-  background-image: -ms-linear-gradient(top, #ffe5e5, #ffe5e5);
-  background-image: -o-linear-gradient(top, #ffe5e5, #ffe5e5);
-  background-image: -webkit-gradient(linear, center top, center bottom, from(#ffe5e5), to(#ffe5e5));
-  background-image: -webkit-linear-gradient(top, #ffe5e5, #ffe5e5);
-  background-image: linear-gradient(top, #ffe5e5, #ffe5e5);
-  background-image: linear-gradient(to bottom, #ffe5e5, #ffe5e5);
+  background-color: #e5f1ff;
+  background-image: -moz-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: -ms-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: -o-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#e5f1ff), to(#e5f1ff));
+  background-image: -webkit-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: linear-gradient(to bottom, #e5f1ff, #e5f1ff);
   -moz-background-clip: padding;
   background-clip: padding-box;
   -webkit-background-clip: padding-box;
@@ -1584,14 +1584,14 @@ input[type="checkbox"]:checked + label {
   color: #666666;
   text-shadow: none;
   border-color: transparent;
-  background-color: #ffe5e5;
-  background-image: -moz-linear-gradient(top, #ffe5e5, #ffe5e5);
-  background-image: -ms-linear-gradient(top, #ffe5e5, #ffe5e5);
-  background-image: -o-linear-gradient(top, #ffe5e5, #ffe5e5);
-  background-image: -webkit-gradient(linear, center top, center bottom, from(#ffe5e5), to(#ffe5e5));
-  background-image: -webkit-linear-gradient(top, #ffe5e5, #ffe5e5);
-  background-image: linear-gradient(top, #ffe5e5, #ffe5e5);
-  background-image: linear-gradient(to bottom, #ffe5e5, #ffe5e5);
+  background-color: #e5f1ff;
+  background-image: -moz-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: -ms-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: -o-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#e5f1ff), to(#e5f1ff));
+  background-image: -webkit-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: linear-gradient(to bottom, #e5f1ff, #e5f1ff);
   -moz-background-clip: padding;
   background-clip: padding-box;
   -webkit-background-clip: padding-box;
@@ -1600,15 +1600,15 @@ input[type="checkbox"]:checked + label {
 .jqx-fill-state-pressed, .jqx-widget .jqx-grid-cell-selected {
   color: #666666;
   text-shadow: none;
-  border-color: #ffcccc;
-  background-color: #ffcccc;
-  background-image: -moz-linear-gradient(top, #ffcccc, #ffcccc);
-  background-image: -ms-linear-gradient(top, #ffcccc, #ffcccc);
-  background-image: -o-linear-gradient(top, #ffcccc, #ffcccc);
-  background-image: -webkit-gradient(linear, center top, center bottom, from(#ffcccc), to(#ffcccc));
-  background-image: -webkit-linear-gradient(top, #ffcccc, #ffcccc);
-  background-image: linear-gradient(top, #ffcccc, #ffcccc);
-  background-image: linear-gradient(to bottom, #ffcccc, #ffcccc);
+  border-color: #cce4ff;
+  background-color: #cce4ff;
+  background-image: -moz-linear-gradient(top, #cce4ff, #cce4ff);
+  background-image: -ms-linear-gradient(top, #cce4ff, #cce4ff);
+  background-image: -o-linear-gradient(top, #cce4ff, #cce4ff);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#cce4ff), to(#cce4ff));
+  background-image: -webkit-linear-gradient(top, #cce4ff, #cce4ff);
+  background-image: linear-gradient(top, #cce4ff, #cce4ff);
+  background-image: linear-gradient(to bottom, #cce4ff, #cce4ff);
   -moz-background-clip: padding;
   background-clip: padding-box;
   -webkit-background-clip: padding-box;
@@ -1913,11 +1913,11 @@ input[type="checkbox"]:checked + label {
 
 .jstree-default .jstree-wholerow-clicked {
   background: none;
-  background-color: #ffcccc; }
+  background-color: #cce4ff; }
 
 .jstree-default .jstree-wholerow-hovered {
   background: none;
-  background-color: #ffe5e5; }
+  background-color: #e5f1ff; }
 
 /* Leaflet */
 /* Fenix Leaflet Import */
