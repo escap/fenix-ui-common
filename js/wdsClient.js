@@ -1,5 +1,6 @@
+define(['jquery'], function($) {
 
-define(['jquery','underscore','config'],function($,_, Config, wdsConfig) {
+    'use strict';
 
 	function _template(str, data) {
 		return str.replace(/\{ *([\w_]+) *\}/g, function (str, key) {
@@ -7,24 +8,34 @@ define(['jquery','underscore','config'],function($,_, Config, wdsConfig) {
 		});
 	}
 
-	return function(queryTmpl, queryVars, callback) {
+ 	function wdsClient(config) {
+
+        this.opts = $.extend({
+        	serviceUrl: 'http://faostat3.fao.org/wds/rest/table/json',
+			datasource: 'demo_fenix',
+			thousandSeparator: ',',
+			decimalSeparator: '.',
+			decimalNumbers: 2,
+			cssFilename: '',
+			nowrap: false,
+			valuesIndex: 0,
+			json: JSON.stringify({query: ''})
+		}, config);
+
+		return this;
+    }
+
+    wdsClient.prototype.query = function(queryTmpl, queryVars, callback) {
 
 		var ret,
-			sql = queryVars ? _template(queryTmpl, queryVars) : queryTmpl,
-			data = _.extend({
-				datasource: Config.dbName,
-				thousandSeparator: ',',
-				decimalSeparator: '.',
-				decimalNumbers: 2,
-				cssFilename: '',
-				nowrap: false,
-				valuesIndex: 0,
+			sql = $.isPlainObject(queryVars) ? _template(queryTmpl, queryVars) : queryTmpl,
+			data = $.extend(this.opts, {
 				json: JSON.stringify({query: sql})
-			}, wdsConfig);
+			});
 
-		if(_.isFunction(callback))
+		if($.isFunction(callback))
 			ret = $.ajax({
-				url: Config.wdsUrl,
+				url: this.opts.serviceUrl,
 				data: data,
 				type: 'POST',
 				dataType: 'JSON',
@@ -33,7 +44,7 @@ define(['jquery','underscore','config'],function($,_, Config, wdsConfig) {
 		else
 			$.ajax({
 				async: false,
-				url: Config.wdsUrl,
+				url: this.opts.serviceUrl,
 				data: data,
 				type: 'POST',
 				dataType: 'JSON',
@@ -44,4 +55,6 @@ define(['jquery','underscore','config'],function($,_, Config, wdsConfig) {
 
 		return ret;
 	};
+
+	return wdsClient;
 });
