@@ -2,6 +2,11 @@ define(['jquery'], function($) {
 
     'use strict';
 
+    var defaultOpts = {
+    	serviceUrl: 'http://faostat3.fao.org/wds/rest/table/json',
+    	datasource: 'demo_fenix'
+    };
+
 	function _template(str, data) {
 		return str.replace(/\{ *([\w_]+) *\}/g, function (str, key) {
 			return data[key] || '';
@@ -11,8 +16,8 @@ define(['jquery'], function($) {
  	function wdsClient(config) {
 
         this.opts = $.extend({
-        	serviceUrl: 'http://faostat3.fao.org/wds/rest/table/json',
-			datasource: 'demo_fenix',
+        	serviceUrl: defaultOpts.serviceUrl,
+			datasource: defaultOpts.datasource,
 			thousandSeparator: ',',
 			decimalSeparator: '.',
 			decimalNumbers: 2,

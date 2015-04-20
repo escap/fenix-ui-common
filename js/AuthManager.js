@@ -1,6 +1,6 @@
 define([
     'jquery',
-    'text!../config/authorized_users.json',
+    'text!../config/auth_users.json',
     'text!../html/auth_modal.html',
     'bootstrap',
     'amplify'
@@ -24,7 +24,7 @@ define([
         CANCEL_LOGOUT : "#fx-logout-form-cancel"
     };
 
-    function AuthManager(){
+    function AuthManager(config){
         this.users = JSON.parse(AuthUsers);
         $('body').append(template);
 
@@ -65,10 +65,11 @@ define([
             }
         });
 
-        //logout
+        //bind logout on fenix menu
         amplify.subscribe('fx.menu.logout', function () {
             self.$modalLogout.modal('show');
         });
+
         this.$cancelLogout.on('click', function () {
             self.$modalLogout.modal('hide');
         });
@@ -81,9 +82,9 @@ define([
 
         this.$modalLogout.modal('hide');
         console.warn("Logout success.");
-        console.warn("Removing authenticated user details with key: 'afo.security.user'.");
-        amplify.store.sessionStorage('afo.security.user', '' );
-        amplify.publish('logout');
+        console.warn("Removing authenticated user details with key: 'fx.auth.user'.");
+        amplify.store.sessionStorage('fx.auth.user', '' );
+        amplify.publish('fx.auth.logout');
 
     };
 
@@ -104,9 +105,9 @@ define([
 
         this.$modalLogin.modal('hide');
         console.warn("Login success: broadcast user information.");
-        console.warn("Storing authenticated user details with key: 'afo.security.user'.");
-        amplify.store.sessionStorage('afo.security.user', user );
-        amplify.publish('login', amplify.store.sessionStorage('afo.security.user'));
+        console.warn("Storing authenticated user details with key: 'fx.auth.user'.");
+        amplify.store.sessionStorage('fx.auth.user', user );
+        amplify.publish('fx.auth.login', amplify.store.sessionStorage('fx.auth.user'));
     };
 
     AuthManager.prototype._onAuthenticationError = function () {
