@@ -1,12 +1,17 @@
 define([
     'jquery',
-    'text!../config/auth_users.json',
+    'text!config/auth_users.json',
     'text!../html/auth_modal.html',
     'bootstrap',
     'amplify'
 ], function ($, AuthUsers, template) {
 
     'use strict';
+
+    var defaults = {
+    	onLogin: null,
+    	onLogout: null
+    };
 
     var s = {
         //login
@@ -21,10 +26,14 @@ define([
         MODAL_LOGOUT: '#fx-logout-modal',
         ERROR_CONTAINER_LOGOUT: '#fx-logout-form-error-container',
         SUBMIT_LOGOUT : "#fx-logout-form-submit",
-        CANCEL_LOGOUT : "#fx-logout-form-cancel"
+        CANCEL_LOGOUT : "#fx-logout-form-cancel",
+        STORAGE_KEY: "fx.auth.user"
     };
 
-    function AuthManager(config){
+    function AuthManager(opts) {
+    	//TODO extend defaults..
+    	this.opts = $.extend(true, defaults, opts);
+
         this.users = JSON.parse(AuthUsers);
         $('body').append(template);
 
@@ -34,12 +43,12 @@ define([
 
     AuthManager.prototype.initVariables = function () {
         //login
-        this.$modalLogin = $(s.MODAL_LOGIN);
         this.$formLogin = $(s.FORM_LOGIN);
+        this.$modalLogin = $(s.MODAL_LOGIN);
         this.$emailLogin = $(s.EMAIL_LOGIN);
+        this.$submitLogin = $(s.SUBMIT_LOGIN);        
         this.$passwordLogin = $(s.PASSWORD_LOGIN);
         this.$errorContainerLogin = $(s.ERROR_CONTAINER_LOGIN);
-        this.$submitLogin = $(s.SUBMIT_LOGIN);
         //logout
         this.$modalLogout = $(s.MODAL_LOGOUT);
         this.$submitLogout = $(s.SUBMIT_LOGOUT);
@@ -55,8 +64,8 @@ define([
             self.$modalLogin.modal('show');
         });
 
-        this.$submitLogin.on('submit', function (event) {
-            event.preventDefault();
+        this.$submitLogin.on('submit', function (e) {
+            e.preventDefault();
         });
 
         this.$submitLogin.on('click', function () {
@@ -82,10 +91,11 @@ define([
 
         this.$modalLogout.modal('hide');
         console.warn("Logout success.");
-        console.warn("Removing authenticated user details with key: 'fx.auth.user'.");
-        amplify.store.sessionStorage('fx.auth.user', '' );
+        console.warn("Removing authenticated user details with key: "+s.STORAGE_KEY);
+        amplify.store.sessionStorage(s.STORAGE_KEY, '' );
         amplify.publish('fx.auth.logout');
-
+        if(this.opts.onLogout)
+        	this.opts.onLogout();
     };
 
     AuthManager.prototype._authenticate = function () {
@@ -94,26 +104,29 @@ define([
             password = this.$passwordLogin.val(),
             user= this.users[email];
 
-        if ( user && user.password === password) {
+        if(user && user.password === password)
             this._onAuthenticationSuccess(user);
-        } else {
+        else
             this._onAuthenticationError();
-        }
     };
 
     AuthManager.prototype._onAuthenticationSuccess = function (user) {
 
         this.$modalLogin.modal('hide');
-        console.warn("Login success: broadcast user information.");
-        console.warn("Storing authenticated user details with key: 'fx.auth.user'.");
-        amplify.store.sessionStorage('fx.auth.user', user );
-        amplify.publish('fx.auth.login', amplify.store.sessionStorage('fx.auth.user'));
+        console.warn("Login success. Storing authenticated user details with key: "+s.STORAGE_KEY);
+        amplify.store.sessionStorage(s.STORAGE_KEY, user );
+        amplify.publish('fx.auth.login', amplify.store.sessionStorage(s.STORAGE_KEY));
+        if(this.opts.onLogin)
+        	this.opts.onLogin(user);
     };
 
     AuthManager.prototype._onAuthenticationError = function () {
-
         console.warn("Login fail.");
         this.$errorContainerLogin.html("Invalid login! Email and password do not match.");
+    };
+
+	AuthManager.prototype.isLogged = function () {
+    	return !!amplify.store.sessionStorage(s.STORAGE_KEY);
     };
 
     return AuthManager;
