@@ -36,10 +36,7 @@ define([
     wdsClient.prototype.query = function ( conf ) {
 
         var ret,
-            sql = $.isPlainObject(conf.queryVars) ? _template(conf.queryTmpl, conf.queryVars) : conf.queryTmpl,
-            data = $.extend(true, this.opts, {
-                json: JSON.stringify({query: sql})
-            });
+            data = this.prepareDataForRequest(conf);
 
         if ($.isFunction(conf.success)) {
             ret = $.ajax({
@@ -66,6 +63,29 @@ define([
         }
 
         return ret;
+    };
+
+    wdsClient.prototype.prepareDataForRequest = function (conf) {
+
+        var sql = $.isPlainObject(conf.queryVars) ? _template(conf.queryTmpl, conf.queryVars) : conf.queryTmpl;
+
+        if (this.opts.outputType === 'object'){
+
+            return {
+                datasource : this.opts.datasource,
+                query : sql,
+                outputType : this.opts.outputType
+
+            };
+
+        } else {
+
+            return $.extend(true, this.opts, {
+                json: JSON.stringify({query: sql})
+            });
+        }
+
+
     };
 
     return wdsClient;
