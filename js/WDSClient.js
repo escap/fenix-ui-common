@@ -50,9 +50,9 @@ define([
                 data: data,
                 type: 'POST',
                 dataType: 'JSON',
-                error: conf.error || $.noop(),
-                always: conf.always || $.noop(),
-                success: conf.success || $.noop()
+                error: conf.error || $.noop,
+                always: conf.always || $.noop,
+                success: conf.success || $.noop
             });
         } else {
 
@@ -62,8 +62,8 @@ define([
                 data: data,
                 type: 'POST',
                 dataType: 'JSON',
-                error: conf.error || $.noop(),                
-                always: conf.always || $.noop(),
+                error: conf.error || $.noop,                
+                always: conf.always || $.noop,
                 success: function (resp) {
                     ret = resp;
                 }                
