@@ -10,7 +10,10 @@ define([
         datasource: 'demo_fenix',
 		queryTmpl: '',
 		queryVars: null,
-		outputType: 'array'	//array | object
+		outputType: 'array',
+		error: null,
+		always: null,
+		success: null
     };
 
     function _template(str, data) {
@@ -47,9 +50,9 @@ define([
                 data: data,
                 type: 'POST',
                 dataType: 'JSON',
-                success: conf.success,
-                error: conf.error,
-                always: conf.always
+                error: conf.error || $.noop(),
+                always: conf.always || $.noop(),
+                success: conf.success || $.noop()
             });
         } else {
 
@@ -59,9 +62,11 @@ define([
                 data: data,
                 type: 'POST',
                 dataType: 'JSON',
+                error: conf.error || $.noop(),                
+                always: conf.always || $.noop(),
                 success: function (resp) {
                     ret = resp;
-                }
+                }                
             });
         }
 
