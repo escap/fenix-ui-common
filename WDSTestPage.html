@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>WDS 5.1 Test Page</title>
+        <script type='application/javascript' src='http://fenixapps.fao.org/repository/js/requirejs/2.8/require.js'></script>
+        <script type='application/javascript'>
+            function test() {
+                require.config({
+                    paths: {
+                        WDS_CLIENT: 'js/WDSClient',
+                        jquery: '//code.jquery.com/jquery-2.1.4.min'
+                    }
+                });
+                require(['jquery', 'WDS_CLIENT'], function($, WDS) {
+                    var w = new WDS({
+                        datasource: 'localpostgres',
+                        serviceUrl: 'http://localhost:8080/wds/rest/crud'
+                    });
+                    w.retrieve({
+                        datasource: 'faostat',
+                        payload: {
+                            query: 'SELECT TOP 10 AreaCode, AreaNameE FROM Area'
+                        },
+                        success: function(response) {
+                            $('#out_retrieve').html(JSON.stringify(response));
+                        },
+                        error: function(a) {
+                            typeof a == 'object' ? alert(a.responseText) : alert(a);
+                        }
+                    })
+                });
+            }
+        </script>
+    </head>
+    <body onload='test();'>
+        <label for='out_retrieve'><h3>Retrieve</h3></label>
+        <div id='out_retrieve'></div>
+    </body>
+</html>

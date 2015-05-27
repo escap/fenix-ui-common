@@ -90,5 +90,36 @@ define([
 
     };
 
+    wdsClient.prototype.retrieve = function(config) {
+        try {
+            this.isValidConfiguration(config);
+            $.ajax({
+                type: 'GET',
+                url: this.opts.serviceUrl,
+                data: {
+                    payload: JSON.stringify(config.payload),
+                    datasource: (config.datasource != undefined && config.datasource != null) ? config.datasource : this.opts.datasource,
+                    collection: config.collection,
+                    outputType: config.outputType
+                },
+                success: config.success,
+                error: config.error,
+                always: config.always
+            });
+        } catch (e) {
+            config.error(e);
+        }
+    };
+
+    wdsClient.prototype.isValidConfiguration = function(config) {
+        if (config.payload == undefined || config.payload == null)
+            throw 'Missing parameter "payload" in the configuration object.';
+        if (config.datasource == undefined || config.datasource == null) {
+            if (this.opts.datasource == undefined || this.opts.datasource == null)
+                throw 'Missing parameter "datasource" in the default configuration and in the configuration object.';
+        }
+    };
+
     return wdsClient;
+
 });
