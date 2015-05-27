@@ -15,10 +15,32 @@
                         datasource: 'localpostgres',
                         serviceUrl: 'http://localhost:8080/wds/rest/crud'
                     });
-                    w.retrieve({
-                        datasource: 'faostat',
+                    w.create({
+                        datasource: 'localpostgres',
                         payload: {
-                            query: 'SELECT TOP 10 AreaCode, AreaNameE FROM Area'
+                            query: [
+                                {
+                                    'name': 'Mario',
+                                    'items': 13
+                                },
+                                {
+                                    'name': 'Nicola',
+                                    'items': 17
+                                }
+                            ]
+                        },
+                        collection: 'TestTable',
+                        success: function(response) {
+                            $('#out_create').html(JSON.stringify(response));
+                        },
+                        error: function(a) {
+                            typeof a == 'object' ? alert(a.responseText) : alert(a);
+                        }
+                    });
+                    w.retrieve({
+                        datasource: 'localpostgres',
+                        payload: {
+                            query: 'SELECT name FROM "TestTable" '
                         },
                         success: function(response) {
                             $('#out_retrieve').html(JSON.stringify(response));
@@ -26,13 +48,49 @@
                         error: function(a) {
                             typeof a == 'object' ? alert(a.responseText) : alert(a);
                         }
-                    })
+                    });
+                    w.update({
+                        datasource: 'localpostgres',
+                        payload: {
+                            "query": 'SELECT name, price, items FROM "TestTable" WHERE name = \'Guido\'',
+                            "update": {
+                                "price": 99.99,
+                                "name": "Update This!"
+                            }
+                        },
+                        collection: 'TestTable',
+                        success: function(response) {
+                            $('#out_update').html(JSON.stringify(response));
+                        },
+                        error: function(a) {
+                            typeof a == 'object' ? alert(a.responseText) : alert(a);
+                        }
+                    });
+                    w.delete({
+                        datasource: 'localpostgres',
+                        payload: {
+                            'query': 'DELETE FROM "TestTable" WHERE name = \'Guido\''
+                        },
+                        collection: 'TestTable',
+                        success: function(response) {
+                            $('#out_delete').html(JSON.stringify(response));
+                        },
+                        error: function(a) {
+                            typeof a == 'object' ? alert(a.responseText) : alert(a);
+                        }
+                    });
                 });
             }
         </script>
     </head>
     <body onload='test();'>
+        <label for='out_create'><h3>Create</h3></label>
+        <div id='out_create'></div>
         <label for='out_retrieve'><h3>Retrieve</h3></label>
         <div id='out_retrieve'></div>
+        <label for='out_update'><h3>Update</h3></label>
+        <div id='out_update'></div>
+        <label for='out_delete'><h3>Delete</h3></label>
+        <div id='out_delete'></div>
     </body>
 </html>

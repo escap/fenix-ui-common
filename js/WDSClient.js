@@ -90,11 +90,27 @@ define([
 
     };
 
+    wdsClient.prototype.create = function(config) {
+        this.crud('POST', config);
+    };
+
     wdsClient.prototype.retrieve = function(config) {
+        this.crud('GET', config);
+    };
+
+    wdsClient.prototype.update = function(config) {
+        this.crud('PUT', config);
+    };
+
+    wdsClient.prototype.delete = function(config) {
+        this.crud('DELETE', config);
+    };
+
+    wdsClient.prototype.crud = function(http_method, config) {
         try {
             this.isValidConfiguration(config);
             $.ajax({
-                type: 'GET',
+                type: http_method,
                 url: this.opts.serviceUrl,
                 data: {
                     payload: JSON.stringify(config.payload),
