@@ -7,7 +7,10 @@ define([
 
     var defaultOpts = {
         serviceUrl: 'http://faostat3.fao.org/wds/rest/table/json',
-        datasource: 'demo_fenix'
+        datasource: 'demo_fenix',
+		queryTmpl: '',
+		queryVars: null,
+		outputType: 'array'	//array | object
     };
 
     function _template(str, data) {
@@ -73,9 +76,8 @@ define([
 
             return {
                 datasource : this.opts.datasource,
-                query : sql,
-                outputType : this.opts.outputType
-
+                outputType : this.opts.outputType,
+                query : sql
             };
 
         } else {
