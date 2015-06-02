@@ -1,10 +1,11 @@
 define([
     'jquery',
+    'underscore',
     'text!config/auth_users.json',
     'text!../html/auth_modal.html',
     'bootstrap',
     'amplify'
-], function ($, AuthUsers, template) {
+], function ($, _, AuthUsers, template) {
 
     'use strict';
 
@@ -126,7 +127,11 @@ define([
     };
 
 	AuthManager.prototype.isLogged = function () {
-    	return !!amplify.store.sessionStorage(s.STORAGE_KEY);
+		return !!amplify.store.sessionStorage(s.STORAGE_KEY);
+    };
+
+    AuthManager.prototype.getCurrentUser = function() {
+    	return amplify.store.sessionStorage(s.STORAGE_KEY) || false;
     };
 
     return AuthManager;
