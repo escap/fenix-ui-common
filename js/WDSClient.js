@@ -3,7 +3,7 @@ define(['jquery', 'text!fenix_ui_common/resources/schemas/wds.json'], function (
     'use strict';
 
     var defaultOpts = {
-        serviceUrl: 'http://fenixapps2.fao.org/wds_5.1',
+        serviceUrl: 'http://fenixapps2.fao.org/wds_5.1/rest/crud',
         datasource: 'demo_fenix',
 		queryTmpl: '',
 		queryVars: null,
