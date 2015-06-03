@@ -1,4 +1,4 @@
-define(['jquery', 'text!fx-common/config/wds_schema.json'], function ($, wds_schema) {
+define(['jquery'], function ($) {
 
     'use strict';
 
@@ -30,8 +30,8 @@ define(['jquery', 'text!fx-common/config/wds_schema.json'], function ($, wds_sch
             cssFilename: '',
             nowrap: false,
             valuesIndex: 0,
-            json: JSON.stringify({query: ''}),
-            wds_schema: $.parseJSON(wds_schema),
+            json: JSON.stringify({query: ''})
+           //,wds_schema: $.parseJSON(wds_schema),
         }, config);
 
         return this;
