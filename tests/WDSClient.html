@@ -1,13 +1,16 @@
 <html>
     <head>
         <title>WDS 5.1 Test Page</title>
-        <script type='application/javascript' src='http://fenixapps.fao.org/repository/js/requirejs/2.8/require.js'></script>
+        <script type='application/javascript' src='//fenixrepo.fao.org/cdn/js/requirejs/2.8/require.js'></script>
         <script type='application/javascript'>
             function test() {
                 require.config({
                     paths: {
-                        WDS_CLIENT: 'js/WDSClient',
-                        jquery: '//code.jquery.com/jquery-2.1.4.min'
+						text:      "//fenixrepo.fao.org/cdn/js/requirejs/plugins/text/2.0.12/text",
+						i18n:      "//fenixrepo.fao.org/cdn/js/requirejs/plugins/i18n/2.0.4/i18n",
+						domready:  "//fenixrepo.fao.org/cdn/js/requirejs/plugins/domready/2.0.1/domReady",
+						jquery:    "//fenixrepo.fao.org/cdn/js/jquery/2.1.1/jquery.min",                    	
+                        WDS_CLIENT: '../js/WDSClient'
                     }
                 });
                 require(['jquery', 'WDS_CLIENT'], function($, WDS) {
