@@ -1,4 +1,4 @@
-define(['jquery', 'text!fenix_ui_common/resources/schemas/wds.json'], function ($, wds_schema) {
+define(['jquery', 'text!fx-common/config/wds_schema.json'], function ($, wds_schema) {
 
     'use strict';
 

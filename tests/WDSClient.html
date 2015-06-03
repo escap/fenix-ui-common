@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>WDS 5.1 Test Page</title>
-        <script type='application/javascript' src='//fenixrepo.fao.org/cdn/js/requirejs/2.8/require.js'></script>
+        <script type='application/javascript' src='//fenixrepo.fao.org/cdn/js/requirejs/2.1.8/require.min.js'></script>
         <script type='application/javascript'>
             function test() {
                 require.config({
@@ -16,7 +16,7 @@
                 require(['jquery', 'WDS_CLIENT'], function($, WDS) {
                     var w = new WDS({
                         datasource: 'localpostgres',
-                        serviceUrl: 'http://localhost:8080/wds/rest/crud'
+//                        serviceUrl: 'http://localhost:8080/wds/rest/crud'
                     });
                     w.create({
                         datasource: 'localpostgres',
