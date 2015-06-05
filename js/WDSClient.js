@@ -213,9 +213,8 @@ define(['jquery'], function ($) {
     };
 
     wdsClient.prototype.check_parameters = function(parameters, rest_parameters) {
-        this.opts.wds_blacklist = ['method', 'endpoint'];
         for (var i = 0 ; i < Object.keys(rest_parameters).length ; i++)
-            if ($.inArray(Object.keys(rest_parameters)[i], blacklist) < 0)
+            if ($.inArray(Object.keys(rest_parameters)[i], this.opts.wds_blacklist) < 0)
                 if (parameters[Object.keys(rest_parameters)[i]] == undefined)
                     throw 'Missing parameter: ' + Object.keys(rest_parameters)[i];
     };
