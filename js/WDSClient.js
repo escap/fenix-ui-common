@@ -1,9 +1,11 @@
-define(['jquery', 'text!fenix_ui_common/resources/schemas/wds.json'], function ($, wds_schema) {
+define(['jquery'], function ($) {
 
     'use strict';
 
     var defaultOpts = {
-        serviceUrl: 'http://faostat3.fao.org/wds/rest/table/json',
+        serviceUrl: 'http://fenixapps2.fao.org/wds_5.1/rest/crud',
+        wdsUrl: 'http://fenixapps2.fao.org/wds_5.1/rest',
+        wdsSchemaUrl: 'http://fenixapps2.fao.org/wds_5.1/schema/services.json',
         datasource: 'demo_fenix',
 		queryTmpl: '',
 		queryVars: null,
@@ -24,6 +26,9 @@ define(['jquery', 'text!fenix_ui_common/resources/schemas/wds.json'], function (
         this.opts = $.extend({
             serviceUrl: defaultOpts.serviceUrl,
             datasource: defaultOpts.datasource,
+            wdsUrl: defaultOpts.wdsUrl,
+            wdsSchemaUrl: defaultOpts.wdsSchemaUrl,
+            wds_blacklist: ['method', 'endpoint'],
             thousandSeparator: ',',
             decimalSeparator: '.',
             decimalNumbers: 2,
@@ -31,7 +36,14 @@ define(['jquery', 'text!fenix_ui_common/resources/schemas/wds.json'], function (
             nowrap: false,
             valuesIndex: 0,
             json: JSON.stringify({query: ''}),
-            wds_schema: $.parseJSON(wds_schema),
+            wds_client_config: {
+                url_root: '',
+                parameters: [],
+                error: null,
+                always: null,
+                success: null,
+                rest_service_name: ''
+            }
         }, config);
 
         return this;
@@ -139,66 +151,72 @@ define(['jquery', 'text!fenix_ui_common/resources/schemas/wds.json'], function (
         }
     };
 
-    wdsClient.prototype.wdsclient = function(rest_service_name, parameters, callback, url_root) {
+    wdsClient.prototype.get_services_client = function(config) {
 
-        /* Root URL. */
-        var url = url_root != null ? url_root : this.CONFIG.wds_root;
-        url += '/' + rest_service_name + '/';
+        /* This... */
+        var _this = this;
 
-        /* Load REST definition. */
-        var rest_parameters = this.opts.wds_schema.properties[rest_service_name].properties;
+        /* Error function. */
+        var err = config.error != undefined ? config.error : function(e) {alert(e);};
 
-        try {
+        /* Service URL. */
+        var wds_url = config.wds_url != null ? config.wds_url : this.opts.wdsUrl;
 
-            /* Check whether the CONFIG object contains all the required parameters for the REST. */
-            this.check_parameters(parameters, rest_parameters);
+        /* Load WDS schema. */
+        $.getJSON(this.opts.wdsSchemaUrl, function(schema) {
 
-            /* Create the URL by taking the parameters from the CONFIG object according to the JSON Schema definition. */
-            for (var i = 0 ; i < Object.keys(rest_parameters).length ; i++)
-                url += parameters[Object.keys(rest_parameters)[i]] + '/';
+            /* Load service schema. */
+            var service_schema;
+            try {
+                service_schema = schema.properties[config.service_name].properties.schema.properties;
+            } catch (e) {
+                err('Invalid schema for service: "' + config.service_name + '"');
+            }
 
-            /* Define the HTTP method, GET by default, */
-            var method = this.opts.wds_schema.properties[rest_service_name].method;
-            method = method != null ? method : 'GET';
+            /* Check user's parameters. */
+            try {
 
-            /* Call WDS. */
-            $.ajax({
+                /* Check user's parameters. */
+                _this.check_parameters(config.parameters, service_schema);
 
-                type: method,
-                url: url,
-
-                success: function (response) {
-
-                    /* Cast response to JSON, if needed. */
-                    var json = response;
-                    if (typeof json == 'string')
-                        json = $.parseJSON(response);
-
-                    /* Invoke user's callback. */
-                    if (callback != null)
-                        callback(json);
-
-                },
-
-                /* Default error handling. */
-                error: function(a) {
-                    alert(a.responseText);
+                /* Add service's endpoint. */
+                try {
+                    wds_url += service_schema.endpoint.default + '/';
+                } catch (e) {
+                    err('Missing "endpoint" in the schema for service: "' + config.service_name + '"');
                 }
 
-            });
+                /* Create the URL by taking the parameters from the CONFIG object according to the JSON Schema definition. */
+                for (var i = 0 ; i < Object.keys(service_schema).length ; i++)
+                    if ($.inArray(Object.keys(service_schema)[i], _this.opts.wds_blacklist) < 0)
+                        wds_url += config.parameters[Object.keys(service_schema)[i]] + '/';
 
-        } catch (e) {
+                /* Test method parameter existence. */
+                if (service_schema.method == undefined)
+                    err('Missing "method" in the schema for service: "' + config.service_name + '"');
 
-            alert(e);
+                /* Invoke the service. */
+                $.ajax({
+                    type: service_schema.method.default.toUpperCase(),
+                    url: wds_url,
+                    success: config.success,
+                    error: err,
+                    always: config.always
+                });
 
-        }
+            } catch (e) {
+                err(e);
+            }
+
+        });
 
     };
 
     wdsClient.prototype.check_parameters = function(parameters, rest_parameters) {
         for (var i = 0 ; i < Object.keys(rest_parameters).length ; i++)
-            if (parameters[Object.keys(rest_parameters)[i]] == undefined)
-                throw translate.missing_parameter + Object.keys(rest_parameters)[i];
+            if ($.inArray(Object.keys(rest_parameters)[i], this.opts.wds_blacklist) < 0)
+                if (parameters[Object.keys(rest_parameters)[i]] == undefined)
+                    throw 'Missing parameter: ' + Object.keys(rest_parameters)[i];
     };
 
     return wdsClient;
