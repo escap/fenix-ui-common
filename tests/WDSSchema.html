@@ -24,7 +24,7 @@
                             lang_faostat: 'E'
                         },
                         success: function(response) {
-                            console.log(response);
+                            $('#one').html(JSON.stringify(response));
                         },
                         error: function(response) {
                             alert(response);
@@ -38,7 +38,7 @@
                             lang_faostat: 'E'
                         },
                         success: function(response) {
-                            console.log(response);
+                            $('#two').html(JSON.stringify(response));
                         },
                         error: function(response) {
                             alert(response);
@@ -48,7 +48,9 @@
             }
         </script>
     </head>
-    <body onload='test()'>
-
+    <body onload='test();'>
+        <div id='one'></div>
+        <hr>
+        <div id='two'></div>
     </body>
 </html>
