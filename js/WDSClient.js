@@ -6,7 +6,7 @@ define(['jquery'], function ($) {
         serviceUrl: 'http://fenixapps2.fao.org/wds_5.1/rest/crud',
         wdsUrl: 'http://fenixapps2.fao.org/wds_5.1/rest',
         wdsSchemaUrl: 'http://fenixapps2.fao.org/wds_5.1/schema/services.json',
-        datasource: 'demo_fenix',
+        datasource: 'DEMO_FENIX',
 		queryTmpl: '',
 		queryVars: null,
 		outputType: 'array',
