@@ -129,9 +129,9 @@ define(['jquery'], function ($) {
                 url: this.opts.serviceUrl,
                 data: {
                     payload: JSON.stringify(config.payload),
-                    datasource: (config.datasource != undefined && config.datasource != null) ? config.datasource : this.opts.datasource,
+                    datasource: (typeof config.datasource !== 'undefined' && config.datasource !== null) ? config.datasource : this.opts.datasource,
                     collection: config.collection,
-                    outputType: config.outputType
+                    outputType: (typeof config.outputType !== 'undefined' && config.outputType !== null) ? config.outputType : this.opts.outputType
                 },
                 success: config.success,
                 error: config.error,
