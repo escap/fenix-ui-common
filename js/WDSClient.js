@@ -124,6 +124,13 @@ define(['jquery'], function ($) {
     wdsClient.prototype.crud = function(http_method, config) {
         try {
             this.isValidConfiguration(config);
+            
+            if (typeof config.payload.queryVars !== 'undefined' && 
+                config.payload.queryVars !== null &&
+                $.isPlainObject(config.payload.queryVars) ) {
+                config.payload.query = _template(config.payload.query, config.payload.queryVars);
+            }
+            
             $.ajax({
                 type: http_method,
                 url: this.opts.serviceUrl,

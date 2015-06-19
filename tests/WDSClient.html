@@ -43,7 +43,11 @@
                     });
                     w.retrieve({
                         payload: {
-                            query: 'SELECT name FROM "TestTable" '
+                            query: 'SELECT {param} FROM "{table}" ',
+                            queryVars: {
+                                param: 'name',
+                                table: 'TestTable' 
+                            }
                         },
                         success: function(response) {
                             $('#out_retrieve').html(JSON.stringify(response));
