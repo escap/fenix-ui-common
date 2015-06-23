@@ -555,6 +555,11 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small
   text-transform: uppercase;
   font-size: 12px; }
 
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
 /* Fenix - Reset */
 /* Components */
 /* Fenix - Components Index */
@@ -838,6 +843,9 @@ legend {
 .fx-catalog-modular-form-content {
   padding: 10px 10px 10px 10px;
   height: 100px; }
+
+div[data-module] .fx-catalog-modular-form-content {
+  height: 173px; }
 
 div[data-module="region"] .fx-catalog-modular-form-content {
   height: 263px; }
@@ -1263,6 +1271,108 @@ input[type="checkbox"]:checked + label {
 @media (min-width: 1200px) {
   .bs-docs-sidebar.affix-bottom, .bs-docs-sidebar.affix {
     width: 263px; } }
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+/* Toggle Styles */
+#wrapper {
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
+
+#wrapper.toggled {
+  padding-left: 250px; }
+
+#sidebar-wrapper {
+  z-index: 1000;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  background: #000;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
+
+#wrapper.toggled #sidebar-wrapper {
+  width: 250px; }
+
+#page-content-wrapper {
+  width: 100%;
+  position: absolute;
+  padding: 15px;
+  overflow-x: hidden; }
+
+#wrapper.toggled #page-content-wrapper {
+  position: absolute;
+  margin-right: -250px; }
+
+/* Sidebar Styles */
+.sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+
+.sidebar-nav li {
+  text-indent: 20px;
+  line-height: 40px; }
+
+.sidebar-nav li a {
+  display: block;
+  text-decoration: none;
+  color: #999999; }
+
+.sidebar-nav li a:hover {
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2); }
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+  text-decoration: none; }
+
+.sidebar-nav > .sidebar-brand {
+  height: 65px;
+  font-size: 18px;
+  line-height: 60px; }
+
+.sidebar-nav > .sidebar-brand a {
+  color: #999999; }
+
+.sidebar-nav > .sidebar-brand a:hover {
+  color: #fff;
+  background: none; }
+
+@media (min-width: 768px) {
+  #wrapper {
+    padding-left: 250px; }
+
+  #wrapper.toggled {
+    padding-left: 0; }
+
+  #sidebar-wrapper {
+    width: 250px; }
+
+  #wrapper.toggled #sidebar-wrapper {
+    width: 0; }
+
+  #page-content-wrapper {
+    padding: 20px;
+    position: relative; }
+
+  #wrapper.toggled #page-content-wrapper {
+    position: relative;
+    margin-right: 0; } }
 /* Fenix - Well Component */
 .well {
   background-color: transparent;
@@ -1274,7 +1384,6 @@ input[type="checkbox"]:checked + label {
 /* Fenix - Widgets Component */
 .fx-widget {
   background-color: white;
-  height: 100%;
   padding: 5px 10px 10px 10px;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -1283,22 +1392,52 @@ input[type="checkbox"]:checked + label {
   border: 1px solid #d8d8d8;
   border-bottom: 3px solid #d8d8d8;
   position: relative; }
-  .fx-widget .nav-tabs > li > a:hover, .fx-widget .nav-tabs > li > a:focus, .fx-widget .nav-tabs > li > a:active {
-    background-color: transparent;
-    color: #0076ff;
-    border-color: transparent; }
-  .fx-widget .nav-tabs > li.active > a, .fx-widget .nav-tabs > li.active > a:hover, .fx-widget .nav-tabs > li.active > a:focus {
-    background-color: white;
-    color: #0076ff;
-    border-left-color: #d8d8d8;
-    border-top-color: #d8d8d8;
-    border-right-color: #d8d8d8;
-    border-bottom-color: white; }
-  .fx-widget .nav-tabs {
-    border-bottom: transparent; }
-    .fx-widget .nav-tabs li a {
+  .fx-widget .nav-tabs > li {
+    position: relative; }
+    .fx-widget .nav-tabs > li > a {
+      padding: 3px 3px 6px 3px;
+      border-color: transparent;
       cursor: pointer;
       color: #666666; }
+      .fx-widget .nav-tabs > li > a:hover, .fx-widget .nav-tabs > li > a:active, .fx-widget .nav-tabs > li > a:focus, .fx-widget .nav-tabs > li > a:visited {
+        border-color: transparent;
+        background-color: transparent;
+        color: #0076ff; }
+  .fx-widget .nav-tabs > li.active > a {
+    color: #0076ff; }
+    .fx-widget .nav-tabs > li.active > a:hover, .fx-widget .nav-tabs > li.active > a:active, .fx-widget .nav-tabs > li.active > a:focus, .fx-widget .nav-tabs > li.active > a:visited {
+      border-color: transparent;
+      background-color: transparent; }
+  .fx-widget .nav-tabs > li.active:before {
+    content: '';
+    width: 100%;
+    height: 3px;
+    background-color: #0076ff;
+    position: absolute;
+    bottom: -7px; }
+
+.fx-dataset-details-container {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  background-color: white;
+  height: 35px;
+  width: calc(100% - 59px);
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid #d8d8d8;
+  padding: 3px 10px; }
+  .fx-dataset-details-container .fx-dataset-details {
+    width: 100%;
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 11px;
+    color: #407bbf; }
 
 .fx-widget:before {
   content: "";
@@ -1313,9 +1452,6 @@ input[type="checkbox"]:checked + label {
   position: relative;
   width: 500px;
   height: 350px; }
-
-.fx-widget .nav > li > a {
-  padding: 3px 3px 6px 3px; }
 
 .fx-icon {
   width: 35px;
@@ -1915,7 +2051,7 @@ input[type="checkbox"]:checked + label {
 
 .jstree-default .jstree-node,
 .jstree-default .jstree-icon {
-  background-image: url(".//css/img/treejs-32px.png"); }
+  background-image: url("../submodules/fenix-ui-common/css/img/treejs-32px.png"); }
 
 .jstree-default .jstree-wholerow-clicked {
   background: none;
@@ -1924,6 +2060,23 @@ input[type="checkbox"]:checked + label {
 .jstree-default .jstree-wholerow-hovered {
   background: none;
   background-color: #e5f1ff; }
+
+/* Packery _ Fenix */
+/* clearfix */
+#fx-ana-result-container:after {
+  content: ' ';
+  display: block;
+  clear: both; }
+
+.fx-analysis-item,
+.grid-sizer {
+  width: 50%;
+  height: 450px; }
+
+.fx-analysis-item .fx-widget .tab-content {
+  height: 350px;
+  overflow-y: auto;
+  overflow-x: hidden; }
 
 /* Leaflet */
 /* Fenix Leaflet Import */

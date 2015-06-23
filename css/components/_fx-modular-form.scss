@@ -67,8 +67,15 @@
   height: 100px;
 }
 
+div[data-module]{
+  .fx-catalog-modular-form-content{
+    height: 173px;
+  }
+}
+
 div[data-module="region"]{
   .fx-catalog-modular-form-content{
     height: 263px;
   }
 }
+

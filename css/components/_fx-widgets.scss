@@ -1,41 +1,115 @@
 /* Fenix - Widgets Component */
 
 .fx-widget{
+
+  &.loading{
+
+  }
   background-color: white;
-  height: 100%;
   padding: 5px 10px 10px 10px;
   @include fx-border-radius($fx-border-radius);
   border: 1px solid $fenix-hr;
   border-bottom: 3px solid  $fenix-hr;
   position: relative;
 
-  .nav-tabs > li > a:hover, .nav-tabs > li > a:focus, .nav-tabs > li > a:active{
-    background-color: transparent;
-    color: $fx-cool-blue;
-    border-color: transparent;
-  }
 
-  .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
-    background-color: white;
-    color: $fx-cool-blue;
-    border-left-color: $fenix-hr;
-    border-top-color: $fenix-hr;
-    border-right-color: $fenix-hr;
-    border-bottom-color: white;
-  }
+  .nav-tabs {
 
+    >li{
 
-  .nav-tabs{
-    border-bottom: transparent;
-    li {
-      a{
+      position: relative;
+
+      >a{
+        padding:3px 3px 6px 3px;
+        border-color: transparent;
         cursor: pointer;
         color: $fenix-text;
+
+
+        &:hover, &:active, &:focus, &:visited{
+          border-color: transparent;
+
+          background-color: transparent;
+          color: $fx-cool-blue;
+        }
+
+
+
+
       }
+
+
+
     }
+
+
+    >li.active{
+
+      >a{
+
+        &:hover, &:active, &:focus, &:visited{
+          border-color: transparent;
+          background-color: transparent;
+        }
+
+      color: $fx-cool-blue;
+
+
+      }
+
+      &:before{
+        content: '';
+        width: 100%;
+        height: 3px;
+        background-color: $fx-cool-blue;
+        position: absolute;
+        bottom:-7px;
+      }
+
+
+
+    }
+
+
+
+
   }
 
+
+
+
+
+
 }
+
+
+.fx-dataset-details-container{
+  position: absolute;
+  top: 0;
+  right:10px;
+  background-color: white;
+  height: 35px;
+  width: calc(100% - 59px);
+  @include fx-border-radius($fx-border-radius);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid $fenix-hr;
+  padding: 3px 10px;
+
+
+  .fx-dataset-details{
+    width: 100%;
+    display:inline-block;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size:11px;
+    color: $fx-secondary-color;
+  }
+
+
+}
+
+
 
 .fx-widget:before{
   content: "";
@@ -53,13 +127,15 @@
   height: 350px;
 }
 
-.fx-widget .nav > li > a {padding:3px 3px 6px 3px;}
+
 
 .fx-icon{
   width: 35px;
   height: 35px;
   display: inline-block;
 }
+
+
 .fx-handle{
   cursor: move;
   position: absolute;
@@ -79,6 +155,8 @@
     top:3px;
     left:12px;
   }
+
+
 
 }
 

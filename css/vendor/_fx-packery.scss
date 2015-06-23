@@ -1,0 +1,30 @@
+/* Packery _ Fenix */
+
+/* clearfix */
+#fx-ana-result-container:after {
+  content: ' ';
+  display: block;
+  clear: both;
+}
+
+.fx-analysis-item,
+.grid-sizer {
+  width: 50%;
+  height: 450px;
+}
+
+.fx-analysis-item {
+  //height: 80px;
+  //float: left;
+  .fx-widget{
+    .tab-content{
+      height: 350px;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+  }
+
+}
+
+
+
