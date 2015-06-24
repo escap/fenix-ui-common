@@ -6754,8 +6754,7 @@ input[type="checkbox"]:checked + label {
   display: block;
   clear: both; }
 
-.fx-analysis-item,
-.grid-sizer {
+.fx-analysis-item {
   width: 50%;
   height: 450px; }
 
@@ -6763,6 +6762,9 @@ input[type="checkbox"]:checked + label {
   height: 350px;
   overflow-y: auto;
   overflow-x: hidden; }
+
+.grid-sizer {
+  width: 50%; }
 
 /* Leaflet */
 /* Fenix Leaflet Import */
