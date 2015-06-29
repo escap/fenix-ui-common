@@ -6177,9 +6177,6 @@ input[type="checkbox"]:checked + label {
 .widget-grid-container {
   padding: 8px 10px; }
 
-.fx-analysis-item {
-  padding: 22px 10px 10px 10px; }
-
 .tab-content {
   padding-top: 10px; }
 
@@ -6762,7 +6759,10 @@ input[type="checkbox"]:checked + label {
 
 .fx-analysis-item {
   width: 50%;
-  height: 450px; }
+  height: 450px;
+  padding: 22px 10px 10px 10px;
+  z-index: 200;
+  /* Veify correct z.index */ }
 
 .fx-analysis-item .fx-widget .tab-content {
   height: 350px;

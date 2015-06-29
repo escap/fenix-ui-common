@@ -10,6 +10,8 @@
 .fx-analysis-item {
   width: 50%;
   height: 450px;
+  padding: 22px 10px 10px 10px;
+  z-index: 200; /* Veify correct z.index */
 }
 
 .fx-analysis-item {
