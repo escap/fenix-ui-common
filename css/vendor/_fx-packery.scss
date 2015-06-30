@@ -12,6 +12,9 @@
   height: 450px;
   padding: 22px 10px 10px 10px;
   z-index: 200; /* Veify correct z.index */
+  &.fit {
+    width: 100%;
+  }
 }
 
 .fx-analysis-item {

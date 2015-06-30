@@ -6763,6 +6763,8 @@ input[type="checkbox"]:checked + label {
   padding: 22px 10px 10px 10px;
   z-index: 200;
   /* Veify correct z.index */ }
+  .fx-analysis-item.fit {
+    width: 100%; }
 
 .fx-analysis-item .fx-widget .tab-content {
   height: 350px;
