@@ -124,8 +124,7 @@ define(['jquery'], function ($) {
     wdsClient.prototype.crud = function(http_method, config) {
         try {
             this.isValidConfiguration(config);
-            
-            if (typeof config.payload.queryVars !== 'undefined' && 
+            if (typeof config.payload.queryVars !== 'undefined' &&
                 config.payload.queryVars !== null &&
                 $.isPlainObject(config.payload.queryVars) ) {
                 config.payload.query = _template(config.payload.query, config.payload.queryVars);
@@ -150,11 +149,12 @@ define(['jquery'], function ($) {
     };
 
     wdsClient.prototype.isValidConfiguration = function(config) {
+
         if (config.payload == undefined || config.payload == null)
-            throw 'Missing parameter "payload" in the configuration object.';
+            throw new Error('Missing parameter "payload" in the configuration object.');
         if (config.datasource == undefined || config.datasource == null) {
             if (this.opts.datasource == undefined || this.opts.datasource == null)
-                throw 'Missing parameter "datasource" in the default configuration and in the configuration object.';
+                throw new Error('Missing parameter "datasource" in the default configuration and in the configuration object.');
         }
     };
 

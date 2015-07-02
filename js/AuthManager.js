@@ -1,8 +1,8 @@
 define([
     'jquery',
     'underscore',
-    'text!config/auth_users.json',
-    'text!../html/auth_modal.html',
+    'text!fx-common/config/auth_users',
+    'text!fx-common/html/auth_modal.html',
     'bootstrap',
     'amplify'
 ], function ($, _, AuthUsers, template) {
