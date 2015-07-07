@@ -5873,6 +5873,38 @@ input[type="checkbox"]:checked + label {
     display: inline;
     margin-right: 7px; }
 
+/* Fenix Section Switcher */
+.fx-section-switcher {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0; }
+  .fx-section-switcher > li {
+    margin-bottom: 10px;
+    display: inline-block; }
+    .fx-section-switcher > li > a {
+      padding: 0 10px;
+      color: #666666;
+      font-weight: 500;
+      font-size: 12px;
+      text-transform: uppercase;
+      position: relative; }
+      .fx-section-switcher > li > a:first-child {
+        padding-left: 0; }
+      .fx-section-switcher > li > a:hover, .fx-section-switcher > li > a:active, .fx-section-switcher > li > a:focus {
+        text-decoration: none; }
+    .fx-section-switcher > li.active > a:before {
+      content: '';
+      position: absolute;
+      width: calc(100% - 20px);
+      height: 2px;
+      background-color: #0076ff;
+      left: 10px;
+      bottom: -2px;
+      pointer-events: none; }
+    .fx-section-switcher > li.active > a:first-child:before {
+      left: 0;
+      width: calc(100% - 10px); }
+
 /* Fenix - Top Menu Component */
 .navbar ul {
   list-style: outside none none;
