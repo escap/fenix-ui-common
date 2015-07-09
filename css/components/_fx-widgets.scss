@@ -3,9 +3,45 @@
 .fx-visualization-box{
   min-height: 450px;
   padding: 22px 10px 10px 10px;
+
+  [data-control="remove"]{
+    position: relative;
+    top: -18px;
+    right: -5px;
+    color: $fenix-text;
+    cursor: pointer;
+
+    &:hover, &:active, &:focus{
+      text-decoration: none;
+      color: $fx-cool-blue;
+    }
+
+    span.fx-widget-icons{
+      font-size: 16px;
+    }
+
+  }
+
+
+}
+
+
+.fx-olap-holder * {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
 }
 
 .fx-widget{
+
+
+
+  [data-role="pivot-container"] *{
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+  }
+
 
   &.loading{
 
