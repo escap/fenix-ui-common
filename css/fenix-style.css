@@ -5359,29 +5359,31 @@ fieldset {
   fieldset .fx-fieldset-subtitle label {
     font-size: 12px; }
 
-/* Fenix - Bootstrap fixed Height */
-/*The Markup
-You have to add the class .row-same-height inside the row, and also add .col-xs-height to the columns.
-<div class="row">
-    <div class="row-same-height">
-        <div class="col-xs-6 col-xs-height"></div>
-        <div class="col-xs-3 col-xs-height col-top"></div>
-        <div class="col-xs-2 col-xs-height col-middle"></div>
-        <div class="col-xs-1 col-xs-height col-bottom"></div>
-    </div>
-</div>
-If you want to restrict the effect to a certain media query, just use .col-sm-height or .col-md-height or .col-lg-height. You can also use different column sizes on each media query.
-<div class="row">
-    <div class="row-same-height">
-        <div class="col-xs-12 col-sm-6 col-sm-height"></div>
-        <div class="col-xs-6 col-sm-3 col-sm-height col-top"></div>
-        <div class="col-xs-6 col-sm-2 col-sm-height col-middle"></div>
-        <div class="col-xs-6 col-sm-1 col-sm-height col-bottom"></div>
-    </div>
-</div>
-You choose the aligment of each column by using the classes .col-top or .col-middle or .col-bottom.
-*/
-/* vertical alignment styles */
+.inside-full-height {
+  /*
+  // if you want to give content full height give him height: 100%;
+  // with content full height you can't apply margins to the content
+  // content full height does not work in ie http://stackoverflow.com/questions/27384433/ie-display-table-cell-child-ignores-height-100
+  */
+  height: 100%;
+  margin-top: 0;
+  margin-bottom: 0; }
+
+.content {
+  padding: 12px 3px; }
+
+/* columns of same height styles */
+.row-height {
+  display: table;
+  table-layout: fixed;
+  height: 100%;
+  width: 100%; }
+
+.col-height {
+  display: table-cell;
+  float: none;
+  height: 100%; }
+
 .col-top {
   vertical-align: top; }
 
@@ -5391,36 +5393,86 @@ You choose the aligment of each column by using the classes .col-top or .col-mid
 .col-bottom {
   vertical-align: bottom; }
 
-/* columns of same height styles */
-.row-full-height {
-  height: 100%; }
+@media (min-width: 480px) {
+  .row-xs-height {
+    display: table;
+    table-layout: fixed;
+    height: 100%;
+    width: 100%; }
 
-.col-full-height {
-  height: 100%;
-  vertical-align: middle; }
+  .col-xs-height {
+    display: table-cell;
+    float: none;
+    height: 100%; }
 
-.row-same-height {
-  display: table;
-  width: 100%;
-  /* fix overflow */
-  table-layout: fixed; }
+  .col-xs-top {
+    vertical-align: top; }
 
-.col-xs-height {
-  display: table-cell;
-  float: none !important; }
+  .col-xs-middle {
+    vertical-align: middle; }
 
+  .col-xs-bottom {
+    vertical-align: bottom; } }
 @media (min-width: 768px) {
+  .row-sm-height {
+    display: table;
+    table-layout: fixed;
+    height: 100%;
+    width: 100%; }
+
   .col-sm-height {
     display: table-cell;
-    float: none !important; } }
+    float: none;
+    height: 100%; }
+
+  .col-sm-top {
+    vertical-align: top; }
+
+  .col-sm-middle {
+    vertical-align: middle; }
+
+  .col-sm-bottom {
+    vertical-align: bottom; } }
 @media (min-width: 992px) {
+  .row-md-height {
+    display: table;
+    table-layout: fixed;
+    height: 100%;
+    width: 100%; }
+
   .col-md-height {
     display: table-cell;
-    float: none !important; } }
+    float: none;
+    height: 100%; }
+
+  .col-md-top {
+    vertical-align: top; }
+
+  .col-md-middle {
+    vertical-align: middle; }
+
+  .col-md-bottom {
+    vertical-align: bottom; } }
 @media (min-width: 1200px) {
+  .row-lg-height {
+    display: table;
+    table-layout: fixed;
+    height: 100%;
+    width: 100%; }
+
   .col-lg-height {
     display: table-cell;
-    float: none !important; } }
+    float: none;
+    height: 100%; }
+
+  .col-lg-top {
+    vertical-align: top; }
+
+  .col-lg-middle {
+    vertical-align: middle; }
+
+  .col-lg-bottom {
+    vertical-align: bottom; } }
 /* Fenix - Inputs Component */
 /* remove x icon in IE 10+ */
 input[type=text]::-ms-clear {
