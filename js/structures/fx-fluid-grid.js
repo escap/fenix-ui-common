@@ -62,9 +62,13 @@ define([
         // add and lay out newly appended elements
         this.pckry.appended(item);
 
-        var draggie = new Draggabilly(item, this.o.drag);
-        // bind Draggabilly events to Packery
-        this.pckry.bindDraggabillyEvents(draggie);
+        if (this.o.drag) {
+
+            var draggie = new Draggabilly(item, this.o.drag);
+            // bind Draggabilly events to Packery
+            this.pckry.bindDraggabillyEvents(draggie);
+        }
+
 
         this.pckry.layout();
 
