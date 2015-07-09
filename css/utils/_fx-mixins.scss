@@ -349,7 +349,7 @@
 @mixin fx-small-icons($locX:0,$locY:0){
   height: 15px;
   width: 15px;
-  background: url("#{$fx-ui-common}/css/img/fenix-catalog-sprite-small.svg") no-repeat $locX $locY;
+  background: url("#{$fx-ui-common}css/img/fenix-catalog-sprite-small.svg") no-repeat $locX $locY;
   background-size: 150px 30px;
 }
 
