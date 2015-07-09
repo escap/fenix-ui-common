@@ -6159,7 +6159,8 @@ input[type="checkbox"]:checked + label {
 
 /* Fenix - Widgets Component */
 .fx-visualization-box {
-  height: 450px; }
+  min-height: 450px;
+  padding: 22px 10px 10px 10px; }
 
 .fx-widget {
   background-color: white;
