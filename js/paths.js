@@ -13,8 +13,8 @@ define(function () {
             'fx-common/config/auth_users' : '../config/auth_users.json',
 
             // third party libs
-            jquery: "//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min",
-            amplify: "//fenixapps.fao.org/repository/js/amplify/1.1.2/amplify.min",
+            jquery:  "//fenixrepo.fao.org/cdn/js/jquery/2.1.1/jquery.min",
+            amplify: "//fenixrepo.fao.org/cdn/js/amplify/1.1.2/amplify.min",
             faostat_commons : "FAOSTATCommons"
         },
 
