@@ -26,6 +26,7 @@ define(['jquery'], function ($) {
         this.opts = $.extend({
             serviceUrl: defaultOpts.serviceUrl,
             datasource: defaultOpts.datasource,
+            collection: null,
             wdsUrl: defaultOpts.wdsUrl,
             wdsSchemaUrl: defaultOpts.wdsSchemaUrl,
             wds_blacklist: ['method', 'endpoint'],
@@ -136,7 +137,7 @@ define(['jquery'], function ($) {
                 data: {
                     payload: JSON.stringify(config.payload),
                     datasource: (typeof config.datasource !== 'undefined' && config.datasource !== null) ? config.datasource : this.opts.datasource,
-                    collection: config.collection,
+                    collection: (typeof config.collection !== 'undefined' && config.collection !== null) ? config.collection : this.opts.collection,
                     outputType: (typeof config.outputType !== 'undefined' && config.outputType !== null) ? config.outputType : this.opts.outputType
                 },
                 success: config.success,
