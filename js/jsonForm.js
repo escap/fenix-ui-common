@@ -51,7 +51,8 @@ define([
 			},
 			//ballbacks
 			onChange: $.noop,
-			onSubmit: $.noop
+			onSubmit: $.noop,
+			onReset: $.noop
 		});
 
 		if(!_.isUndefined(opts.editable))
@@ -64,6 +65,8 @@ define([
 			});
 
 		self.target.html( tmplJsonForm(self.opts.tmpl) );
+
+		self.$form = self.target.find('form');
 
 		self.editor = new JSONEditor(self.target.find('.form-wrapper-content')[0], self.opts);
 
@@ -79,17 +82,32 @@ define([
 		if(!_.isEmpty(self.opts.values))
 			self.editor.setValue(self.opts.values);
 
-
 		self.target.find('.form-wrapper-submit').on('click', function(e) {
 			e.preventDefault();
 			self.opts.onChange.call(self, self.editor.getValue() );
 			self.opts.onSubmit.call(self, self.editor.getValue() );
 		});
 
-		return self;
+		self.target.find('.form-wrapper-reset').on('click', function(e) {
+			e.preventDefault();
+			
+			self.reset();
+
+			self.opts.onChange.call(self, self.editor.getValue() );
+			self.opts.onReset.call(self, self.editor.getValue() );
+		});
 	};
 
-	return function (target, schemaUrl, opts) {
-		return new jsonForm(target, schemaUrl, opts);
-	}
+
+	jsonForm.prototype.reset = function() {
+		
+		this.$form[0].reset();
+
+		this.editor.root.refreshValue();
+	};
+
+
+	//TODO add function to reset form and json-editor
+
+	return jsonForm;
 });
