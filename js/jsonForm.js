@@ -11,7 +11,7 @@ USAGE:
 define([
 	'require','jquery','underscore','handlebars','jsoneditor',
 	//'fmdTheme',
-	'text!html/jsonForm.html'
+	'text!../html/jsonForm.html'
 ], function (require, $, _, Handlebars, JSONEditor, 
 	//FMDTheme,
 	jsonFormHtml) {
