@@ -1,0 +1,26 @@
+<style>
+    .bar {
+        height: 18px;
+        background: green;
+    }
+</style>
+
+<button id='fx-uploader-submit' class="btn btn-primary" disabled>
+    <i class="glyphicon glyphicon-upload"></i>
+    <span>Start upload</span>
+</button>
+
+<button id='fx-uploader-delete' class="btn btn-primary" disabled>
+    <i class="glyphicon glyphicon-trash"></i>
+    <span>Delete File</span>
+</button>
+
+
+<div id="progress">
+    <div class="bar" style="width: 0%;"></div>
+</div>
+
+<div id="fx-uploader"></div>
+
+<input id="fx-uploader-input" type="file" name="files[]"  accept=".csv" >
+
