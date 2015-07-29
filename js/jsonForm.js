@@ -5,6 +5,7 @@ USAGE:
 
 	//new dom element
 	var form$ = $('<form>').prependTo('body');
+	
 	jsonForm(form$, 'json/schema.contact.json');
 
 */
@@ -26,11 +27,10 @@ define([
 
 		self.target = (target instanceof jQuery) ? target : $(target);
 
-
 		self.opts = _.defaults(opts, {
 			template: 'handlebars',
-			theme: 'bootstrap3',		
 			iconlib: 'fontawesome4',
+			theme: 'bootstrap3',
 			//TODO languages using module nls/jsoneditor_errors.js
 
 			ajax: true,
@@ -70,7 +70,7 @@ define([
 
 		self.editor = new JSONEditor(self.target.find('.form-wrapper-content')[0], self.opts);
 
-		if(self.opts.disabled.length>0)
+		if(!_.isEmpty(self.opts.disabled))
 			_.each(self.opts.disabled, function(key) {
 				self.editor.getEditor('root.'+key).disable();
 			});
