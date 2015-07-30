@@ -23,6 +23,12 @@ define(function () {
             'jquery.fileupload' : '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload',
             'jquery.fileupload-ui' : '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-ui',
             'jquery.iframe-transport' : '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.iframe-transport',
+            'jquery.fileupload-image' : '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-image',
+            'jquery.fileupload-audio' : '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-audio',
+            'jquery.fileupload-video' : '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-video',
+            'jquery.fileupload-validate' : '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-validate',
+            'jquery.fileupload-process' : '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-process'
+
         },
 
         shim: {
@@ -30,8 +36,8 @@ define(function () {
                 "deps": ["jquery"]
             },
             'jquery.fileupload': {
-                deps: ["jquery", "jquery.ui.widget"]
-            },
+                deps: ["jquery", "jquery.ui.widget" /*, 'jquery.fileupload-ui', 'jquery.iframe-transport'*/]
+            }
         }
     };
 
