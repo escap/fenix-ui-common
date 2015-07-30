@@ -15,7 +15,7 @@ define([
             upload_accept: '.csv',
             server_url: 'http://fenixservices.fao.org/upload',
             context: "c",
-            autoClose: true,
+            autoClose: false,
             chunkSize: 100000,
             maxRetry: 100,
             retryTimeout: 500
@@ -310,6 +310,35 @@ define([
 
     };
 
+    /**
+     * Close the transferred file
+     * @return {Promise}
+     */
+    FxUploader.prototype._closeFile = function () {
+
+        return Q($.ajax({
+            type: "POST",
+            url: this.o.server_url + '/file/closure/' + this.o.context + '/' + this.current.md5 + '?process=false',
+            contentType: "application/json"
+        }));
+
+    };
+
+    /**
+     * Start post-process
+     * @return {Promise}
+     */
+    FxUploader.prototype._startPostProcess = function () {
+
+        return Q($.ajax({
+            type: "POST",
+            url: this.o.server_url + '/file/process/' + this.o.context + '/' + this.current.md5 ,
+            contentType: "application/json"
+        }));
+
+    };
+
+
     FxUploader.prototype._renderExtendedProgress = function (data) {
         return this._formatBitrate(data.bitrate) + ' | ' +
             this._formatTime(
@@ -386,7 +415,22 @@ define([
 
         console.log("Trans complete")
 
+        var self = this;
+
         this.$submit.prop('disabled', true);
+
+        this._closeFile().then(function () {
+            console.log("File Closed")
+            return self._startPostProcess();
+
+        }, function () {
+
+            throw new Error("Impossible to close the file");
+        }).then(function () {
+            console.log("Post process completed")
+        }, function () {
+            throw new Error("Impossible to complete the postprocess");
+        })
 
     };
 
