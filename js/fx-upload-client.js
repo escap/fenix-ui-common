@@ -4,10 +4,11 @@ define([
     'underscore',
     'handlebars',
     'text!fx-common/html/fenix-uploader-template.hbs',
+    'text!fx-common/html/fenix-uploader-item.hbs',
     'q',
     'SparkMD5',
     'jquery.fileupload'
-], function ($, _, Handlebars, uploadTemplate, Q, SparkMD5) {
+], function ($, _, Handlebars, uploadTemplate, itemTemplate, Q, SparkMD5) {
 
     'use strict';
 
@@ -18,7 +19,8 @@ define([
             autoClose: false,
             chunkSize: 100000,
             maxRetry: 100,
-            retryTimeout: 500
+            retryTimeout: 500,
+            callTimeout: 500
         },
         s = {
             UPLOADER: '#fx-uploader',
@@ -26,7 +28,25 @@ define([
             SUBMIT: '#fx-uploader-submit',
             DELETE: '#fx-uploader-delete',
             PROGRESS_BAR: '#progress .bar',
-            EXTENDED_INFO: '#fx-uploader-extended-info'
+            EXTENDED_INFO: '#fx-uploader-extended-info',
+            INPUT_OPENER: '#fx-uploader-input-opener',
+            LIST: '#fx-uploader-list',
+            ITEM_REMOVE: '.fx-uploader-item-remove',
+            ITEM_LIST: '.fx-uploader-item-list',
+            ITEM_STEP_ICON: 'i',
+            ITEM_TICKER : '.fx-uploader-item-list-container',
+            STEP_INFO : '[data-role="info"]'
+        }, step = {
+            PRE_PROCESS: 'pre_process',
+            UPLOAD: 'upload',
+            CLOSE: 'close',
+            POST_PROCESS: 'post_process',
+            METADATA: 'metadata'
+        }, status = {
+            WAITING: 'waiting',
+            DOING: 'doing',
+            DONE: 'done',
+            ERROR: 'error'
         };
 
     /**
@@ -61,6 +81,8 @@ define([
      */
     FxUploader.prototype._initVariables = function () {
 
+        this.$inputOpener = this.$el.find(s.INPUT_OPENER);
+
         this.$input = this.$el.find(s.INPUT);
 
         this.$submit = this.$el.find(s.SUBMIT);
@@ -71,7 +93,8 @@ define([
 
         this.$progressBar = this.$el.find(s.PROGRESS_BAR);
 
-        this.$extendedInfo = this.$el.find(s.EXTENDED_INFO);
+        this.$list = this.$el.find(s.LIST);
+
 
     };
 
@@ -79,11 +102,15 @@ define([
      * Init internal components
      * @return {undefined}
      */
-    FxUploader.prototype._initUploader = function () {
+    FxUploader.prototype._initUploader = function ( item ) {
+
+        console.log(this.o.server_url + '/file/chunk/' + this.o.context + '/' + item.details.md5)
 
         var self = this;
 
-        this.$uploader.fileupload({
+        item.template.fileupload({
+
+            url: this.o.server_url + '/file/chunk/' + this.o.context + '/' + item.details.md5,
 
             maxChunkSize: this.o.chunkSize,
 
@@ -95,11 +122,11 @@ define([
 
             sequentialUploads: true,
 
-            done: _.bind(this._onTransferComplete, this),
+            done: _.bind(this._onTransferComplete, this, item),
 
-            progressall: _.bind(this._onProgressAll, this),
+            //progressall: _.bind(this._onProgressAll, this, item),
 
-            progress: _.bind(this._onProgress, this),
+            progress: _.bind(this._onUploadProgress, this, item),
 
             /*
              maxRetries: this.o.maxRetries,
@@ -169,8 +196,6 @@ define([
 
         this._initVariables();
 
-        this._initUploader();
-
         this._bindEventListeners();
 
         return this;
@@ -195,36 +220,43 @@ define([
      * to transfer a file
      * @return {undefined}
      */
-    FxUploader.prototype._uploadFile = function () {
+    FxUploader.prototype._uploadFile = function (item) {
 
         var self = this;
 
-        this._createCurrentFileInfo();
+        this._startItemStep(step.PRE_PROCESS, item);
 
-        this._createFileMetadata()
+        this._setStepStatus(status.DOING, item);
+
+        this._setItemStatus(status.DOING, item);
+
+        this.createFileMD5(item.file)
+            .then(function (md5) {
+                self._setStepStatus(status.DONE, item);
+
+                if (!item.details) {
+                    item.details = { };
+                }
+
+                item.details.md5 = md5;
+
+                return self._createFileMetadata(item);
+
+            }, function () {
+                self._setStepStatus(status.ERROR, item);
+            })
             .then(function () {
 
                 console.log("File Metadata: created.");
 
-                self.$delete.prop('disabled', false);
+                self._setStepStatus(status.DONE, item);
 
-                return self._transferFile();
+                return self._transferFile(item);
 
+            },  function () {
+                self._setStepStatus(status.ERROR, item);
             });
-    };
 
-    /**
-     * Create current file info as 'context' and 'autoClose'.
-     * MD5 is already calculated.
-     * @return {Object} The current file info
-     */
-    FxUploader.prototype._createCurrentFileInfo = function () {
-
-        this.current.context = this.o.context;
-
-        this.current.autoClose = this.o.autoClose;
-
-        return this.current;
     };
 
     /**
@@ -245,16 +277,20 @@ define([
      * Create file metadata
      * @return {Promise}
      */
-    FxUploader.prototype._createFileMetadata = function () {
+    FxUploader.prototype._createFileMetadata = function (item) {
+
+        this._startItemStep(step.METADATA, item);
+
+        this._setStepStatus(status.DOING, item);
 
         return Q($.ajax({
             type: "POST",
             url: this.o.server_url + "/metadata/file",
             contentType: "application/json",
             data: JSON.stringify({
-                "context": this.current.context,
-                "md5": this.current.md5,
-                "autoClose": this.current.autoClose
+                "context": this.o.context,
+                "md5": item.details.md5,
+                "autoClose": this.o.autoClose
             })
         }));
 
@@ -278,13 +314,15 @@ define([
      * Send sequentially file's chunks and update the progress bar
      * @return {undefined}
      */
-    FxUploader.prototype._transferFile = function () {
+    FxUploader.prototype._transferFile = function (item) {
 
-        this.$uploader.fileupload('option', {
-            url: this.o.server_url + '/file/chunk/' + this.o.context + '/' + this.current.md5
-        });
+        this._startItemStep(step.UPLOAD, item);
 
-        this.$uploader.fileupload('add', {files: this.current.files});
+        this._setStepStatus(status.DOING, item);
+
+        this._initUploader(item);
+
+        item.template.fileupload('add', {files: item.file});
     };
 
     /**
@@ -304,10 +342,9 @@ define([
      * Handler for progress Transfer graphical extended progress information
      * @return {undefined}
      */
-    FxUploader.prototype._onProgress = function (e, data) {
+    FxUploader.prototype._onUploadProgress = function (item, e, data ) {
 
-        this.$extendedInfo.html(this._renderExtendedProgress(data))
-
+        item.current.el.find(s.STEP_INFO).html(this._renderExtendedProgress(data))
     };
 
     /**
@@ -328,11 +365,15 @@ define([
      * Start post-process
      * @return {Promise}
      */
-    FxUploader.prototype._startPostProcess = function () {
+    FxUploader.prototype._startPostProcess = function (item) {
+
+        this._startItemStep(step.POST_PROCESS, item);
+
+        this._setStepStatus(status.DOING, item);
 
         return Q($.ajax({
             type: "POST",
-            url: this.o.server_url + '/file/process/' + this.o.context + '/' + this.current.md5 ,
+            url: this.o.server_url + '/file/process/' + this.o.context + '/' + item.details.md5,
             contentType: "application/json"
         }));
 
@@ -394,41 +435,51 @@ define([
         return (bytes / 1000).toFixed(2) + ' KB';
     };
 
-    FxUploader.prototype._formatFileInfo = function (file) {
-        if (typeof bytes !== 'number') {
-            return '';
-        }
-        if (bytes >= 1000000000) {
-            return (bytes / 1000000000).toFixed(2) + ' GB';
-        }
-        if (bytes >= 1000000) {
-            return (bytes / 1000000).toFixed(2) + ' MB';
-        }
-        return (bytes / 1000).toFixed(2) + ' KB';
+    FxUploader.prototype._getFileInfo = function (item) {
+
+        var model = {},
+            f = item.file;
+
+        model.name = f.name;
+        model.type = f.type || 'n/a';
+        model.size = this._formatFileSize(f.size) || 'n/a';
+        model.lastModifiedDate = f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a';
+
+        item.model = model;
+
     };
 
     /**
      * Handler for Transfer end
      * @return {undefined}
      */
-    FxUploader.prototype._onTransferComplete = function () {
+    FxUploader.prototype._onTransferComplete = function (item) {
+
+        this._setStepStatus(status.DONE, item);
 
         console.log("Trans complete")
 
         var self = this;
 
-        this.$submit.prop('disabled', true);
+        this._startItemStep(step.CLOSE, item);
+
+        this._setStepStatus(status.DOING, item);
 
         this._closeFile().then(function () {
             console.log("File Closed")
-            return self._startPostProcess();
+
+            self._setStepStatus(status.DONE, item);
+            return self._startPostProcess(item);
 
         }, function () {
-
+            self._setStepStatus(status.ERROR, item);
             throw new Error("Impossible to close the file");
         }).then(function () {
             console.log("Post process completed")
+            self._setStepStatus(status.DONE, item);
         }, function () {
+
+            self._setStepStatus(status.ERROR, item);
             throw new Error("Impossible to complete the postprocess");
         })
 
@@ -468,7 +519,7 @@ define([
             }
 
             function onLoad(e) {
-                console.log('read chunk nr', currentChunk + 1, 'of', chunks);
+                //console.log('read chunk nr', currentChunk + 1, 'of', chunks);
                 spark.append(e.target.result);                   // Append array buffer
                 currentChunk++;
 
@@ -477,7 +528,7 @@ define([
                 } else {
 
                     var hash = spark.end();
-                    console.log('finished loading');
+                    //console.log('finished loading');
                     console.info('computed hash', hash);  // Compute hash
                     resolve(hash);
                 }
@@ -488,7 +539,7 @@ define([
             }
 
             function onprogress(event) {
-                self._onProgressAll(event, {loaded: event.loaded, total: event.total})
+                //self._onProgressAll(event, {loaded: event.loaded, total: event.total})
             }
         });
 
@@ -502,12 +553,23 @@ define([
      */
     FxUploader.prototype._bindEventListeners = function () {
 
-        this.$input.on('change', _.bind(this._onInputChange, this));
+        this.$inputOpener.on('click', _.bind(this._onInputOpenerClick, this));
 
-        this.$submit.on('click', _.bind(this._onSubmit, this));
+        this.$input.on('change', _.bind(this._onInputChange, this));
 
         this.$delete.on('click', _.bind(this._onDelete, this))
 
+    };
+
+    /**
+     * Handler invoked on opener click.
+     * @return {undefined}
+     */
+    FxUploader.prototype._onInputOpenerClick = function (e) {
+
+        e.preventDefault();
+
+        this.$input.trigger('click');
     };
 
     /**
@@ -517,32 +579,136 @@ define([
      */
     FxUploader.prototype._onInputChange = function (e) {
 
-        var self = this,
-            f = e.target.files || [{name: this.value}];
+        var f = e.target.files || [{name: this.value}];
 
-        this.current.files = [];
-        this.current.files.push(f[0]);
-        this._formatFileInfo(f[0]);
+        this._addItem({
+            file: f[0],
+            steps: []
+        });
 
-        //reset current md5 file info
-        this.current.md5 = undefined;
-
-        this.$delete.prop('disabled', true);
-        this.createFileMD5()
-            .then(function (hash) {
-                self.current.md5 = hash;
-                self.$submit.prop('disabled', false);
-            });
     };
 
-    /**
-     * Handler invoked to start upload process.
-     * The file is already loaded and the MD5 hash already calculated.
-     * @return {undefined}
-     */
-    FxUploader.prototype._onSubmit = function () {
+    FxUploader.prototype._addItem = function (item) {
 
-        this._uploadFile();
+        this._injectItemTemplate(item);
+
+        this._bindItemEventListeners(item);
+
+        this._uploadFile(item);
+
+    };
+
+    FxUploader.prototype._injectItemTemplate = function (item) {
+
+        this._getFileInfo(item);
+
+        var template = Handlebars.compile(itemTemplate),
+            result = template({model: item.model});
+
+        item.template = $(result);
+        item.list = item.template.find(s.ITEM_LIST);
+
+        return this.$list.prepend(item.template);
+    };
+
+    FxUploader.prototype._bindItemEventListeners = function (item) {
+
+        var self = this;
+
+        item.buttons = {};
+        item.buttons.remove = item.template.find(s.ITEM_REMOVE);
+
+        item.buttons.remove.on('click', function () {
+            self._unbindItemEventListeners(item);
+            item.template.remove();
+        });
+
+
+    };
+
+    FxUploader.prototype._startItemStep = function (step, item) {
+
+        console.log('------------- start step ' + step)
+
+        if (!item.steps) {
+            item.steps = [];
+        }
+
+        var step = {
+            id: step,
+            el: item.list.find('[data-step=' + step + ']')
+        };
+
+        item.steps.push(step);
+        item.current = step;
+
+        this._scrollToStep(item);
+        this._setStepStatus(status.WAITING, item);
+
+    };
+
+    FxUploader.prototype._scrollToStep = function (item) {
+
+        var top = item.list.find("li").index(item.current.el) * item.current.el.height(),
+            string = '-' + top.toString() + 'px';
+
+        item.list.css({'top': string})
+
+    };
+
+    FxUploader.prototype._scrollToStep = function (item) {
+
+        var top = item.list.find("li").index(item.current.el) * item.current.el.height(),
+            string = '-' + top.toString() + 'px';
+
+        item.list.css({'top': string})
+
+    };
+
+    FxUploader.prototype._setStepStatus = function (stat, item) {
+
+        console.log('set status ' + stat)
+
+        var icon =  item.current.el.find(s.ITEM_STEP_ICON);
+
+        item.current.status = stat;
+
+        switch (item.current.status) {
+            case 'doing' :
+                icon.removeClass().addClass('fa fa-refresh fa-spin step-icon');
+                break;
+            case 'done' :
+                icon.removeClass().addClass('fa fa-check step-icon');
+                break;
+            case 'error' :
+                icon.removeClass().addClass('fa fa-times step-icon');
+                this._setItemStatus(status.ERROR, item);
+                break;
+            default :
+                icon.removeClass().addClass('fa fa-clock');
+        }
+
+    };
+
+    FxUploader.prototype._setItemStatus = function (stat, item) {
+
+        var ticker =  item.template.find(s.ITEM_TICKER);
+
+        ticker.attr('data-status', status[stat.toUpperCase()]);
+
+    };
+
+    FxUploader.prototype._unbindItemEventListeners = function (item) {
+
+        var btns = Object.keys(item.buttons);
+
+        for (var i = 0; i < btns.length; i++) {
+
+            if (btns.hasOwnProperty(btns[i])) {
+                btns[i].off();
+            }
+        }
+
     };
 
     /**

@@ -27,7 +27,8 @@ define(function () {
             'jquery.fileupload-audio' : '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-audio',
             'jquery.fileupload-video' : '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-video',
             'jquery.fileupload-validate' : '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-validate',
-            'jquery.fileupload-process' : '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-process'
+            'jquery.fileupload-process' : '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-process',
+            'jquery.scrollto' : 'http://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.0/jquery.scrollTo.min'
 
         },
 
@@ -37,6 +38,9 @@ define(function () {
             },
             'jquery.fileupload': {
                 deps: ["jquery", "jquery.ui.widget" /*, 'jquery.fileupload-ui', 'jquery.iframe-transport'*/]
+            },
+            'jquery.scrollto': {
+                deps: ["jquery"]
             }
         }
     };
