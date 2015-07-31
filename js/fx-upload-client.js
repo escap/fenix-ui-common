@@ -23,7 +23,8 @@ define([
             retryTimeout: 500,
             callTimeout: 500,
             debounceTimeout: 1500,
-            throttleTimeout: 2000
+            throttleTimeout: 2000,
+            pollingTimeout: 10000 //ms
         },
         s = {
             UPLOADER: '#fx-uploader',
@@ -209,7 +210,7 @@ define([
             })
             .then(function (metadata) {
 
-                console.log("Getting File Metadata: done.");
+                //console.log("Getting File Metadata: done.");
 
                 item.metadata = metadata;
 
@@ -260,18 +261,17 @@ define([
             this._startItemStep(step.CLOSE, item);
             this._setStepStatus(status.DONE, item);
 
-            this._startPostProcess(item).then(function () {
-                //console.log("Post process completed");
+            this._startPostProcess(item)
+                .then(function () {
+                    //console.log("Post process completed");
 
-                self._setStepStatus(status.DONE, item);
+                    self._monitorProcessStatus(item);
 
-                self._setItemStatus(status.DONE, item);
+                }, function () {
+                    self._setStepStatus(status.ERROR, item);
 
-            }, function () {
-                self._setStepStatus(status.ERROR, item);
-
-                throw new Error("Impossible to complete the postprocess");
-            });
+                    throw new Error("Impossible to complete the postprocess");
+                });
 
             return;
         }
@@ -281,6 +281,72 @@ define([
 
             this._transferFile(item);
         }
+    };
+
+    FxUploader.prototype._monitorProcessStatus = function (item) {
+
+        var self = this;
+
+        item.timer = window.setInterval(function () {
+
+            self._checkProcessStatus(item)
+                .then(function (flow) {
+
+                    var error;
+
+                    for (var i = 0; i < flow.length; i++) {
+                        if (typeof  flow[i].error === 'string') {
+                            error = flow[i];
+                            break;
+                        }
+                    }
+
+                    if (error) {
+
+                        clearInterval(item.timer);
+
+                        //print error
+                        item.current.el.find(s.STEP_INFO).html(error);
+
+                        self._setStepStatus(status.ERROR, item);
+                        return;
+                    }
+
+                    var completed = [];
+
+                    for (i = 0; i < flow.length; i++) {
+                        if (flow[i].completed === true) {
+                            completed.push(flow[i])
+                        }
+                    }
+
+                    if (completed.length === flow.length) {
+
+                        clearInterval(item.timer);
+
+                        self._setStepStatus(status.DONE, item);
+
+                        self._setItemStatus(status.DONE, item);
+
+                    }
+
+                });
+
+        }, this.o.pollingTimeout);
+    };
+
+    /**
+     * Get file metadata
+     * @return {Promise}
+     */
+    FxUploader.prototype._checkProcessStatus = function (item) {
+
+        return Q($.ajax({
+            type: "GET",
+            url: this.o.server_url + '/process/' + this.o.context + '/' + item.details.md5,
+            contentType: "application/json"
+        }));
+
     };
 
     /**
@@ -355,7 +421,7 @@ define([
      */
     FxUploader.prototype._onUploadProgress = function (item, e, data) {
 
-        item.current.el.find(s.STEP_INFO).html(this._renderExtendedProgress(data))
+        item.current.el.find(s.STEP_INFO).html(this._renderExtendedProgress(data));
     };
 
     /**
@@ -384,7 +450,7 @@ define([
 
         return Q($.ajax({
             type: "POST",
-            url: this.o.server_url + '/file/process/' + this.o.context + '/' + item.details.md5,
+            url: this.o.server_url + '/process/' + this.o.context + '/' + item.details.md5,
             contentType: "application/json"
         }));
 
@@ -483,9 +549,9 @@ define([
             self._setStepStatus(status.ERROR, item);
             throw new Error("Impossible to close the file");
         }).then(function () {
-            //console.log("Post process completed")
-            self._setStepStatus(status.DONE, item);
-            self._setItemStatus(status.DONE, item);
+
+            self._monitorProcessStatus(item);
+
         }, function () {
 
             self._setStepStatus(status.ERROR, item);
