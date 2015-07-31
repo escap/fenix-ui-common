@@ -15,12 +15,15 @@ define([
     var defaultOpts = {
             upload_accept: '.csv',
             server_url: 'http://fenixservices.fao.org/upload',
+            //server_url: 'http://168.202.28.32:8080/v1',
             context: "c",
             autoClose: false,
             chunkSize: 100000,
             maxRetry: 100,
             retryTimeout: 500,
-            callTimeout: 500
+            callTimeout: 500,
+            debounceTimeout: 1500,
+            throttleTimeout: 2000
         },
         s = {
             UPLOADER: '#fx-uploader',
@@ -34,15 +37,17 @@ define([
             ITEM_REMOVE: '.fx-uploader-item-remove',
             ITEM_LIST: '.fx-uploader-item-list',
             ITEM_STEP_ICON: 'i',
-            ITEM_TICKER : '.fx-uploader-item-list-container',
-            STEP_INFO : '[data-role="info"]'
-        }, step = {
+            ITEM_TICKER: '.fx-uploader-item-list-container',
+            STEP_INFO: '[data-role="info"]'
+        },
+        step = {
             PRE_PROCESS: 'pre_process',
             UPLOAD: 'upload',
             CLOSE: 'close',
             POST_PROCESS: 'post_process',
             METADATA: 'metadata'
-        }, status = {
+        },
+        status = {
             WAITING: 'waiting',
             DOING: 'doing',
             DONE: 'done',
@@ -91,32 +96,24 @@ define([
 
         this.$uploader = this.$el.find(s.UPLOADER);
 
-        this.$progressBar = this.$el.find(s.PROGRESS_BAR);
-
         this.$list = this.$el.find(s.LIST);
-
-
     };
 
     /**
      * Init internal components
      * @return {undefined}
      */
-    FxUploader.prototype._initUploader = function ( item ) {
-
-        console.log(this.o.server_url + '/file/chunk/' + this.o.context + '/' + item.details.md5)
+    FxUploader.prototype._initUploader = function (item) {
 
         var self = this;
 
-        item.template.fileupload({
+        item.jqXHR = item.template.fileupload({
 
             url: this.o.server_url + '/file/chunk/' + this.o.context + '/' + item.details.md5,
 
             maxChunkSize: this.o.chunkSize,
 
             multipart: false,
-
-            //autoUpload: false,
 
             singleFileUploads: true,
 
@@ -128,53 +125,18 @@ define([
 
             progress: _.bind(this._onUploadProgress, this, item),
 
-            /*
-             maxRetries: this.o.maxRetries,
+            add: function (e, data) {
 
-             retryTimeout: this.o.retryTimeout,
+                if (item.metadata) {
+                    data.uploadedBytes = item.metadata.status.currentSize;
+                }
 
-             add: function (e, data) {
+                $.blueimp.fileupload.prototype.options.add.call(this, e, data);
+            },
 
-             self._getFileMetadata().then(function (result) {
-             var file = result.file;
-             console.log(file)
-             data.uploadedBytes = file && file.size;
-             $.blueimp.fileupload.prototype.options.add.call(that, e, data);
-             });
-             },
-
-             fail: function (e, data) {
-
-             // jQuery Widget Factory uses "namespace-widgetname" since version 1.10.0:
-             var fu = $(this).data('blueimp-fileupload') || $(this).data('fileupload'),
-             retries = data.context.data('retries') || 0,
-             retry = function () {
-
-             self._getFileMetadata().then(function (result) {
-             var file = result.file;
-             data.uploadedBytes = file && file.size;
-             // clear the previous data:
-             data.data = null;
-             data.submit();
-             }, function () {
-             fu._trigger('fail', e, data);
-             });
-             };
-
-             if (data.errorThrown !== 'abort' &&
-             data.uploadedBytes < data.files[0].size &&
-             retries < fu.options.maxRetries) {
-             retries += 1;
-             data.context.data('retries', retries);
-             window.setTimeout(retry, retries * fu.options.retryTimeout);
-             return;
-             }
-             data.context.removeData('retries');
-             $.blueimp.fileupload.prototype.options.fail.call(this, e, data);
-             }
-             */
-
-
+            fail: function () {
+                self._setStepStatus(status.ERROR, item);
+            }
         });
 
     };
@@ -232,28 +194,28 @@ define([
 
         this.createFileMD5(item.file)
             .then(function (md5) {
-                self._setStepStatus(status.DONE, item);
 
                 if (!item.details) {
-                    item.details = { };
+                    item.details = {};
                 }
 
                 item.details.md5 = md5;
 
-                return self._createFileMetadata(item);
+                return self._getFileMetadata(item);
 
             }, function () {
+
                 self._setStepStatus(status.ERROR, item);
             })
-            .then(function () {
+            .then(function (metadata) {
 
-                console.log("File Metadata: created.");
+                console.log("Getting File Metadata: done.");
 
-                self._setStepStatus(status.DONE, item);
+                item.metadata = metadata;
 
-                return self._transferFile(item);
+                return self._checkFileStatus(item);
 
-            },  function () {
+            }, function () {
                 self._setStepStatus(status.ERROR, item);
             });
 
@@ -261,13 +223,75 @@ define([
 
     /**
      * Get file metadata
+     * @return {undefined}
+     */
+    FxUploader.prototype._checkFileStatus = function (item) {
+
+        this._setStepStatus(status.DONE, item);
+
+        var m = item.metadata,
+            self = this;
+
+        //No metadata
+        if (!m) {
+
+            this._createFileMetadata(item)
+                .then(function () {
+                    //console.log("File Metadata: created.");
+
+                    self._setStepStatus(status.DONE, item);
+
+                    return self._transferFile(item);
+                }, function () {
+                    self._setStepStatus(status.ERROR, item);
+                });
+
+            return;
+        }
+
+        this._startItemStep(step.METADATA, item);
+        this._setStepStatus(status.DONE, item);
+
+        //File totally uploaded, just start post-process
+        if (m.status.complete === true) {
+
+            this._startItemStep(step.UPLOAD, item);
+            this._setStepStatus(status.DONE, item);
+            this._startItemStep(step.CLOSE, item);
+            this._setStepStatus(status.DONE, item);
+
+            this._startPostProcess(item).then(function () {
+                //console.log("Post process completed");
+
+                self._setStepStatus(status.DONE, item);
+
+                self._setItemStatus(status.DONE, item);
+
+            }, function () {
+                self._setStepStatus(status.ERROR, item);
+
+                throw new Error("Impossible to complete the postprocess");
+            });
+
+            return;
+        }
+
+        //Metadata is present, file partially uploaded
+        if (m.status.currentSize) {
+
+            this._transferFile(item);
+        }
+    };
+
+    /**
+     * Get file metadata
      * @return {Promise}
      */
-    FxUploader.prototype._getFileMetadata = function () {
+    FxUploader.prototype._getFileMetadata = function (item) {
 
         return Q($.ajax({
             type: "GET",
-            url: this.o.server_url + '/metadata/file/' + this.o.context + '/' + this.current.md5,
+            url: this.o.server_url + '/metadata/file/' + this.o.context + '/' + item.details.md5,
             contentType: "application/json"
         }));
 
@@ -300,11 +324,11 @@ define([
      * Delete file metadata
      * @return {Promise}
      */
-    FxUploader.prototype._deleteFileMetadata = function () {
+    FxUploader.prototype._deleteFileMetadata = function (item) {
 
         return Q($.ajax({
             type: "DELETE",
-            url: this.o.server_url + '/file/' + this.o.context + '/' + this.current.md5,
+            url: this.o.server_url + '/file/' + this.o.context + '/' + item.details.md5,
             contentType: "application/json"
         }));
 
@@ -326,23 +350,10 @@ define([
     };
 
     /**
-     * Handler for global progress Transfer graphical feedback
-     * @return {Number} progress
-     */
-    FxUploader.prototype._onProgressAll = function (e, data) {
-
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-
-        this.$progressBar.css('width', progress + '%');
-
-        return progress;
-    };
-
-    /**
      * Handler for progress Transfer graphical extended progress information
      * @return {undefined}
      */
-    FxUploader.prototype._onUploadProgress = function (item, e, data ) {
+    FxUploader.prototype._onUploadProgress = function (item, e, data) {
 
         item.current.el.find(s.STEP_INFO).html(this._renderExtendedProgress(data))
     };
@@ -351,11 +362,11 @@ define([
      * Close the transferred file
      * @return {Promise}
      */
-    FxUploader.prototype._closeFile = function () {
+    FxUploader.prototype._closeFile = function (item) {
 
         return Q($.ajax({
             type: "POST",
-            url: this.o.server_url + '/file/closure/' + this.o.context + '/' + this.current.md5 + '?process=false',
+            url: this.o.server_url + '/file/closure/' + this.o.context + '/' + item.details.md5 + '?process=false',
             contentType: "application/json"
         }));
 
@@ -378,7 +389,6 @@ define([
         }));
 
     };
-
 
     FxUploader.prototype._renderExtendedProgress = function (data) {
         return this._formatBitrate(data.bitrate) + ' | ' +
@@ -457,16 +467,14 @@ define([
 
         this._setStepStatus(status.DONE, item);
 
-        console.log("Trans complete")
-
         var self = this;
 
         this._startItemStep(step.CLOSE, item);
 
         this._setStepStatus(status.DOING, item);
 
-        this._closeFile().then(function () {
-            console.log("File Closed")
+        this._closeFile(item).then(function () {
+            //console.log("File Closed")
 
             self._setStepStatus(status.DONE, item);
             return self._startPostProcess(item);
@@ -475,8 +483,9 @@ define([
             self._setStepStatus(status.ERROR, item);
             throw new Error("Impossible to close the file");
         }).then(function () {
-            console.log("Post process completed")
+            //console.log("Post process completed")
             self._setStepStatus(status.DONE, item);
+            self._setItemStatus(status.DONE, item);
         }, function () {
 
             self._setStepStatus(status.ERROR, item);
@@ -492,8 +501,7 @@ define([
      */
     FxUploader.prototype.createFileMD5 = function (f) {
 
-        var self = this,
-            blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
+        var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
             file = f || this.current.files[0],
             chunkSize = this.o.chunkSize,
             chunks = Math.ceil(file.size / chunkSize),
@@ -501,7 +509,7 @@ define([
             spark = new SparkMD5.ArrayBuffer(),
             fileReader = new FileReader();
 
-        return Q.Promise(function (resolve, reject, notify) {
+        return Q.Promise(function (resolve, reject) {
 
             fileReader.onload = onLoad;
 
@@ -529,7 +537,7 @@ define([
 
                     var hash = spark.end();
                     //console.log('finished loading');
-                    console.info('computed hash', hash);  // Compute hash
+                    //console.info('computed hash', hash);  // Compute hash
                     resolve(hash);
                 }
             }
@@ -553,11 +561,13 @@ define([
      */
     FxUploader.prototype._bindEventListeners = function () {
 
-        this.$inputOpener.on('click', _.bind(this._onInputOpenerClick, this));
+        var self = this;
+
+        this.$inputOpener.on('click', _.throttle(function (e) {
+            self._onInputOpenerClick(e);
+        }, this.o.throttleTimeout));
 
         this.$input.on('change', _.bind(this._onInputChange, this));
-
-        this.$delete.on('click', _.bind(this._onDelete, this))
 
     };
 
@@ -586,6 +596,7 @@ define([
             steps: []
         });
 
+        this.$input.replaceWith(this.$input = this.$input.clone(true));
     };
 
     FxUploader.prototype._addItem = function (item) {
@@ -619,16 +630,17 @@ define([
         item.buttons.remove = item.template.find(s.ITEM_REMOVE);
 
         item.buttons.remove.on('click', function () {
-            self._unbindItemEventListeners(item);
-            item.template.remove();
+
+            var r = confirm("Delete file?");
+            if (r == true) {
+                self._onDelete(item);
+            }
         });
-
-
     };
 
     FxUploader.prototype._startItemStep = function (step, item) {
 
-        console.log('------------- start step ' + step)
+        //console.log('------------- start step ' + step)
 
         if (!item.steps) {
             item.steps = [];
@@ -640,36 +652,59 @@ define([
         };
 
         item.steps.push(step);
+
         item.current = step;
 
-        this._scrollToStep(item);
+        /* Prepare animation */
+        if (!item.animations) {
+            item.animations = [];
+        }
+
+        item.animations.push({
+            step: step
+        });
+
+        this._animateTicker(item);
+
         this._setStepStatus(status.WAITING, item);
 
     };
 
-    FxUploader.prototype._scrollToStep = function (item) {
+    FxUploader.prototype._animateTicker = function (item) {
 
-        var top = item.list.find("li").index(item.current.el) * item.current.el.height(),
-            string = '-' + top.toString() + 'px';
+        if (!item.animations || item.animations.length === 0 || item.animated === true) {
+            return;
+        }
 
-        item.list.css({'top': string})
+        item.animated = true;
+
+        var animation = item.animations.shift();
+
+        this._scrollToStep(item, animation.step);
 
     };
 
-    FxUploader.prototype._scrollToStep = function (item) {
+    FxUploader.prototype._scrollToStep = function (item, step) {
 
-        var top = item.list.find("li").index(item.current.el) * item.current.el.height(),
+        var self = this,
+            step = _.findWhere(item.steps, {id: step.id}),
+            top = item.list.find("li").index(step.el) * step.el.height(),
             string = '-' + top.toString() + 'px';
 
-        item.list.css({'top': string})
+        item.list.css({'top': string});
+
+        window.setTimeout(function () {
+            item.animated = false;
+            self._animateTicker(item);
+        }, this.o.debounceTimeout);
 
     };
 
     FxUploader.prototype._setStepStatus = function (stat, item) {
 
-        console.log('set status ' + stat)
+        //console.log('set status ' + stat)
 
-        var icon =  item.current.el.find(s.ITEM_STEP_ICON);
+        var icon = item.current.el.find(s.ITEM_STEP_ICON);
 
         item.current.status = stat;
 
@@ -692,7 +727,7 @@ define([
 
     FxUploader.prototype._setItemStatus = function (stat, item) {
 
-        var ticker =  item.template.find(s.ITEM_TICKER);
+        var ticker = item.template.find(s.ITEM_TICKER);
 
         ticker.attr('data-status', status[stat.toUpperCase()]);
 
@@ -708,7 +743,6 @@ define([
                 btns[i].off();
             }
         }
-
     };
 
     /**
@@ -716,13 +750,24 @@ define([
      * The file is already loaded and the MD5 hash already calculated.
      * @return {undefined}
      */
-    FxUploader.prototype._onDelete = function () {
+    FxUploader.prototype._onDelete = function (item) {
 
         var self = this;
 
-        this._deleteFileMetadata().then(function () {
-            self.$delete.prop('disabled', true);
-        });
+        if (item.jqXHR && typeof item.jqXHR.abort === 'function') {
+            item.jqXHR.abort();
+        }
+
+        this._deleteFileMetadata(item)
+            .then(function () {
+
+                item.template.remove();
+                self._unbindItemEventListeners(item);
+
+            }, function () {
+                alert("Error on remove")
+            });
+
     };
 
     /**

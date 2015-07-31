@@ -72,6 +72,11 @@
       color: white;
     }
 
+    &[data-status="done"]{
+      background-color: green;
+      color: white;
+    }
+
     ul{
       position: relative;
       @include animate();
