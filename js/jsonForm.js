@@ -50,6 +50,7 @@ define([
 				reset: 'Cancel'
 			},
 			//ballbacks
+			onReady: $.noop,
 			onChange: $.noop,
 			onSubmit: $.noop,
 			onReset: $.noop
@@ -74,6 +75,10 @@ define([
 			_.each(self.opts.disabled, function(key) {
 				self.editor.getEditor('root.'+key).disable();
 			});
+
+		self.editor.on('ready', function() {
+			self.opts.onReady.call(self, self.editor);
+		});
 
 		self.editor.on('change', _.after(2, function(e) {
 			self.opts.onChange.call(self, self.editor.getValue() );
