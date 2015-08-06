@@ -156,6 +156,11 @@ define([
         $(this.o.container).find(this.o.s.COURTESY_MESSAGE).fadeOut(200);
     };
 
+    Fx_Fluid_Grid.prototype.destroy = function () {
+
+        this.pckry.destroy();
+    };
+
     return Fx_Fluid_Grid;
 
 });
