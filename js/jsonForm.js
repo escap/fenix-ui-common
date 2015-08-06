@@ -40,7 +40,8 @@ define([
 			disable_properties: true,
 			disable_array_reorder: true,
 
-			values: {},
+			//show_errors: true,
+
 			schema: _.isString(opts.schema) ? {$ref: require.toUrl(opts.schema)} : opts.schema,
 			disabled: [],
 
@@ -84,9 +85,6 @@ define([
 			self.opts.onChange.call(self, self.editor.getValue() );
 		}) );
 
-		if(!_.isEmpty(self.opts.values))
-			self.editor.setValue(self.opts.values);
-
 		self.target.find('.form-wrapper-submit').on('click', function(e) {
 			e.preventDefault();
 			self.opts.onChange.call(self, self.editor.getValue() );
@@ -108,7 +106,7 @@ define([
 		
 		this.$form[0].reset();
 
-		this.editor.root.refreshValue();
+		
 	};
 
 
