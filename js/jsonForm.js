@@ -12,7 +12,7 @@ USAGE:
 define([
 	'require','jquery','underscore','handlebars','jsoneditor',
 	//'fmdTheme',
-	'text!../html/jsonForm.html'
+	'text!fx-common/html/jsonForm.html'
 ], function (require, $, _, Handlebars, JSONEditor, 
 	//FMDTheme,
 	jsonFormHtml) {
@@ -41,6 +41,8 @@ define([
 			disable_array_reorder: true,
 
 			//show_errors: true,
+
+			values: {},
 
 			schema: _.isString(opts.schema) ? {$ref: require.toUrl(opts.schema)} : opts.schema,
 			disabled: [],
@@ -71,6 +73,11 @@ define([
 		self.$form = self.target.find('form');
 
 		self.editor = new JSONEditor(self.target.find('.form-wrapper-content')[0], self.opts);
+
+		self.emptyValues = self.editor.getValue();
+
+		if(!_.isEmpty(self.opts.values))
+			self.editor.setValue(self.opts.values);
 
 		if(!_.isEmpty(self.opts.disabled))
 			_.each(self.opts.disabled, function(key) {
@@ -105,8 +112,8 @@ define([
 	jsonForm.prototype.reset = function() {
 		
 		this.$form[0].reset();
+		this.editor.setValue( this.emptyValues );
 
-		
 	};
 
 
