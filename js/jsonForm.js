@@ -19,6 +19,18 @@ define([
 
 	var tmplJsonForm = Handlebars.compile(jsonFormHtml);
 
+
+	JSONEditor.defaults.editors.string = JSONEditor.defaults.editors.string.extend({
+		build: function() {
+			
+			this._super();
+
+		    if(this.options.disabled) {
+		      this.input.disabled = this.options.disabled;
+		    }
+		}
+	});
+
 	function jsonForm(target, opts) {
 
 		opts = opts || {};
@@ -41,10 +53,9 @@ define([
 			disable_array_reorder: true,
 
 			//show_errors: true,
-
+			schema: _.isString(opts.schema) ? {$ref: require.toUrl(opts.schema)} : opts.schema,
 			values: {},
 
-			schema: _.isString(opts.schema) ? {$ref: require.toUrl(opts.schema)} : opts.schema,
 			disabled: [],
 
 			tmpl: {
@@ -115,7 +126,6 @@ define([
 		this.editor.setValue( this.emptyValues );
 
 	};
-
 
 	//TODO add function to reset form and json-editor
 
