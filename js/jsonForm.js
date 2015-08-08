@@ -95,10 +95,11 @@ define([
 				self.editor.getEditor('root.'+key).disable();
 			});
 
-		self.editor.on('ready', function() {
+		self.editor.on('ready', function(e) {
 			self.opts.onReady.call(self, self.editor);
 		});
 
+		//TODO remove _.after(...)
 		self.editor.on('change', _.after(2, function(e) {
 			self.opts.onChange.call(self, self.editor.getValue() );
 		}) );
