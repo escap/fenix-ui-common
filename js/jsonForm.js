@@ -20,7 +20,7 @@ define([
 	var tmplJsonForm = Handlebars.compile(jsonFormHtml);
 
 	//PATCH json-editor template engine:
-	//window.Handlebars = Handlebars;
+	window.Handlebars = Handlebars;
 	//https://github.com/jdorn/json-editor/issues/494
 
 
