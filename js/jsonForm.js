@@ -29,9 +29,18 @@ define([
 			
 			this._super();
 
-		    if(this.options.disabled) {
-		      this.input.disabled = this.options.disabled;
-		    }
+			if(this.options.disabled)
+				this.disable();
+		}
+	});
+
+	JSONEditor.defaults.editors.object = JSONEditor.defaults.editors.object.extend({
+		build: function() {
+
+			this._super();
+
+			if(this.options.disabled)
+				this.disable();
 		}
 	});
 
@@ -59,8 +68,6 @@ define([
 			//show_errors: true,
 			schema: _.isString(opts.schema) ? {$ref: require.toUrl(opts.schema)} : opts.schema,
 			values: {},
-
-			//schemaDeps:
 
 			disabled: [],
 
