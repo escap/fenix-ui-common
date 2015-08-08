@@ -19,6 +19,9 @@ define([
 
 	var tmplJsonForm = Handlebars.compile(jsonFormHtml);
 
+	//PATCH json-editor template engine:
+	window.Handlebars = Handlebars;
+
 
 	JSONEditor.defaults.editors.string = JSONEditor.defaults.editors.string.extend({
 		build: function() {
@@ -55,6 +58,8 @@ define([
 			//show_errors: true,
 			schema: _.isString(opts.schema) ? {$ref: require.toUrl(opts.schema)} : opts.schema,
 			values: {},
+
+			//schemaDeps:
 
 			disabled: [],
 
