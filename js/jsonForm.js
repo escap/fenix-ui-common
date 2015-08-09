@@ -131,6 +131,10 @@ define([
 
 		if(!_.isEmpty(self.opts.disabled))
 			_.each(self.opts.disabled, function(key) {
+                console.log(key)
+                console.log(self)
+                console.log(self.editor)
+                console.log(self.editor.getEditor('root.'+key))
 				self.editor.getEditor('root.'+key).disable();
 			});
 
