@@ -32,6 +32,16 @@ define(['jquery','underscore','handlebars','amplify',
 		return this;
 	};
 
+	storeForm.prototype.removeSection = function(id) {
+		
+		if(this.storeObj.hasOwnProperty(id))
+			delete this.storeObj[ id ];
+
+		this.storeSections();
+
+		return this;
+	};
+
 	storeForm.prototype.storeSections = function(data) {
 		
 		var self = this;
@@ -56,7 +66,7 @@ define(['jquery','underscore','handlebars','amplify',
 
 	storeForm.prototype.cleanSections = function() {
 
-		this.storeSections( {} );
+		this.storeSections({});
 
 		return this;
 	};

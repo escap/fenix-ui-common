@@ -10,10 +10,10 @@ USAGE:
 
 */
 define([
-	'require','jquery','underscore','handlebars','jsoneditor',
+	'require','jquery','underscore','handlebars','jsoneditor', 'bootstrap-datetimepicker', 'moment',
 	//'fmdTheme',
 	'text!fx-common/html/jsonForm.html'
-], function (require, $, _, Handlebars, JSONEditor, 
+], function (require, $, _, Handlebars, JSONEditor, datetimepicker, moment,
 	//FMDTheme,
 	jsonFormHtml) {
 
@@ -23,6 +23,14 @@ define([
 	window.Handlebars = Handlebars;
 	//https://github.com/jdorn/json-editor/issues/494
 
+/*    JSONEditor.defaults.themes.ap_dataEntry_theme = JSONEditor.AbstractTheme.extend(AP_DATAENTRY_THEME);
+    var customSelector = new CustomSelector();
+    JSONEditor.defaults.editors.string = JSONEditor.defaults.editors.string.extend(customSelector.custom_string_editor);
+*/
+
+	JSONEditor.defaults.themes.fenix = JSONEditor.defaults.themes.bootstrap3.extend({
+
+	});
 
 	JSONEditor.defaults.editors.string = JSONEditor.defaults.editors.string.extend({
 		build: function() {
@@ -31,6 +39,24 @@ define([
 
 			if(this.options.disabled)
 				this.disable();
+
+			if(this.format === 'date') {
+				$(this.input).attr('type','text');	//disable html5 datepicker
+				$(this.input).datetimepicker({
+					format: "D-MM-YYYY",
+					disabledTimeIntervals: [[moment({ h: 0 }), moment({ h: 23 })]]
+				});
+			}
+		},
+		setValue: function(value, initial, from_template) {
+			this._super();
+
+			if(this.format === 'date') {
+				$(this.input).data('DateTimePicker').date( new Date(parseFloat(value)) );
+				this.refreshValue();
+			}
+
+			console.log(value, from_template);	
 		}
 	});
 
@@ -56,6 +82,7 @@ define([
 			template: 'handlebars',
 			iconlib: 'fontawesome4',
 			theme: 'bootstrap3',
+			//theme:'fmd_theme',
 			//TODO languages using module nls/jsoneditor_errors.js
 
 			ajax: true,
@@ -78,9 +105,9 @@ define([
 			},
 			//ballbacks
 			onReady: $.noop,
+			onReset: $.noop,
 			onChange: $.noop,
-			onSubmit: $.noop,
-			onReset: $.noop
+			onSubmit: $.noop			
 		});
 
 		if(!_.isUndefined(opts.editable))
