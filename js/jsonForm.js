@@ -40,15 +40,15 @@ define([
 			if(this.options.disabled)
 				this.disable();
 
-			if(this.format === 'date') {
+/*			if(this.format === 'date') {
 				$(this.input).attr('type','text');	//disable html5 datepicker
 				$(this.input).datetimepicker({
 					format: "D-MM-YYYY",
 					disabledTimeIntervals: [[moment({ h: 0 }), moment({ h: 23 })]]
 				});
-			}
+			}*/
 		},
-		setValue: function(value, initial, from_template) {
+/*		setValue: function(value, initial, from_template) {
 			this._super();
 
 			if(this.format === 'date') {
@@ -57,7 +57,7 @@ define([
 			}
 
 			console.log(value, from_template);	
-		}
+		}*/
 	});
 
 	JSONEditor.defaults.editors.object = JSONEditor.defaults.editors.object.extend({
