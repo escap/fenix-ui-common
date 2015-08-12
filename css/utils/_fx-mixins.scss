@@ -385,3 +385,17 @@
     bottom: 0;
   }
 }
+
+
+@mixin truncate-multi($font-size,$line-height,$lines-to-show) {
+  display: block; /* Fallback for non-webkit */
+  display: -webkit-box;
+  width: 100%;
+  height: $font-size*$line-height*$lines-to-show; /* Fallback for non-webkit */
+  font-size: $font-size;
+  line-height: $line-height;
+  -webkit-line-clamp: $lines-to-show;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
