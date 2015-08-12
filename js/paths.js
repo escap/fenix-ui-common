@@ -35,11 +35,11 @@ define(function () {
             'jquery.fileupload-audio':    '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-audio',
             'jquery.fileupload-video':    '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-video',
             'jquery.fileupload-process':  '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-process',
-            'jquery.fileupload-validate': '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-validate'
+            'jquery.fileupload-validate': '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-validate',
 
 
             'draggabilly': '{FENIX_CDN}/js/draggabilly/dist/draggabilly.pkgd.min',
-            'packery': '{FENIX_CDN}/js/packery/dist/packery.pkgd.min',
+            'packery': '{FENIX_CDN}/js/packery/dist/packery.pkgd.min'
 
         },
 
