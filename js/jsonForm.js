@@ -104,6 +104,7 @@ define([
 				reset: 'Cancel'
 			},
 			//ballbacks
+			//TODO onError	fired when inputs not valid
 			onReady: $.noop,
 			onReset: $.noop,
 			onChange: $.noop,
