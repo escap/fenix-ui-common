@@ -11,7 +11,11 @@ define([
 
     var defaults = {
         onLogin: null,
-        onLogout: null
+        onLogout: null,
+        modal : {
+            keyboard: true,
+            backdrop: true
+        }
     };
 
     var s = {
@@ -40,6 +44,8 @@ define([
 
         this.initVariables();
         this.bindEventListeners();
+
+        return this;
     }
 
     AuthManager.prototype.initVariables = function () {
@@ -62,7 +68,7 @@ define([
 
         //login
         amplify.subscribe('fx.menu.login', function () {
-            self.$modalLogin.modal('show');
+            self.$modalLogin.modal(self.opts.modal);
         });
 
         this.$submitLogin.on('submit', function (e) {
@@ -77,7 +83,7 @@ define([
 
         //bind logout on fenix menu
         amplify.subscribe('fx.menu.logout', function () {
-            self.$modalLogout.modal('show');
+            self.$modalLogout.modal(self.opts.modal);
         });
 
         this.$cancelLogout.on('click', function () {
