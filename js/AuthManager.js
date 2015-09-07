@@ -76,7 +76,7 @@ define([
         });
 
         this.$submitLogin.on('click', function () {
-            if (self.$formLogin[0].checkValidity()) {
+            if (self.$formLogin[0].checkValidity || self.$formLogin[0].checkValidity()) {
                 self._authenticate();
             }
         });
@@ -98,8 +98,8 @@ define([
 
         this._resetLoginForm();
         this.$modalLogout.modal('hide');
-        console.warn("Logout success.");
-        console.warn("Removing authenticated user details with key: " + s.STORAGE_KEY);
+        //console.warn("Logout success.");
+        //console.warn("Removing authenticated user details with key: " + s.STORAGE_KEY);
         amplify.store.sessionStorage(s.STORAGE_KEY, '');
         amplify.publish('fx.auth.logout');
         if (this.opts.onLogout)
@@ -127,7 +127,7 @@ define([
 
         this._resetLoginForm();
         this.$modalLogin.modal('hide');
-        console.warn("Login success. Storing authenticated user details with key: " + s.STORAGE_KEY);
+        //console.warn("Login success. Storing authenticated user details with key: " + s.STORAGE_KEY);
         amplify.store.sessionStorage(s.STORAGE_KEY, user);
         amplify.publish('fx.auth.login', amplify.store.sessionStorage(s.STORAGE_KEY));
         if (this.opts.onLogin)
@@ -135,7 +135,7 @@ define([
     };
 
     AuthManager.prototype._onAuthenticationError = function () {
-        console.warn("Login fail.");
+        //console.warn("Login fail.");
         this.$errorContainerLogin.html("Invalid login! Email and password do not match.");
     };
 
