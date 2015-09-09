@@ -126,8 +126,6 @@ define([
 
 		self.editor = new JSONEditor(self.target.find('.form-wrapper-content')[0], self.opts);
 
-		self.emptyValues = self.editor.getValue();
-
 		if(!_.isEmpty(self.opts.values))
 			self.editor.setValue(self.opts.values);
 
@@ -136,7 +134,8 @@ define([
 				self.editor.getEditor('root.'+key).disable();
 			});
 
-		self.editor.on('ready', function(e) {
+		self.editor.on('ready', function (e) {
+		    self.emptyValues = self.editor.getValue();
 			self.opts.onReady.call(self, self.editor);
 		});
 
