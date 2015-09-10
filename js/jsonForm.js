@@ -103,12 +103,12 @@ define([
 				submit: 'Save',
 				reset: 'Cancel'
 			},
-			//ballbacks
-			//TODO onError	fired when inputs not valid
+			//callbacks
 			onReady: $.noop,
 			onReset: $.noop,
 			onChange: $.noop,
-			onSubmit: $.noop			
+			onSubmit: $.noop
+			//TODO onError	fired when inputs not valid			
 		});
 
 		if(!_.isUndefined(opts.editable))
@@ -123,30 +123,26 @@ define([
 		self.target.html( tmplJsonForm(self.opts.tmpl) );
 
 		self.$form = self.target.find('form');
-
-		self.editor = new JSONEditor(self.target.find('.form-wrapper-content')[0], self.opts);
-
-		if(!_.isEmpty(self.opts.values))
-			self.editor.setValue(self.opts.values);
+		self.container = self.target.find('.form-wrapper-content')[0];
+		self.editor = new JSONEditor(self.container, self.opts);
 
 		if(!_.isEmpty(self.opts.disabled))
 			_.each(self.opts.disabled, function(key) {
-                console.log(key)
-                console.log(self)
-                console.log(self.editor)
-                console.log(self.editor.getEditor('root.'+key))
 				self.editor.getEditor('root.'+key).disable();
 			});
 
 		self.editor.on('ready', function (e) {
-		    self.emptyValues = self.editor.getValue();
-			self.opts.onReady.call(self, self.editor);
-		});
+		    self.emptySchema = self.editor.getValue();
+		
+			if(!_.isEmpty(self.opts.values))
+				self.editor.setValue(self.opts.values);
 
-		//TODO remove _.after(...)
-		self.editor.on('change', _.after(2, function(e) {
-			self.opts.onChange.call(self, self.editor.getValue() );
-		}) );
+			self.opts.onReady.call(self, self.editor);
+
+			self.editor.on('change', function(e) {
+				self.opts.onChange.call(self, self.editor.getValue() );
+			});			
+		});
 
 		self.target.find('.form-wrapper-submit').on('click', function(e) {
 			e.preventDefault();
@@ -164,15 +160,14 @@ define([
 		});
 	};
 
-
 	jsonForm.prototype.reset = function() {
-		
-		this.$form[0].reset();
-		this.editor.setValue( this.emptyValues );
 
+		var self = this;
+
+		self.$form[0].reset();
+
+		self.editor.setValue( self.emptySchema );
 	};
-
-	//TODO add function to reset form and json-editor
 
 	return jsonForm;
 });
