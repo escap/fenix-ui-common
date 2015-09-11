@@ -1,12 +1,12 @@
 /*
 
 USAGE:
-	jsonForm('#form-contact', 'json/schema.contact.json');
+	jsonForm('#form-contact', 'schema.contact.json');
 
 	//new dom element
 	var form$ = $('<form>').prependTo('body');
 	
-	jsonForm(form$, 'json/schema.contact.json');
+	jsonForm(form$, 'schema.contact.json');
 
 */
 define([
