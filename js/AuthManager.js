@@ -76,9 +76,9 @@ define([
         });
 
         this.$submitLogin.on('click', function () {
-            if (self.$formLogin[0].checkValidity || self.$formLogin[0].checkValidity()) {
+            //if (self.$formLogin[0].checkValidity || self.$formLogin[0].checkValidity()) {
                 self._authenticate();
-            }
+            //}
         });
 
         //bind logout on fenix menu
