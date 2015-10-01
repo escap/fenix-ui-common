@@ -6,6 +6,13 @@ define(function () {
         "HOST": "//fenix.fao.org"
     };
 
+    function Compiler(){
+    }
+
+    Compiler.prototype.resolve = function (obj, opts) {
+        _resolve(obj, opts);
+    };
+
     function _resolve(obj, opts) {
 
         if (typeof opts !== 'undefined'){
@@ -186,8 +193,5 @@ define(function () {
     }
 
     //Return the module value
-    return {
-        resolve: _resolve
-
-    };
+    return new Compiler();
 });
