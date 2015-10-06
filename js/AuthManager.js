@@ -40,7 +40,14 @@ define([
         this.opts = $.extend(true, defaults, opts);
 
         this.users = JSON.parse(AuthUsers);
-        $('body').append(template);
+
+        var $body = $(".fx-sandbox");
+
+        if ($body.length > 0) {
+            $body.append(template);
+        } else {
+            $('body').append(template);
+        }
 
         this.initVariables();
         this.bindEventListeners();
