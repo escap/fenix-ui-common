@@ -1,9 +1,10 @@
-/*global define*/
+/*global define, amplify*/
 
 define([
     'jquery',
     'packery',
-    'draggabilly'
+    'draggabilly',
+    'amplify'
 ], function ($, Packery, Draggabilly) {
 
     'use strict';
@@ -12,14 +13,26 @@ define([
         css: {
             FIT: "fit"
         },
-        s : {
+        s: {
             COURTESY_MESSAGE: ".fx-courtesy"
         }
     };
 
     function Fx_Fluid_Grid() {
         this.o = {};
+        this.bindEventListeners();
     }
+
+    Fx_Fluid_Grid.prototype.bindEventListeners = function () {
+
+        var self = this;
+        amplify.subscribe("fx.window.resize", function () {
+            if (self.pckry && self.pckry.layout) {
+                self.pckry.layout();
+            }
+        });
+
+    };
 
     Fx_Fluid_Grid.prototype.resize = function (item) {
 
