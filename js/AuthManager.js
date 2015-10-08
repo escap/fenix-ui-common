@@ -9,15 +9,6 @@ define([
 
     'use strict';
 
-    var defaults = {
-        onLogin: null,
-        onLogout: null,
-        modal : {
-            keyboard: true,
-            backdrop: true
-        }
-    };
-
     var s = {
         //login
         FORM_LOGIN: '#fx-login-form',
@@ -35,9 +26,20 @@ define([
         STORAGE_KEY: "fx.auth.user"
     };
 
+
+    var defaults = {
+    	storekey: s.STORAGE_KEY,
+        onLogin: null,
+        onLogout: null,
+        modal : {
+            keyboard: true,
+            backdrop: true
+        }
+    };
+
     function AuthManager(opts) {
         //TODO extend defaults..
-        this.opts = $.extend(true, defaults, opts);
+        this.opts = _.extend(defaults, opts);
 
         this.users = JSON.parse(AuthUsers);
 
@@ -105,9 +107,7 @@ define([
 
         this._resetLoginForm();
         this.$modalLogout.modal('hide');
-        //console.warn("Logout success.");
-        //console.warn("Removing authenticated user details with key: " + s.STORAGE_KEY);
-        amplify.store.sessionStorage(s.STORAGE_KEY, '');
+        amplify.store.sessionStorage(this.opts.storekey, '');
         amplify.publish('fx.auth.logout');
         if (this.opts.onLogout)
             this.opts.onLogout();
@@ -134,9 +134,8 @@ define([
 
         this._resetLoginForm();
         this.$modalLogin.modal('hide');
-        //console.warn("Login success. Storing authenticated user details with key: " + s.STORAGE_KEY);
-        amplify.store.sessionStorage(s.STORAGE_KEY, user);
-        amplify.publish('fx.auth.login', amplify.store.sessionStorage(s.STORAGE_KEY));
+        amplify.store.sessionStorage(this.opts.storekey, user);
+        amplify.publish('fx.auth.login', user);
         if (this.opts.onLogin)
             this.opts.onLogin(user);
     };
@@ -147,11 +146,11 @@ define([
     };
 
     AuthManager.prototype.isLogged = function () {
-        return !!amplify.store.sessionStorage(s.STORAGE_KEY);
+        return !!amplify.store.sessionStorage(this.opts.storekey);
     };
 
     AuthManager.prototype.getCurrentUser = function () {
-        return amplify.store.sessionStorage(s.STORAGE_KEY) || false;
+        return amplify.store.sessionStorage(this.opts.storekey) || false;
     };
 
     return AuthManager;
