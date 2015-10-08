@@ -119,8 +119,10 @@ define([
             password = this.$passwordLogin.val(),
             user = this.users[email];
 
-        if (user && user.password === password)
+        if (user && user.password === password) {
+        	user.email = email;
             this._onAuthenticationSuccess(user);
+        }
         else
             this._onAuthenticationError();
     };
@@ -149,7 +151,7 @@ define([
         return !!amplify.store.sessionStorage(this.opts.storekey);
     };
 
-    AuthManager.prototype.getCurrentUser = function () {
+    AuthManager.prototype.getCurrentUser = function (prop) {
         return amplify.store.sessionStorage(this.opts.storekey) || false;
     };
 
