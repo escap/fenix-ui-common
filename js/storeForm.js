@@ -7,13 +7,14 @@ define(['jquery','underscore','handlebars','amplify',
 		this.opts = _.defaults(opts, {
 			prefix: '',
 			autosave: true,
-			autosaveInterval: 5000,
+			autosaveInterval: 4000,
 			autosaveLoader: null,
 			storeExpires: 0
 		});
 
 		this.storeId = _.uniqueId('storeForm-'+this.opts.prefix);
 		this.storeObj = amplify.store(this.storeId) || {};
+		this.storeObjLast = null;
 		this.autosaveTimer = null;		
 		
 		if(this.opts.autosaveLoader)
@@ -59,7 +60,7 @@ define(['jquery','underscore','handlebars','amplify',
 		setTimeout(function() {
 			if(self.opts.autosaveLoader)
 				$(self.opts.autosaveLoader).css({visibility: 'hidden'});
-		}, 1000);
+		}, 2500);
 
 		return this;
 	};
@@ -79,16 +80,16 @@ define(['jquery','underscore','handlebars','amplify',
 
 		var self = this;
 
-		this.autosaveTimer = setInterval(function() {
+		self.autosaveTimer = setInterval(function() {
 
-			//TODO run autosave only if data is changed
-
-			if(!_.isEmpty(self.storeObj))
+			if(!_.isEmpty(self.storeObj) && !_.isEqual(self.storeObj, self.storeObjLast)) {
 				self.storeSections();
+				self.storeObjLast = _.clone(self.storeObj);
+			}
 
-		}, this.opts.autosaveInterval);
+		}, self.opts.autosaveInterval);
 
-		return this;
+		return self;
 	};
 
 	return storeForm;
