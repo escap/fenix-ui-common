@@ -161,12 +161,12 @@ define([
 
     Fx_Fluid_Grid.prototype.showCourtesyMessage = function () {
 
-        $(this.o.container).find(this.o.s.COURTESY_MESSAGE).fadeIn();
+        $("#fx-analysis-container").find(this.o.s.COURTESY_MESSAGE).fadeIn();
     };
 
     Fx_Fluid_Grid.prototype.hideCourtesyMessage = function () {
 
-        $(this.o.container).find(this.o.s.COURTESY_MESSAGE).fadeOut(200);
+        $("#fx-analysis-container").find(this.o.s.COURTESY_MESSAGE).hide();
     };
 
     Fx_Fluid_Grid.prototype.destroy = function () {
