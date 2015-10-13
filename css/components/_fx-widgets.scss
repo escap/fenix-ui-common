@@ -62,7 +62,7 @@
       position: relative;
 
       >a{
-        padding:3px 3px 6px 3px;
+        padding:6px 3px 6px 3px;
         border-color: transparent;
         cursor: pointer;
         color: $fenix-text;
@@ -116,8 +116,6 @@
 
 
   }
-
-
 
 
 
@@ -212,4 +210,16 @@
 
 .fx-widget-icons{
   font-size: 24px;
+}
+
+
+.small-icons-analysis{
+  .pull-right{
+    span{
+      font-size: 18px;
+      position: relative;
+      top: -33px;
+      left: 5px;
+    }
+  }
 }

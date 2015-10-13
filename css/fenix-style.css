@@ -5882,6 +5882,29 @@ div[data-module="sector"] .fx-catalog-modular-form-content {
   background: url("./css/img/fenix-catalog-sprite-small.svg") no-repeat -75px -15px;
   background-size: 150px 30px; }
 
+.metadata-container .btn {
+  min-width: 0;
+  border-color: transparent; }
+.metadata-container .form-control {
+  -moz-border-radius-topleft: 0;
+  -webkit-border-top-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-border-radius-topright: 0;
+  -webkit-border-top-right-radius: 0;
+  border-top-right-radius: 0;
+  -moz-border-radius-bottomright: 0;
+  -webkit-border-bottom-right-radius: 0;
+  border-bottom-right-radius: 0;
+  -moz-border-radius-bottomleft: 0;
+  -webkit-border-bottom-left-radius: 0;
+  border-bottom-left-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0; }
+.metadata-container .btn-success, .metadata-container .btn-warning {
+  border-color: #0076ff; }
+
 /* Fenix Popover Component */
 .popover {
   width: 200px; }
@@ -6488,7 +6511,7 @@ input[type="checkbox"]:checked + label {
     .fx-widget .nav-tabs > li {
       position: relative; }
       .fx-widget .nav-tabs > li > a {
-        padding: 3px 3px 6px 3px;
+        padding: 6px 3px 6px 3px;
         border-color: transparent;
         cursor: pointer;
         color: #666666; }
@@ -6583,6 +6606,12 @@ input[type="checkbox"]:checked + label {
 
 .fx-widget-icons {
   font-size: 24px; }
+
+.small-icons-analysis .pull-right span {
+  font-size: 18px;
+  position: relative;
+  top: -33px;
+  left: 5px; }
 
 /* Fenix - Widgets Stack Component */
 #fx-widgets-stack {

@@ -92,3 +92,21 @@
   @include fx-small-icons(-75px,-15px);
 }
 
+
+.metadata-container{
+  .btn{
+    min-width: 0;
+    border-color: transparent;
+  }
+.form-control{
+  @include fx-no-border-radius;
+}
+
+  .btn-success,.btn-warning{
+    border-color: $fx-cool-blue;
+  }
+  .btn-warning{
+
+  }
+
+}
