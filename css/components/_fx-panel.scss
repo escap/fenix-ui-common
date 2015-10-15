@@ -97,6 +97,16 @@
   .btn{
     min-width: 0;
     border-color: transparent;
+
+    &:link,
+    &:visited,
+    &:hover,
+    &:focus,
+    &:active{
+      border-color: transparent;
+    }
+
+
   }
 .form-control{
   @include fx-no-border-radius;
