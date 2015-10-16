@@ -6480,7 +6480,7 @@ input[type="checkbox"]:checked + label {
   padding: 22px 10px 10px 10px; }
   .fx-visualization-box [data-control="remove"] {
     position: relative;
-    top: -18px;
+    top: -31px;
     right: -5px;
     color: #666666;
     cursor: pointer; }

@@ -6,10 +6,12 @@
 
   [data-control="remove"]{
     position: relative;
-    top: -18px;
+    top: -31px;
     right: -5px;
     color: $fenix-text;
     cursor: pointer;
+
+
 
     &:hover, &:active, &:focus{
       text-decoration: none;
