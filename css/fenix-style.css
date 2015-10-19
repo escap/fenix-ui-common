@@ -11,8 +11,8 @@
 /* Eldorado  */
 @font-face {
   font-family: 'eldorado_stroke';
-  src: url("http://fenixapps.fao.org/repository/fenix-ui-common/css/fonts/eldorado/eldorado_stroke.eot");
-  src: url("http://fenixapps.fao.org/repository/fenix-ui-common/css/fonts/eldorado/eldorado_stroke.eot?#iefix") format("embedded-opentype"), url("http://fenixapps.fao.org/repository/fenix-ui-common/css/fonts/eldorado/eldorado_stroke.woff") format("woff"), url("http://fenixapps.fao.org/repository/fenix-ui-common/css/fonts/eldorado/eldorado_stroke.ttf") format("truetype"), url("http://fenixapps.fao.org/repository/fenix-ui-common/css/fonts/eldorado/eldorado_stroke.svg#RobotoRegular") format("svg");
+  src: url("http://fenixrepo.fao.org/cdn/css/fenix-ui-common/css/fonts/eldorado/eldorado_stroke.eot");
+  src: url("http://fenixrepo.fao.org/cdn/css/fenix-ui-common/css/fonts/eldorado/eldorado_stroke.eot?#iefix") format("embedded-opentype"), url("http://fenixrepo.fao.org/cdn/css/fenix-ui-common/css/fonts/eldorado/eldorado_stroke.woff") format("woff"), url("http://fenixrepo.fao.org/cdn/css/fenix-ui-common/css/fonts/eldorado/eldorado_stroke.ttf") format("truetype"), url("http://fenixrepo.fao.org/cdn/css/fenix-ui-common/css/fonts/eldorado/eldorado_stroke.svg#RobotoRegular") format("svg");
   font-weight: normal;
   font-style: normal; }
 [class^="icojam_"], [class*=" icojam_"] {
