@@ -92,6 +92,9 @@ define([
 			disable_properties: true,
 			disable_array_reorder: true,
 
+			//for required fields
+			remove_empty_properties: true,
+
 			//show_errors: true,
 			schema: _.isString(opts.schema) ? {$ref: require.toUrl(opts.schema)} : opts.schema,
 			values: {},
