@@ -7,6 +7,7 @@
   .fx-md-viewer-title{
     margin-top: 10px;
     margin-bottom: 20px;
+    font-size: 18px;
   }
 
 
@@ -65,6 +66,10 @@
 
   .popover-title{
     background-color: transparent;
+
+    .text-info{
+      color: $fx-cool-blue;
+    }
     //border-bottom-color: transparent ;
     font: $standard-text;
   }

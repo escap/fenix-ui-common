@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /* Fenix Interface Style */
 /* Produced By Fenix Team and Mentaltoy 2014 All rights reserved */
 /* Variables */
@@ -5038,7 +5037,7 @@ button_new_2:before {
 
 .fa-border {
   padding: .2em .25em .15em;
-  border: solid 0.08em #eee;
+  border: solid 0.08em #eeeeee;
   border-radius: .1em; }
 
 .pull-right {
@@ -5060,6 +5059,7 @@ button_new_2:before {
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg); }
+
   100% {
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg); } }
@@ -5067,6 +5067,7 @@ button_new_2:before {
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg); }
+
   100% {
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg); } }
@@ -5128,78 +5129,78 @@ button_new_2:before {
   font-size: 2em; }
 
 .fa-inverse {
-  color: #fff; }
+  color: white; }
 
 /* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
    readers do not read off random characters that represent icons */
 .fa-search:before {
-  content: ""; }
+  content: "\f002"; }
 
 .fa-th:before {
-  content: ""; }
+  content: "\f00a"; }
 
 .fa-th-list:before {
-  content: ""; }
+  content: "\f00b"; }
 
 .fa-home:before {
-  content: ""; }
+  content: "\f015"; }
 
 .fa-clock-o:before {
-  content: ""; }
+  content: "\f017"; }
 
 .fa-refresh:before {
-  content: ""; }
+  content: "\f021"; }
 
 .fa-lock:before {
-  content: ""; }
+  content: "\f023"; }
 
 .fa-barcode:before {
-  content: ""; }
+  content: "\f02a"; }
 
 .fa-map-marker:before {
-  content: ""; }
+  content: "\f041"; }
 
 .fa-calendar:before {
-  content: ""; }
+  content: "\f073"; }
 
 .fa-twitter-square:before {
-  content: ""; }
+  content: "\f081"; }
 
 .fa-facebook-square:before {
-  content: ""; }
+  content: "\f082"; }
 
 .fa-globe:before {
-  content: ""; }
+  content: "\f0ac"; }
 
 .fa-wrench:before {
-  content: ""; }
+  content: "\f0ad"; }
 
 .fa-google-plus-square:before {
-  content: ""; }
+  content: "\f0d4"; }
 
 .fa-google-plus:before {
-  content: ""; }
+  content: "\f0d5"; }
 
 .fa-caret-down:before {
-  content: ""; }
+  content: "\f0d7"; }
 
 .fa-caret-up:before {
-  content: ""; }
+  content: "\f0d8"; }
 
 .fa-caret-left:before {
-  content: ""; }
+  content: "\f0d9"; }
 
 .fa-caret-right:before {
-  content: ""; }
+  content: "\f0da"; }
 
 .fa-rss-square:before {
-  content: ""; }
+  content: "\f143"; }
 
 .fa-slack:before {
-  content: ""; }
+  content: "\f198"; }
 
 .fa-database:before {
-  content: ""; }
+  content: "\f1c0"; }
 
 /* Fenix Typography */
 body {
@@ -5496,6 +5497,68 @@ fieldset {
   fieldset .fx-fieldset-subtitle label {
     font-size: 12px; }
 
+/* Fenix Filter Tab */
+[data-plugin="filter"] .btn {
+  width: 150px; }
+[data-plugin="filter"] .fx-catalog-modular-form-holder {
+  border-color: transparent;
+  position: relative; }
+  [data-plugin="filter"] .fx-catalog-modular-form-holder:before {
+    content: '';
+    height: 1px;
+    width: calc(100% + 30px);
+    display: block;
+    background-color: #dddddd;
+    position: relative;
+    top: -13px;
+    left: -23px; }
+[data-plugin="filter"] .jstree-holder {
+  height: 100px; }
+[data-plugin="filter"] .fx-catalog-modular-form-label {
+  font-size: 14px;
+  left: 0; }
+[data-plugin="filter"] input[type="search"] {
+  -moz-border-radius-topleft: 0;
+  -webkit-border-top-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-border-radius-topright: 0;
+  -webkit-border-top-right-radius: 0;
+  border-top-right-radius: 0;
+  -moz-border-radius-bottomright: 0;
+  -webkit-border-bottom-right-radius: 0;
+  border-bottom-right-radius: 0;
+  -moz-border-radius-bottomleft: 0;
+  -webkit-border-bottom-left-radius: 0;
+  border-bottom-left-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0;
+  height: 20px;
+  margin-bottom: 3px;
+  position: absolute;
+  top: -27px;
+  width: 70%;
+  right: 25px;
+  background-color: transparent;
+  border: 1px solid #d8d8d8; }
+[data-plugin="filter"] form {
+  position: relative; }
+  [data-plugin="filter"] form:before {
+    content: "\e003";
+    font-family: 'Glyphicons Halflings';
+    position: absolute;
+    top: -23px;
+    left: calc(100% - 17px);
+    display: inline-block;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    color: #d8d8d8; }
+[data-plugin="filter"] .fx-filter-form-module.fit {
+  width: 100%; }
+
 .inside-full-height {
   /*
   // if you want to give content full height give him height: 100%;
@@ -5651,7 +5714,8 @@ legend {
   font-size: 12px; }
   .fx-md-viewer-wrapper .fx-md-viewer-title {
     margin-top: 10px;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+    font-size: 18px; }
   .fx-md-viewer-wrapper .fx-md-viewer-container {
     width: 100%; }
   .fx-md-viewer-wrapper th, .fx-md-viewer-wrapper td {
@@ -5691,6 +5755,8 @@ legend {
   .fx-md-viewer-wrapper .popover-title {
     background-color: transparent;
     font: normal normal 300 14px/normal "Roboto Condensed"; }
+    .fx-md-viewer-wrapper .popover-title .text-info {
+      color: #0076ff; }
   .fx-md-viewer-wrapper .popover-content {
     font: normal normal 300 14px/normal "Roboto Condensed"; }
 
@@ -6821,14 +6887,14 @@ input[type="checkbox"]:checked + label {
   color: #666666;
   text-shadow: none;
   border-color: transparent;
-  background-color: #e6f1ff;
-  background-image: -moz-linear-gradient(top, #e6f1ff, #e6f1ff);
-  background-image: -ms-linear-gradient(top, #e6f1ff, #e6f1ff);
-  background-image: -o-linear-gradient(top, #e6f1ff, #e6f1ff);
-  background-image: -webkit-gradient(linear, center top, center bottom, from(#e6f1ff), to(#e6f1ff));
-  background-image: -webkit-linear-gradient(top, #e6f1ff, #e6f1ff);
-  background-image: linear-gradient(top, #e6f1ff, #e6f1ff);
-  background-image: linear-gradient(to bottom, #e6f1ff, #e6f1ff);
+  background-color: #e5f1ff;
+  background-image: -moz-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: -ms-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: -o-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#e5f1ff), to(#e5f1ff));
+  background-image: -webkit-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: linear-gradient(to bottom, #e5f1ff, #e5f1ff);
   -moz-background-clip: padding;
   background-clip: padding-box;
   -webkit-background-clip: padding-box;
@@ -6895,14 +6961,14 @@ input[type="checkbox"]:checked + label {
   color: #666666;
   text-shadow: none;
   border-color: transparent;
-  background-color: #e6f1ff;
-  background-image: -moz-linear-gradient(top, #e6f1ff, #e6f1ff);
-  background-image: -ms-linear-gradient(top, #e6f1ff, #e6f1ff);
-  background-image: -o-linear-gradient(top, #e6f1ff, #e6f1ff);
-  background-image: -webkit-gradient(linear, center top, center bottom, from(#e6f1ff), to(#e6f1ff));
-  background-image: -webkit-linear-gradient(top, #e6f1ff, #e6f1ff);
-  background-image: linear-gradient(top, #e6f1ff, #e6f1ff);
-  background-image: linear-gradient(to bottom, #e6f1ff, #e6f1ff);
+  background-color: #e5f1ff;
+  background-image: -moz-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: -ms-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: -o-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#e5f1ff), to(#e5f1ff));
+  background-image: -webkit-linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: linear-gradient(top, #e5f1ff, #e5f1ff);
+  background-image: linear-gradient(to bottom, #e5f1ff, #e5f1ff);
   -moz-background-clip: padding;
   background-clip: padding-box;
   -webkit-background-clip: padding-box;
@@ -7228,7 +7294,7 @@ input[type="checkbox"]:checked + label {
 
 .jstree-default .jstree-wholerow-hovered {
   background: none;
-  background-color: #e6f1ff; }
+  background-color: #e5f1ff; }
 
 /* Packery _ Fenix */
 /* clearfix */
@@ -7275,5 +7341,3 @@ body {
     text-align: center; }
   .page-header p {
     text-align: center; }
-
-/*# sourceMappingURL=fenix-style.css.map */
