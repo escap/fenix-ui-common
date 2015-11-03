@@ -84,8 +84,8 @@ define([
 			}
 			$(input.errmsg).html('<span class="alert alert-danger">'+html+'</span>');
 		}
-	});  */
-	
+	});*/
+
 	function jsonForm(target, opts) {
 
 		opts = opts || {};
