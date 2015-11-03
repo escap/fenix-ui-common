@@ -70,6 +70,22 @@ define([
 		}
 	});
 
+/*	JSONEditor.defaults.themes.bootstrap3 = JSONEditor.defaults.themes.bootstrap3.extend({
+		addInputError: function(input, html) {
+			if(!input.controlgroup) return;
+			input.controlgroup.className += ' has-error';
+			if(!input.errmsg) {
+			  input.errmsg = document.createElement('p');
+			  input.errmsg.className = 'help-block errormsg';
+			  input.controlgroup.appendChild(input.errmsg);
+			}
+			else {
+			  input.errmsg.style.display = '';
+			}
+			$(input.errmsg).html('<span class="alert alert-danger">'+html+'</span>');
+		}
+	});  */
+	
 	function jsonForm(target, opts) {
 
 		opts = opts || {};
@@ -104,8 +120,10 @@ define([
 			tmpl: {
 				idform: self.target.attr('id'),
 				submit: 'Save',
-				reset: 'Cancel'
+				reset: 'Cancel',
+				languages: null
 			},
+
 			//callbacks
 			onReady: $.noop,
 			onReset: $.noop,
@@ -122,6 +140,12 @@ define([
 				disable_properties:   !opts.editable,
 				disable_array_reorder:!opts.editable
 			});
+
+		if(self.opts.tmpl.languages) {
+			JSONEditor.defaults.default_language = requirejs.s.contexts._.config.i18n.locale;
+			JSONEditor.defaults.language = JSONEditor.defaults.default_language;
+			JSONEditor.defaults.languages = self.opts.tmpl.languages;
+		}
 
 		self.target.html( tmplJsonForm(self.opts.tmpl) );
 
