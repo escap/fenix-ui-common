@@ -107,6 +107,8 @@ define([
 			disable_edit_json: true,
 			disable_properties: true,
 			disable_array_reorder: true,
+			
+			keep_oneof_values: false,
 
 			//for required fields
 			remove_empty_properties: true,
@@ -185,6 +187,24 @@ define([
 			self.opts.onChange.call(self, self.editor.getValue() );
 			self.opts.onReset.call(self, self.editor.getValue() );
 		});
+
+/*		if(self.target.is('#cat1')) {
+
+			var key = 'ask1';
+
+			self.editor.watch('root.'+key, function() {
+
+				var e = self.editor.getEditor('root.'+key);
+					val = e.getValue();
+
+				console.log('watch', e, val);
+
+				if(val=='Yes') {
+					console
+				}
+
+			});
+		}*/
 	};
 
 	jsonForm.prototype.reset = function() {
