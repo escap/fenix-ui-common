@@ -188,7 +188,7 @@ define([
 			self.opts.onReset.call(self, self.editor.getValue() );
 		});
 
-/*		if(self.target.is('#cat1')) {
+		if(self.target.is('#cat1')) {
 
 			var key = 'ask1';
 
@@ -204,7 +204,7 @@ define([
 				}
 
 			});
-		}*/
+		}
 	};
 
 	jsonForm.prototype.reset = function() {
