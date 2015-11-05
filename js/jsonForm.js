@@ -122,9 +122,10 @@ define([
 			tmpl: {
 				idform: self.target.attr('id'),
 				submit: 'Save',
-				reset: 'Cancel',
-				languages: null
+				reset: 'Cancel'
 			},
+
+			languages: null,
 
 			//callbacks
 			onReady: $.noop,
