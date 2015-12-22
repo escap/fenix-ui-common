@@ -5695,8 +5695,16 @@ input[type=text]::-ms-clear {
   opacity: .5; }
 
 /*iOS switch like */
+.toggle-wrapper .toggle-text {
+  display: inline-block;
+  color: #999999;
+  font-size: 10px;
+  margin: 0;
+  position: relative;
+  top: -5px;
+  left: 2px; }
 .toggle-wrapper input[data-type="switch"] + label {
-  display: block;
+  display: inline-block;
   position: relative;
   box-shadow: inset 0 0 0px 1px #d5d5d5;
   text-indent: -5000px;
@@ -6492,7 +6500,12 @@ input[type="checkbox"]:checked + label {
       color: #666666;
       font-weight: 500;
       font-size: 12px;
-      text-transform: uppercase; }
+      text-transform: uppercase;
+      border-color: transparent; }
+      .fx-tabs .nav-tabs > li > a:hover, .fx-tabs .nav-tabs > li > a:focus {
+        border-color: transparent;
+        background-color: transparent;
+        color: #0076ff; }
       .fx-tabs .nav-tabs > li > a:before {
         -webkit-transition: all 0.3s ease 0s;
         -moz-transition: all 0.3s ease 0s;
@@ -6521,6 +6534,10 @@ input[type="checkbox"]:checked + label {
         -ms-transform: scaleX(0.8);
         -webkit-transform: scaleX(0.8);
         transform: scaleX(0.8); }
+      .fx-tabs .nav-tabs > li.active > a:hover, .fx-tabs .nav-tabs > li.active > a:focus {
+        border-color: transparent;
+        background-color: transparent;
+        color: #0076ff; }
 .fx-tabs .tab-content {
   padding-top: 10px; }
   .fx-tabs .tab-content > div {
@@ -7322,6 +7339,10 @@ input[type="checkbox"]:checked + label {
   color: #666666;
   font-weight: 300;
   font-style: normal; }
+.jstree-default .jstree-node:not(.jstree-open) {
+  position: relative; }
+  .jstree-default .jstree-node:not(.jstree-open) .jstree-wholerow {
+    height: 100%; }
 
 .jstree-default .jstree-themeicon {
   display: none;

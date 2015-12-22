@@ -8,6 +8,19 @@
     font-weight: 300;
     font-style: normal;
   }
+
+
+
+  .jstree-node:not(.jstree-open){
+    position: relative;
+
+    .jstree-wholerow{
+      height: 100%;
+    }
+
+  }
+
+
 }
 
 .jstree-default .jstree-themeicon{
