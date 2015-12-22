@@ -7339,6 +7339,18 @@ input[type="checkbox"]:checked + label {
   background: none;
   background-color: #e6f1ff; }
 
+.jstree-container-ul .jstree-anchor {
+  white-space: normal;
+  height: auto; }
+.jstree-container-ul [role="group"].jstree-children [role='treeitem'] {
+  position: relative; }
+
+li[role="treeitem"]:nth-child(odd) {
+  background-color: #f2f2f2 !important; }
+
+ul[role="group"] {
+  background-color: white; }
+
 /* Packery _ Fenix */
 /* clearfix */
 #fx-ana-result-container:after {
