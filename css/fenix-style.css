@@ -7360,9 +7360,14 @@ input[type="checkbox"]:checked + label {
   background: none;
   background-color: #e6f1ff; }
 
+.jstree-default .jstree-disabled.jstree-clicked {
+  background: none;
+  background-color: #cce4ff; }
+
 .jstree-container-ul .jstree-anchor {
   white-space: normal;
-  height: auto; }
+  height: auto;
+  width: 90%; }
 .jstree-container-ul [role="group"].jstree-children [role='treeitem'] {
   position: relative; }
 

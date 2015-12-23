@@ -47,12 +47,19 @@
 
 }
 
+.jstree-default .jstree-disabled.jstree-clicked{
+  background: none;
+  background-color: $fx-main-color-light;
+}
+
 
 .jstree-container-ul{
 
   .jstree-anchor {
     white-space: normal;
     height: auto;
+    width: 90%;
+
   }
 
   [role="group"].jstree-children{
