@@ -7,15 +7,15 @@ define([
     'text!fx-common/html/fenix-uploader-item.hbs',
     'q',
     'SparkMD5',
+    "loglevel",
     'jquery.fileupload'
-], function ($, _, Handlebars, uploadTemplate, itemTemplate, Q, SparkMD5) {
+], function ($, _, Handlebars, uploadTemplate, itemTemplate, Q, SparkMD5, log) {
 
     'use strict';
 
     var defaultOpts = {
             upload_accept: '.csv',
             server_url: 'http://fenixservices.fao.org/upload',
-            //server_url: 'http://168.202.28.32:8080/v1',
             context: "c",
             autoClose: false,
             chunkSize: 100000,
@@ -61,6 +61,8 @@ define([
      * @return {Object} Fenix Uploader instance
      */
     function FxUploader(opts) {
+        log.info("FENIX Uploader");
+        log.info(opts);
 
         this.o = $.extend(true, {}, defaultOpts, opts);
 
@@ -148,6 +150,8 @@ define([
      * @return {Object} Fenix Uploader instance
      */
     FxUploader.prototype.render = function (opts) {
+        log.info("Render: start");
+        log.info(opts);
 
         $.extend(true, this.o, opts);
 
@@ -160,6 +164,8 @@ define([
         this._initVariables();
 
         this._bindEventListeners();
+
+        log.info("Render: end");
 
         return this;
 
@@ -448,12 +454,39 @@ define([
 
         this._setStepStatus(status.DOING, item);
 
+        //create custom body
+        var body = {};
+
+        _.each(this.o.body_post_process, function (obj, key){
+
+            if (!obj.startsWith('@')){
+                body[key] = obj;
+            }else {
+                body[key] = getDescendantProp(obj, item)
+            }
+        });
+
+        console.log("------------")
+        console.log(body)
+        console.log(item)
+
         return Q($.ajax({
             type: "POST",
             url: this.o.server_url + '/process/' + this.o.context + '/' + item.details.md5,
-            contentType: "application/json"
+            contentType: "application/json",
+            data: JSON.stringify(body)
         }));
 
+        function getDescendantProp( p, obj ) {
+
+            //remove @ char
+            var path = p.substring(1),
+                arr = path.split(".");
+
+            while(arr.length && (obj = obj[arr.shift()]));
+
+            return obj;
+        }
     };
 
     FxUploader.prototype._renderExtendedProgress = function (data) {
@@ -589,11 +622,13 @@ define([
                 var start = currentChunk * chunkSize,
                     end = ((start + chunkSize) >= file.size) ? file.size : start + chunkSize;
 
+                log.info('Load next: ', start, end );
+
                 fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
             }
 
             function onLoad(e) {
-                //console.log('read chunk nr', currentChunk + 1, 'of', chunks);
+                log.info('read chunk nr', currentChunk + 1, 'of', chunks);
                 spark.append(e.target.result);                   // Append array buffer
                 currentChunk++;
 
@@ -602,18 +637,21 @@ define([
                 } else {
 
                     var hash = spark.end();
-                    //console.log('finished loading');
-                    //console.info('computed hash', hash);  // Compute hash
+                    log.info('Loading finished.');
+                    log.info('Computed hash', hash);  // Compute hash
                     resolve(hash);
                 }
             }
 
             function onError() {
-                reject(new Error('MD5 file: oops, something went wrong.'));
+                var msg ='MD5 file: oops, something went wrong.';
+                log.error(msg);
+                reject(new Error(msg));
             }
 
             function onprogress(event) {
-                //self._onProgressAll(event, {loaded: event.loaded, total: event.total})
+                log.info('Progress [load/total]: ', event.loaded, event.total );
+                //self._onProgressAll(event, {loaded: event.loaded, total: event.loaded})
             }
         });
 
@@ -656,6 +694,8 @@ define([
     FxUploader.prototype._onInputChange = function (e) {
 
         var f = e.target.files || [{name: this.value}];
+
+        log.info("File selected: " + f);
 
         this._addItem({
             file: f[0],

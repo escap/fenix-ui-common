@@ -18,6 +18,7 @@ define(function () {
             'moment':    '{FENIX_CDN}/js/moment/2.9.0/moment.min',
             'SparkMD5' : '{FENIX_CDN}/js/spark-md5/spark-md5.min',
             'q':         '{FENIX_CDN}/js/q/1.1.2/q',
+            loglevel: '{FENIX_CDN}/js/loglevel/1.4.0/loglevel',
 
             //AuthManager
             'fx-common/config/auth_users': '../config/auth_users.json',
