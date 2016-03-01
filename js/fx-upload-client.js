@@ -8,6 +8,7 @@ define([
     'q',
     'SparkMD5',
     "loglevel",
+    "amplify",
     'jquery.fileupload'
 ], function ($, _, Handlebars, uploadTemplate, itemTemplate, Q, SparkMD5, log) {
 
@@ -24,7 +25,8 @@ define([
             callTimeout: 500,
             debounceTimeout: 1500,
             throttleTimeout: 2000,
-            pollingTimeout: 10000 //ms
+            pollingTimeout: 10000, //ms
+            event_prefix: "fx.upload."
         },
         s = {
             UPLOADER: '#fx-uploader',
@@ -334,6 +336,8 @@ define([
 
                         self._setItemStatus(status.DONE, item);
 
+                        amplify.publish(self.o.event_prefix + "finish");
+
                     }
 
                 });
@@ -366,7 +370,6 @@ define([
             url: this.o.server_url + '/metadata/file/' + this.o.context + '/' + item.details.md5,
             contentType: "application/json"
         }));
-
     };
 
     /**
@@ -389,7 +392,6 @@ define([
                 "autoClose": this.o.autoClose
             })
         }));
-
     };
 
     /**
@@ -457,18 +459,14 @@ define([
         //create custom body
         var body = {};
 
-        _.each(this.o.body_post_process, function (obj, key){
+        _.each(this.o.body_post_process, function (obj, key) {
 
-            if (!obj.startsWith('@')){
+            if (!obj.startsWith('@')) {
                 body[key] = obj;
-            }else {
+            } else {
                 body[key] = getDescendantProp(obj, item)
             }
         });
-
-        console.log("------------")
-        console.log(body)
-        console.log(item)
 
         return Q($.ajax({
             type: "POST",
@@ -477,13 +475,13 @@ define([
             data: JSON.stringify(body)
         }));
 
-        function getDescendantProp( p, obj ) {
+        function getDescendantProp(p, obj) {
 
             //remove @ char
             var path = p.substring(1),
                 arr = path.split(".");
 
-            while(arr.length && (obj = obj[arr.shift()]));
+            while (arr.length && (obj = obj[arr.shift()]));
 
             return obj;
         }
@@ -589,7 +587,7 @@ define([
 
             self._setStepStatus(status.ERROR, item);
             throw new Error("Impossible to complete the postprocess");
-        })
+        });
 
     };
 
@@ -622,7 +620,7 @@ define([
                 var start = currentChunk * chunkSize,
                     end = ((start + chunkSize) >= file.size) ? file.size : start + chunkSize;
 
-                log.info('Load next: ', start, end );
+                log.info('Load next: ', start, end);
 
                 fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
             }
@@ -644,13 +642,13 @@ define([
             }
 
             function onError() {
-                var msg ='MD5 file: oops, something went wrong.';
+                var msg = 'MD5 file: oops, something went wrong.';
                 log.error(msg);
                 reject(new Error(msg));
             }
 
             function onprogress(event) {
-                log.info('Progress [load/total]: ', event.loaded, event.total );
+                log.info('Progress [load/total]: ', event.loaded, event.total);
                 //self._onProgressAll(event, {loaded: event.loaded, total: event.loaded})
             }
         });
@@ -693,6 +691,8 @@ define([
      */
     FxUploader.prototype._onInputChange = function (e) {
 
+        amplify.publish(this.o.event_prefix + "start");
+
         var f = e.target.files || [{name: this.value}];
 
         log.info("File selected: " + f);
@@ -703,6 +703,24 @@ define([
         });
 
         this.$input.replaceWith(this.$input = this.$input.clone(true));
+    };
+
+    /**
+     * Handler invoked on file selection.
+     * Reset current file information and start the MD5 calculation
+     * @return {undefined}
+     */
+    FxUploader.prototype.add = function (item) {
+
+        var self = this;
+
+        if (Array.isArray(item)) {
+            _.each(item, function (o) {
+                self._addItem(o)
+            })
+        } else {
+            self._addItem(item)
+        }
     };
 
     FxUploader.prototype._addItem = function (item) {
@@ -746,8 +764,6 @@ define([
 
     FxUploader.prototype._startItemStep = function (step, item) {
 
-        //console.log('------------- start step ' + step)
-
         if (!item.steps) {
             item.steps = [];
         }
@@ -773,6 +789,8 @@ define([
         this._animateTicker(item);
 
         this._setStepStatus(status.WAITING, item);
+
+        amplify.publish(this.o.event_prefix + "step.change", item);
 
     };
 
@@ -808,7 +826,7 @@ define([
 
     FxUploader.prototype._setStepStatus = function (stat, item) {
 
-        //console.log('set status ' + stat)
+        log.info('set status ' + stat);
 
         var icon = item.current.el.find(s.ITEM_STEP_ICON);
 
