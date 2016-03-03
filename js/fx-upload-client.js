@@ -464,16 +464,6 @@ define([
             data: JSON.stringify(this._createPostProcessBody())
         }));
 
-        function getDescendantProp(p, obj) {
-
-            //remove @ char
-            var path = p.substring(1),
-                arr = path.split(".");
-
-            while (arr.length && (obj = obj[arr.shift()]));
-
-            return obj;
-        }
     };
 
     FxUploader.prototype._createPostProcessBody = function () {
@@ -491,6 +481,17 @@ define([
         });
 
         return body;
+
+        function getDescendantProp(p, obj) {
+
+            //remove @ char
+            var path = p.substring(1),
+                arr = path.split(".");
+
+            while (arr.length && (obj = obj[arr.shift()]));
+
+            return obj;
+        }
 
     };
 

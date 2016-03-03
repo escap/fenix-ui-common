@@ -11,6 +11,7 @@ define([
         DEV_CONTEXT = "test",
         s = {
             UPLOADER_CONTAINER: "#uploader-container",
+            UPLOADER_AMIS: "#uploader-amis",
             SECTION: "section",
             DETAILS: "[data-details]"
         };
@@ -24,6 +25,8 @@ define([
         log.trace("Test started");
 
         this._render();
+
+        this._renderPolicy();
 
     };
 
@@ -39,6 +42,20 @@ define([
         this._renderUploader(config);
 
     };
+
+    Test.prototype._renderPolicy = function () {
+
+        var config = {
+            container: s.UPLOADER_AMIS,
+            context: DEV_CONTEXT,
+            server_url: DEV_URL,
+            body_post_process : { policy : 11}
+        };
+
+        this._renderUploader(config);
+
+    };
+
 
     Test.prototype._renderUploader = function (config) {
 
