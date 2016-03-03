@@ -218,7 +218,7 @@ define([
             })
             .then(function (metadata) {
 
-                //console.log("Getting File Metadata: done.");
+                log.info("Getting File Metadata: done.");
 
                 item.metadata = metadata;
 
@@ -246,7 +246,7 @@ define([
 
             this._createFileMetadata(item)
                 .then(function () {
-                    //console.log("File Metadata: created.");
+                    log.info("File Metadata: created.");
 
                     self._setStepStatus(status.DONE, item);
 
@@ -271,7 +271,7 @@ define([
 
             this._startPostProcess(item)
                 .then(function () {
-                    //console.log("Post process completed");
+                    log.info("Post process completed");
 
                     self._monitorProcessStatus(item);
 
@@ -438,11 +438,13 @@ define([
      */
     FxUploader.prototype._closeFile = function (item) {
 
+        var body = this._createPostProcessBody();
+
         return Q($.ajax({
             type: "POST",
             url: this.o.server_url + '/file/closure/' + this.o.context + '/' + item.details.md5 + '?process=false',
             contentType: "application/json",
-            data: JSON.stringify(this._createPostProcessBody())
+            data: JSON.stringify(body)
         }));
 
     };
@@ -457,11 +459,13 @@ define([
 
         this._setStepStatus(status.DOING, item);
 
+        var body = this._createPostProcessBody();
+
         return Q($.ajax({
             type: "POST",
             url: this.o.server_url + '/process/' + this.o.context + '/' + item.details.md5,
             contentType: "application/json",
-            data: JSON.stringify(this._createPostProcessBody())
+            data: JSON.stringify(body)
         }));
 
     };
@@ -473,7 +477,7 @@ define([
 
         _.each(this.o.body_post_process, function (obj, key) {
 
-            if (!obj.startsWith('@')) {
+            if (!obj.toString().startsWith('@')) {
                 body[key] = obj;
             } else {
                 body[key] = getDescendantProp(obj, item)
@@ -579,7 +583,6 @@ define([
         this._setStepStatus(status.DOING, item);
 
         this._closeFile(item).then(function () {
-            //console.log("File Closed")
 
             self._setStepStatus(status.DONE, item);
             return self._startPostProcess(item);

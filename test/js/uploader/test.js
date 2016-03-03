@@ -47,7 +47,7 @@ define([
 
         var config = {
             container: s.UPLOADER_AMIS,
-            context: DEV_CONTEXT,
+            context: "policy",
             server_url: DEV_URL,
             body_post_process : { policy : 11}
         };
