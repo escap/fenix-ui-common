@@ -40,7 +40,9 @@ define(function () {
 
 
             'draggabilly': '{FENIX_CDN}/js/draggabilly/dist/draggabilly.pkgd.min',
-            'packery': '{FENIX_CDN}/js/packery/dist/packery.pkgd.min'
+            'packery': '{FENIX_CDN}/js/packery/dist/packery.pkgd.min',
+            'handlebars': "{FENIX_CDN}/js/handlebars/2.0.0/handlebars",
+            underscore: "{FENIX_CDN}/js/underscore/1.7.0/underscore.min"
 
         },
 

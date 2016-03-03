@@ -441,7 +441,8 @@ define([
         return Q($.ajax({
             type: "POST",
             url: this.o.server_url + '/file/closure/' + this.o.context + '/' + item.details.md5 + '?process=false',
-            contentType: "application/json"
+            contentType: "application/json",
+            data: JSON.stringify(this._createPostProcessBody())
         }));
 
     };
@@ -456,23 +457,11 @@ define([
 
         this._setStepStatus(status.DOING, item);
 
-        //create custom body
-        var body = {};
-
-        _.each(this.o.body_post_process, function (obj, key) {
-
-            if (!obj.startsWith('@')) {
-                body[key] = obj;
-            } else {
-                body[key] = getDescendantProp(obj, item)
-            }
-        });
-
         return Q($.ajax({
             type: "POST",
             url: this.o.server_url + '/process/' + this.o.context + '/' + item.details.md5,
             contentType: "application/json",
-            data: JSON.stringify(body)
+            data: JSON.stringify(this._createPostProcessBody())
         }));
 
         function getDescendantProp(p, obj) {
@@ -485,6 +474,24 @@ define([
 
             return obj;
         }
+    };
+
+    FxUploader.prototype._createPostProcessBody = function () {
+
+        //create custom body
+        var body = {};
+
+        _.each(this.o.body_post_process, function (obj, key) {
+
+            if (!obj.startsWith('@')) {
+                body[key] = obj;
+            } else {
+                body[key] = getDescendantProp(obj, item)
+            }
+        });
+
+        return body;
+
     };
 
     FxUploader.prototype._renderExtendedProgress = function (data) {
