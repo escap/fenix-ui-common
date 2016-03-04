@@ -382,15 +382,17 @@ define([
 
         this._setStepStatus(status.DOING, item);
 
+        var body = this._createPostBody($.extend(true, {}, this.o.body_create_file, {
+            "context": this.o.context,
+            "md5": item.details.md5,
+            "autoClose": this.o.autoClose
+        }), item);
+
         return Q($.ajax({
             type: "POST",
             url: this.o.server_url + "/metadata/file",
             contentType: "application/json",
-            data: JSON.stringify({
-                "context": this.o.context,
-                "md5": item.details.md5,
-                "autoClose": this.o.autoClose
-            })
+            data: JSON.stringify(body)
         }));
     };
 
@@ -438,7 +440,7 @@ define([
      */
     FxUploader.prototype._closeFile = function (item) {
 
-        var body = this._createPostProcessBody(item);
+        var body = this._createPostBody(this.o.body_create_file, item);
 
         return Q($.ajax({
             type: "POST",
@@ -459,7 +461,7 @@ define([
 
         this._setStepStatus(status.DOING, item);
 
-        var body = this._createPostProcessBody(item);
+        var body = this._createPostBody(this.o.body_post_process, item);
 
         return Q($.ajax({
             type: "POST",
@@ -470,12 +472,13 @@ define([
 
     };
 
-    FxUploader.prototype._createPostProcessBody = function (item) {
+    FxUploader.prototype._createPostBody = function (conf, item) {
 
         //create custom body
-        var body = {};
+        var raw = conf || {},
+            body = {};
 
-        _.each(this.o.body_post_process, function (obj, key) {
+        _.each(conf, function (obj, key) {
 
             if (!obj.toString().startsWith('@')) {
                 body[key] = obj;

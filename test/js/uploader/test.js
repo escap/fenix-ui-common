@@ -49,17 +49,19 @@ define([
             container: s.UPLOADER_AMIS,
             context: "policy",
             server_url: DEV_URL,
-            body_post_process : { policy : 11}
+            body_post_process : { policy : 11},
+            body_create_file : {
+                size: "@file.size",
+                name: "@file.name"
+            }
+
         };
 
         this._renderUploader(config);
 
     };
 
-
     Test.prototype._renderUploader = function (config) {
-        console.log("Before render 2")
-        console.log(config)
 
         var uploader = new Uploader();
 
