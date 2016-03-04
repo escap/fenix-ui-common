@@ -438,7 +438,7 @@ define([
      */
     FxUploader.prototype._closeFile = function (item) {
 
-        var body = this._createPostProcessBody();
+        var body = this._createPostProcessBody(item);
 
         return Q($.ajax({
             type: "POST",
@@ -459,7 +459,7 @@ define([
 
         this._setStepStatus(status.DOING, item);
 
-        var body = this._createPostProcessBody();
+        var body = this._createPostProcessBody(item);
 
         return Q($.ajax({
             type: "POST",
@@ -470,7 +470,7 @@ define([
 
     };
 
-    FxUploader.prototype._createPostProcessBody = function () {
+    FxUploader.prototype._createPostProcessBody = function (item) {
 
         //create custom body
         var body = {};

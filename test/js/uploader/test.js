@@ -58,6 +58,8 @@ define([
 
 
     Test.prototype._renderUploader = function (config) {
+        console.log("Before render 2")
+        console.log(config)
 
         var uploader = new Uploader();
 
