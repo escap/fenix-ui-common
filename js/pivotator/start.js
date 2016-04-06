@@ -4,6 +4,7 @@ define([
 
     'use strict';
 //FIG
+var MYFINALRESULT;
     var myfunc = new myFunction();
 
     var SortedSet = (function () {
@@ -157,8 +158,10 @@ define([
         }
     };
 
+	var toFXJson =function(x){return x}
+	
     var pivot = (function () {
-        var MYFINALRESULT;
+        
         var defaultOptions = {
             extractor: null,
             comparators: {}
@@ -184,11 +187,7 @@ define([
         function buildPivotResult(data, row, cols, getValue, cumulative) {
 
 // console.log("data",data, "row",row,"cols", cols);
-            if (!getValue) {
-                getValue = function (a) {
-                    return a
-                }
-            }//mapping
+            if (!getValue) {getValue = function (a) {return a}}//mapping
 
             var listTotalColumns = {};
             var listTotalRows = {};
@@ -224,7 +223,7 @@ define([
                 listTotalRows[indexR] = true;
             }
 
-
+				
             return {data: result, columns: listTotalColumns, rows: listTotalRows, internalObject: MYFINALRESULT};
         }
 
@@ -247,7 +246,7 @@ define([
 
         function toFenix(FX, rowNames, columnNames, userOptions) {
             var data = [];
-            MYFINALRESULT = {data: [], rows: [], cols: [], okline: [], nookline: []};//to internal test and dataset function
+           // MYFINALRESULT = {data: [], rows: [], cols: [], okline: [], nookline: [],rowname:[],colsname:[]};//to internal test and dataset function
             var result = {data: [], metadata: {dsd: {columns: []}}}
 
             for (var i in FX.data) {
@@ -263,25 +262,29 @@ define([
             }
             var pivotdata = pivotData(data, rowNames, columnNames, userOptions);
             for (var i in pivotdata.data) {
-                MYFINALRESULT.rows.push(i);
-                var temp = i.split("|*");
-                var temp2 = [];//for internaldata
+			var temp = i.split("|*");
+             //MYFINALRESULT.rows.push(temp);
+                
+              /*  var temp2 = [];
+				if(userOptions.fulldataformat==true){temp2=temp}
+				*/
+				//for internaldata
                 for (var j in pivotdata.columns) {
                     if (pivotdata.data[i][j]) {
-                        //temp.push(myfunc.getAgg(userOptions.aggregator)(pivotdata.data[i][j],myfunc.getFormater(userOptions.formater),userOptions.nbDecimal) )
-                        temp2.push(myfunc.getAgg(userOptions.aggregator)(pivotdata.data[i][j], myfunc.getFormater(userOptions.formater), userOptions.nbDecimal));
+                        temp.push(myfunc.getAgg(userOptions.aggregator)(pivotdata.data[i][j],myfunc.getFormater(userOptions.formater),userOptions.nbDecimal) )
+                        //temp2.push(myfunc.getAgg(userOptions.aggregator)(pivotdata.data[i][j], myfunc.getFormater(userOptions.formater), userOptions.nbDecimal));
                         //console.log(pivotdata.data[i][j])
                     }
                     else {
-                        //temp.push(null);
-                        temp2.push(null)
+                        temp.push(null);
+                        //temp2.push(null)
                     }
                 }
-                result.data.push(temp.concat(temp2))
-                MYFINALRESULT.data.push(temp2)
+               result.data.push(temp.concat(temp))
+                //MYFINALRESULT.data.push(temp2)
             }
 
-            var moyenne = jStat(MYFINALRESULT.data).mean();
+            /*var moyenne = jStat(MYFINALRESULT.data).mean();
 
             for (var count = 0; count < MYFINALRESULT.data.length; count++) {
                 var corIndex = jStat.corrcoeff(moyenne, MYFINALRESULT.data[count]);
@@ -293,52 +296,130 @@ define([
                     MYFINALRESULT.okline.push(" ligne " + MYFINALRESULT.rows[count] + " : " + corIndex);
                 }
 
-            }
+            }*/
 
             var traduc = {}
-            for (var i in FX.metadata.dsd.columns) {
-                traduc[FX.metadata.dsd.columns[i].id] = FX.metadata.dsd.columns[i].title["EN"]
+            for (var i in FX.metadata.dsd.columns) {traduc[FX.metadata.dsd.columns[i].id] = FX.metadata.dsd.columns[i].title["EN"]}
+            
+			for (var i in rowNames) {
+               result.metadata.dsd.columns.push({id: rowNames[i], title: {EN: traduc[rowNames[i]]}})
+				//MYFINALRESULT.rowname.push({id: rowNames[i], title: {EN: traduc[rowNames[i]]}})
             }
-            for (var i in rowNames) {
-                result.metadata.dsd.columns.push({id: rowNames[i], title: {EN: traduc[rowNames[i]]}})
+			for (var i in columnNames) {
+                //result.metadata.dsd.columns.push({id: rowNames[i], title: {EN: traduc[rowNames[i]]}})
+				//MYFINALRESULT.colsname.push({id: columnNames[i], title: {EN: traduc[columnNames[i]]}})
             }
+			
+			
             for (var i in pivotdata.columns) {
-                result.metadata.dsd.columns.push({
-                    id: i.replace(/\|\*/g, "_"),
-                    title: {EN: i.replace(/\|\*/g, "\n")},
-                    subject: "value"
-                })
+                result.metadata.dsd.columns.push({id: i.replace(/\|\*/g, "_"),title: {EN: i.replace(/\|\*/g, "\n")},subject: "value"})
+				//MYFINALRESULT.cols.push({id: i.replace(/\|\*/g, "_"),title: {EN: i.replace(/\|\*/g, "\n")}})
             }
+		//	console.log("MYFINALRESULT",MYFINALRESULT)
             return result;
+//return MYFINALRESULT;
+
+        }
+		
+		
+		function toR(FX, rowNames, columnNames, userOptions) {
+            var data = [];
+            MYFINALRESULT = {data: [], rows: [], cols: [], okline: [], nookline: [],rowname:[],colsname:[]};//to internal test and dataset function
+           // var result = {data: [], metadata: {dsd: {columns: []}}}
+
+            for (var i in FX.data) {
+                //if(i>1000)break;
+                var tmp = {}
+
+                for (var j in FX.metadata.dsd.columns) {
+                    tmp[FX.metadata.dsd.columns[j].id] = FX.data[i][j];
+                }
+
+
+                data.push(tmp);
+            }
+            var pivotdata = pivotData(data, rowNames, columnNames, userOptions);
+			console.log(pivotdata)
+			
+            for (var i in pivotdata.data) {
+			var temp = i.split("|*");
+             MYFINALRESULT.rows.push(temp);
+                
+                var temp2 = [];
+				if(userOptions.fulldataformat==true){temp2=temp}
+				//for internaldata
+                for (var j in pivotdata.columns) {
+                    if (pivotdata.data[i][j]) {
+                        //temp.push(myfunc.getAgg(userOptions.aggregator)(pivotdata.data[i][j],myfunc.getFormater(userOptions.formater),userOptions.nbDecimal) )
+                        temp2.push(myfunc.getAgg(userOptions.aggregator)(pivotdata.data[i][j], myfunc.getFormater(userOptions.formater), userOptions.nbDecimal));
+                        //console.log(pivotdata.data[i][j])
+                    }
+                    else {
+                        //temp.push(null);
+                        temp2.push(null)
+                    }
+                }
+              //  result.data.push(temp.concat(temp2))
+                MYFINALRESULT.data.push(temp2)
+            }
+
+            /*var moyenne = jStat(MYFINALRESULT.data).mean();
+
+            for (var count = 0; count < MYFINALRESULT.data.length; count++) {
+                var corIndex = jStat.corrcoeff(moyenne, MYFINALRESULT.data[count]);
+                //console.log("corIndex",corIndex)
+                if (corIndex < 0.8 || corIndex.toString() == "NaN") {
+                    MYFINALRESULT.nookline.push(" problem ligne " + MYFINALRESULT.rows[count] + " : " + corIndex);
+                }
+                else {
+                    MYFINALRESULT.okline.push(" ligne " + MYFINALRESULT.rows[count] + " : " + corIndex);
+                }
+
+            }*/
+
+            var traduc = {}
+            for (var i in FX.metadata.dsd.columns) {traduc[FX.metadata.dsd.columns[i].id] = FX.metadata.dsd.columns[i].title["EN"]}
+            
+			for (var i in rowNames) {
+               // result.metadata.dsd.columns.push({id: rowNames[i], title: {EN: traduc[rowNames[i]]}})
+				MYFINALRESULT.rowname.push({id: rowNames[i], title: {EN: traduc[rowNames[i]]}})
+            }
+			for (var i in columnNames) {
+               // result.metadata.dsd.columns.push({id: rowNames[i], title: {EN: traduc[rowNames[i]]}})
+				MYFINALRESULT.colsname.push({id: columnNames[i], title: {EN: traduc[columnNames[i]]}})
+            }
+			
+			
+            for (var i in pivotdata.columns) {
+                //result.metadata.dsd.columns.push({id: i.replace(/\|\*/g, "_"),title: {EN: i.replace(/\|\*/g, "\n")},subject: "value"})
+				MYFINALRESULT.cols.push({id: i.replace(/\|\*/g, "_"),title: {EN: i.replace(/\|\*/g, "\n")}})
+            }
+		//	console.log("MYFINALRESULT",MYFINALRESULT)
+            //return result;
+return MYFINALRESULT;
 
         }
 
 
          function pivotData(data, rowNames, columnNames, userOptions) {
 
-            if (userOptions === undefined) {
-                userOptions = {};
-            }
+            if (userOptions === undefined) {userOptions = {};}
             var options = {};
             Utils.copyProperties(defaultOptions, options);
-            if (userOptions) {
-                Utils.copyProperties(userOptions, options);
-            }
+            if (userOptions) {Utils.copyProperties(userOptions, options);}
             var leftSet = new SortedSet(Utils.makeComparator(rowNames, data, options));
             var topSet = new SortedSet(Utils.makeComparator(columnNames, data, options));
 
             //console.log("leftSet",leftSet,"topSet",topSet)
 //ONLY if we want to use an derived attributs function or a filter attribute
             //options.extractor=function(e){return e}
-            if (options.extractor) {
-                data = extractData(data, options);
-            }
+            if (options.extractor) {data = extractData(data, options);}
 
 
             return buildPivotResult(data, rowNames, columnNames, myfunc.getGetValue(userOptions.myfunction), userOptions.cumulative);
         }
 
-        return toFenix;
+        return toR;
         // return toR;
 
     }());
@@ -347,6 +428,7 @@ define([
     return function () {
         return {
             pivot: pivot,
+			 toFXJson: toFXJson,
         }
     };
 });
