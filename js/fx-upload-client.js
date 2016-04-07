@@ -336,7 +336,7 @@ define([
 
                         self._setItemStatus(status.DONE, item);
 
-                        amplify.publish(self.o.event_prefix + "finish");
+                        amplify.publish(self.o.event_prefix + "finish", {item : item});
 
                     }
 
