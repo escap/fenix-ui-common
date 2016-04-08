@@ -80,7 +80,7 @@ var Aggregator={sum:function(cell,format,nbDec){var a= jStat(cell);return format
 				concat:function(cell,format,nbDec){var a= cell;console.log(a);return a.join(" - ")}
 				}
 var GetValue={Classic:function(rec){return rec.Value},classic:function(rec){return rec.value},
-ClassicToNumber:function(rec){return parseFloat(rec.Value)},classicToNumber:function(rec){return parseFloat(rec.value)||null}
+ClassicToNumber:function(rec){if(rec.Value==null){return null}return parseFloat(rec.Value)},classicToNumber:function(rec){if(rec.value==null){return null}return parseFloat(rec.value)}
 };
 
 var Formater={localstring:function(e,nbdecimal){return (Math.floor(e*Math.pow(10,nbdecimal))/Math.pow(10,nbdecimal)).toLocaleString()},
@@ -103,8 +103,6 @@ getListAggregator:getListAggregator,
 			getGetValue:getGetValue,
 			getFormater:getFormater
 			}
-			
-	
 }
 
 }
