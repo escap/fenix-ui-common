@@ -30,8 +30,11 @@ define([
             onchange: function () {
                 var optGr = myToolbar.getConfigCOLROW();
                 //console.log("rowcol",rowcol);
-				optGr["fulldataformat"]=true;
-                console.log(myPivot.toFX(Model,optGr));
+				optGr["fulldataformat"]=false;
+                console.log("toPivotData",myPivot.toPivotData(Model,optGr));
+                console.log("ToFX",myPivot.toFX(Model,optGr));
+
+                console.log("toFXJson",myPivot.toFXJson(Model,optGr));
             }
             , lang: "EN", nbDecimal: 2
         });
@@ -44,11 +47,11 @@ define([
 		  console.log("toPivotData",myPivot.toPivotData(Model,optGr));
         console.log("ToFX",myPivot.toFX(Model,optGr));
 		 
-		 console.log("toFXJson",myPivot.toFXJson(Model,optGr));
+		  console.log("toFXJson",myPivot.toFXJson(Model,optGr));
 		
-        log.info(Pivotator);
-        log.info(PivotatorFunctions);
-        log.info(Model);
+      //  log.info(Pivotator);
+        //log.info(PivotatorFunctions);
+        //log.info(Model);
     };
 
     return new Test();

@@ -120,6 +120,14 @@ define([
 
         };
 
+        Menu.prototype.hideItem = function (item) {
+
+            var $item = this.$el.find("[data-tab='"+item+"']");
+
+            $item.addClass("hidden");
+
+        };
+
         return Menu;
 
     });
