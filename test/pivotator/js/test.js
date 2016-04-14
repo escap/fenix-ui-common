@@ -42,13 +42,13 @@ define([
 		console.log(optGr)
 		 console.log("MODEL : FX initial",Model);
 		  console.log("toPivotData",myPivot.toPivotData(Model,optGr));
-       // console.log("ToFX",myPivot.toFX(Model,optGr));
+        console.log("ToFX",myPivot.toFX(Model,optGr));
 		 
-		 // console.log("toFXJson",myPivot.toFXJson(Model,optGr));
+		 console.log("toFXJson",myPivot.toFXJson(Model,optGr));
 		
-      //  log.info(Pivotator);
-        //log.info(PivotatorFunctions);
-        //log.info(Model);
+        log.info(Pivotator);
+        log.info(PivotatorFunctions);
+        log.info(Model);
     };
 
     return new Test();

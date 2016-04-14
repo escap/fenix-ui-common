@@ -158,7 +158,128 @@ var MYFINALRESULT;
         }
     };
 
-	var identity =function(x){return x}
+	var identity =function(){return x}
+	
+	
+	
+	var toTree=function(arr,mySpan)
+	{
+		
+		
+var data=[{id:'root'}];
+var indexMap={}
+for(var i in arr){
+	for(var j=1;j<= arr[i].length;j++){
+		var index=arr[i].slice(0,j).join("_");
+		if(!indexMap[index]){indexMap[index]=false;}
+		var indexOld=""
+		if(j>1){
+		indexOld=arr[i].slice(0,j-1).join("_");}
+			if(indexMap[index]==false)
+			{
+				if(indexOld.length>0){
+					data.push({"id":index,"parentId":indexOld})}
+				else	{data.push({"id":index,"parentId":'root'})}
+			}
+			indexMap[index]=true;
+			}			
+		}
+//		console.log(data);
+
+var options = {  childKey  : 'id',  parentKey : 'parentId'};
+
+
+//document.body.innerHTML += '<pre>' + JSON.stringify(tree, null, 4) + '</pre>';
+
+function listToTree(list, options) {
+  options = options || {};
+  var childKey    = options.childKey    || 'child';
+  var parentKey   = options.parentKey   || 'parent';
+  var childrenKey = options.childrenKey || 'children';
+  var nodeFn      = options.nodeFn      || function(node, name, children) {   return { name : name, children : children };  };
+  var nodeCache = {};
+  return list.reduce(function(tree, node) {
+    node[childrenKey] = [];
+    nodeCache[node[childKey]] = node;
+    if (typeof node[parentKey] === 'undefined' || node[parentKey] === '') {
+      tree = nodeFn(node, node[childKey], node[childrenKey]);
+    } else {
+     var  parentNode = nodeCache[node[parentKey]];
+      parentNode[childrenKey].push(nodeFn(node, node[childKey], node[childrenKey]));
+    }
+    return tree;
+  }, {});
+}
+
+function walkTree(tree, visitorFn, parent) {
+  if (visitorFn == null || typeof visitorFn !== 'function') {
+    return tree;
+  }
+  visitorFn.call(tree, tree, parent);
+  if (tree.children && tree.children.length > 0) {
+    tree.children.forEach(function(child) {
+      walkTree(child, visitorFn, tree);
+    });
+  }
+  return tree;
+}
+
+function pruneChildren(node, parent) {
+  if (node.children.length < 1) {
+    delete node.children;
+  }
+}
+	
+	
+	function setColRowSpan(tree)
+	{
+		
+
+if(!tree.children || tree.children.length==0){		tree["span"]=1}
+else{tree["span"]=0;}
+		for(var i in tree.children)
+		{tree["span"]+=setColRowSpan(tree.children[i])}
+	return tree["span"];
+	}
+	
+	var tree = walkTree(listToTree(data, options), pruneChildren);
+setColRowSpan(tree,mySpan)
+
+function treeToTab(tree,prof,profCurrent)
+{
+	ret=[];
+	if(prof==profCurrent)
+	{
+		for(var i in tree.children)
+		{
+		//console.log("INSIDE",tree.children[i])	
+			ret.push({id:tree.children[i].name,span:tree.children[i].span})
+			}
+		
+	}
+	else
+	{
+for(var i in tree.children){ret=ret.concat(treeToTab(tree.children[i],prof,profCurrent+1))}
+	}
+	
+	return ret;
+}
+
+
+
+
+var ret2=[];
+for(var i in arr[0])
+{//console.log("HIHI",i);
+var temp=[]
+//console.log(ret[i],treeToTab(tree,i,0))
+	temp=treeToTab(tree,i,0);
+	ret2.push(temp);
+}
+//console.log('final ret',ret2);
+return ret2;//tree;
+	
+	}
 	
    
         
@@ -321,7 +442,7 @@ for (var i in FX.data) {
                 result.metadata.dsd.columns.push({id: i.replace(/\|\*/g, "_"),title: {EN: i.replace(/\|\*/g, "\n")},subject: "value"})
 				//MYFINALRESULT.cols.push({id: i.replace(/\|\*/g, "_"),title: {EN: i.replace(/\|\*/g, "\n")}})
             }
-		//	console.log("MYFINALRESULT",MYFINALRESULT)
+		//console.log("MYFINALRESULT",MYFINALRESULT)
             return result;
 //return MYFINALRESULT;
 
@@ -330,7 +451,7 @@ for (var i in FX.data) {
 		
 		function toFXJson(FX,userOptions) {
 		//console.log("toFXJon")
-            MYFINALRESULT = {data: [], rows: [], cols: [], okline: [], nookline: [],rowname:[],colsname:[]};//to internal test and dataset function
+            MYFINALRESULT = {data: [], rows: [], cols: [],cols2: [], okline: [], nookline: [],rowname:[],colsname:[]};//to internal test and dataset function
            // var result = {data: [], metadata: {dsd: {columns: []}}}
 
             var pivotdata = toPivotData(FX,  userOptions);
@@ -393,7 +514,8 @@ for (var i in FX.data) {
             for (var ii in pivotdata.columns) {
 			var i=pivotdata.columns[ii];
                 //result.metadata.dsd.columns.push({id: i.replace(/\|\*/g, "_"),title: {EN: i.replace(/\|\*/g, "\n")},subject: "value"})
-				MYFINALRESULT.cols.push({id: i.replace(/\|\*/g, "_"),title: {EN: i.replace(/\|\*/g, "\n")}})
+				MYFINALRESULT.cols.push({id: i.replace(/\|\*/g, "_"),title: {EN: i.replace(/\|\*/g, "\n")}});
+				MYFINALRESULT.cols2.push(i.split("|*"))
             }
 			//console.log("MYFINALRESULT",MYFINALRESULT)
             //return result;
@@ -412,6 +534,7 @@ return MYFINALRESULT;
 			toPivotData:toPivotData,
 			toFX:toFX,
 			identity: identity,
+			toTree:toTree
         }
     };
 });
