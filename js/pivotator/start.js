@@ -304,7 +304,7 @@ return ret2;//tree;
 
         function buildPivotResult(data, row, cols, getValue, cumulative) {
 
-		//	 console.log("buildPivotResult","data",data, "row",row,"cols", cols,"getValue",getValue);
+			 console.log("buildPivotResult","data",data, "row",row,"cols", cols,"getValue",getValue);
             if (!getValue) {getValue = function (a) {return a}}//mapping
 
             var listTotalColumns = {};
