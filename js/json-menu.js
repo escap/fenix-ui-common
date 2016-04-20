@@ -36,7 +36,7 @@ define([
 
             for (var i = 0; i < data.length; i++) {
                 item = data[i];
-                var label = item["name"];
+                var label = item["label"];
                 var parentid = item["parent_id"];
                 var id = item["id"];
                 var url = item["url"];
@@ -125,6 +125,22 @@ define([
             var $item = this.$el.find("[data-tab='"+item+"']");
 
             $item.addClass("hidden");
+
+        };
+
+        Menu.prototype.disableItem = function (item) {
+
+            var $item = this.$el.find("[data-selector='"+item+"']").parent();
+
+            $item.addClass("disabled");
+
+        };
+
+        Menu.prototype.enableItem = function (item) {
+
+            var $item = this.$el.find("[data-selector='"+item+"']").parent();
+
+            $item.removeClass("disabled");
 
         };
 
