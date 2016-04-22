@@ -37,8 +37,8 @@ define(function () {
             'jquery.fileupload-process': '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-process',
             'jquery.fileupload-validate': '{FENIX_CDN}/js/jquery-file-upload/9.10.4/js/jquery.fileupload-validate',
 
-            'draggabilly': '{FENIX_CDN}/js/draggabilly/dist/draggabilly.pkgd.min',
-            'packery': '{FENIX_CDN}/js/packery/dist/packery.pkgd.min',
+            'draggabilly': '{FENIX_CDN}/js/draggabilly/2.1.0/dist/draggabilly.pkgd.min',
+            'packery': '{FENIX_CDN}/js/packery/1.4.3/dist/packery.pkgd.min',
 
             'jstat': '{FENIX_CDN}/js/jStat/1.5.2/jstat.min'
 
