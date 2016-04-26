@@ -19,7 +19,7 @@ define(function () {
         //Grid
         FLUID_GRID_CONFIG : {
             drag: {
-                handle: '[data-role="fx-grid-item-handle"]'
+                handle: '[data-grid="fx-grid-item-handle"]'
             },
             config: {
                 itemSelector: '[data-role="fx-grid-item"]',
