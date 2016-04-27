@@ -15,7 +15,9 @@ define(function () {
         CODELIST_SERVICE: 'msd/codes/filter',
         ENUMERATION_SERVICE: 'msd/choices/',
         PROCESSES_SERVICE : "processes/",
-        
+        METADATA_SERVICE : "msd/resources/metadata/",
+        RESOURCES_SERVICE : "msd/resources/",
+
         //Grid
         FLUID_GRID_CONFIG : {
             drag: {

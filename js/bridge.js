@@ -134,7 +134,7 @@ define([
 
     };
 
-    Bridge.prototype.getProcessedResourcePromise = function (obj) {
+    Bridge.prototype.getResource = function (obj) {
 
         var serviceProvider = obj.serviceProvider || C.SERVICE_PROVIDER || DC.SERVICE_PROVIDER,
             processesService = obj.processesService || C.PROCESSES_SERVICE || DC.PROCESSES_SERVICE;
@@ -145,6 +145,19 @@ define([
             dataType: obj.dataType || 'json',
             contentType: obj.contentType || "application/json",
             data: JSON.stringify(obj.body)
+        }));
+
+    };
+
+    Bridge.prototype.getMetadata = function (obj) {
+
+        var serviceProvider = obj.serviceProvider || C.SERVICE_PROVIDER || DC.SERVICE_PROVIDER,
+            processesService = obj.metadataService || C.METADATA_SERVICE || DC.METADATA_SERVICE;
+
+        return Q($.ajax({
+            url: serviceProvider + processesService + this._parseUidAndVersion(obj, true) + this._parseQueryParams(obj.params),
+            type: obj.type || "GET",
+            dataType: obj.dataType || 'json'
         }));
 
     };
@@ -170,9 +183,10 @@ define([
 
     };
 
-    Bridge.prototype._parseUidAndVersion = function (params) {
+    Bridge.prototype._parseUidAndVersion = function (params, appendUid) {
 
-        var result = '';
+        var result = '',
+            versionFound = false;
 
         if (!params.uid) {
             log.warn("Impossible to find uid")
@@ -182,9 +196,10 @@ define([
 
         if (params.version) {
             result = result.concat("/").concat(params.version);
+            versionFound = true
         }
 
-        return result;
+        return (appendUid === true && versionFound !== true) ? 'uid/' + result : result;
 
     };
 
