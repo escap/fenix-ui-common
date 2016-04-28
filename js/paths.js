@@ -40,7 +40,9 @@ define(function () {
             'draggabilly': '{FENIX_CDN}/js/draggabilly/2.1.0/dist/draggabilly.pkgd.min',
             'packery': '{FENIX_CDN}/js/packery/1.4.3/dist/packery.pkgd.min',
 
-            'jstat': '{FENIX_CDN}/js/jStat/1.5.2/jstat.min'
+            'jstat': '{FENIX_CDN}/js/jStat/1.5.2/jstat.min',
+            loglevel: '{FENIX_CDN}/js/loglevel/1.4.0/loglevel'
+
 
         },
 

@@ -28,6 +28,10 @@ define(function () {
                 percentPosition: true,
                 rowHeight: '[data-role="fx-grid-item"]'
             }
-        }
+        },
+
+        //Utils
+        DEFAULT_PERIOD_FROM: 1960,
+        DEFAULT_PERIOD_TO: 2016
     }
 });
