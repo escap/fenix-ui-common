@@ -28,6 +28,8 @@ define([
         return this;
     }
 
+    /* CONVERTER */
+
     Utils.prototype.toD3P = function (items, values) {
 
         var filter = {},
@@ -196,6 +198,8 @@ define([
         }
         return newArray;
     };
+
+    /* FILTER UTILS */
 
     /**
      * Creates a FENIX filter configuration from a
@@ -885,6 +889,36 @@ define([
         }
 
         return errors.length > 0 ? errors : valid;
+    };
+
+    /* COMMONS */
+
+    Utils.prototype.assign = function(obj, prop, value) {
+        if (typeof prop === "string")
+            prop = prop.split(".");
+
+        if (prop.length > 1) {
+            var e = prop.shift();
+            this.assign(obj[e] =
+                    Object.prototype.toString.call(obj[e]) === "[object Object]"
+                        ? obj[e]
+                        : {},
+                prop,
+                value);
+        } else {
+            obj[prop[0]] = value;
+        }
+    };
+
+    Utils.prototype.getNestedProperty = function (path, obj) {
+
+        var obj = $.extend(true, {}, obj),
+            arr = path.split(".");
+
+        while (arr.length && (obj = obj[arr.shift()]));
+
+        return obj;
+
     };
 
     return new Utils();
