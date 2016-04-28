@@ -5267,57 +5267,13 @@ button:active {
 input[type="button"]::-moz-focus-inner {
   border: 0; }
 
-.btn {
-  background-color: #0076ff;
-  color: white;
-  border-color: transparent;
-  font: normal normal 300 14px/normal "Roboto Condensed"; }
-  .btn:hover {
-    background-color: transparent;
-    color: #0076ff;
-    border-color: #0076ff; }
-  .btn:active {
-    background-color: transparent;
-    color: #0076ff;
-    border-color: #0076ff;
-    -webkit-box-shadow: 0 0 0 white;
-    -moz-box-shadow: 0 0 0 white;
-    box-shadow: 0 0 0 white; }
-
-.fx-button-reset {
-  background-color: transparent;
-  color: #666666;
-  border-color: transparent;
-  font: normal normal 300 14px/normal "Roboto Condensed"; }
-  .fx-button-reset:hover {
-    background-color: transparent;
-    color: #666666;
-    border-color: transparent; }
-  .fx-button-reset:active {
-    background-color: transparent;
-    color: #666666;
-    border-color: transparent;
-    -webkit-box-shadow: 0 0 0 white;
-    -moz-box-shadow: 0 0 0 white;
-    box-shadow: 0 0 0 white; }
-
-.btn-primary.disabled
-, .btn-primary[disabled]
-, fieldset[disabled] .btn-primary
-, .btn-primary.disabled:hover
-, .btn-primary[disabled]:hover
-, fieldset[disabled] .btn-primary:hover
-, .btn-primary.disabled:focus
-, .btn-primary[disabled]:focus
-, fieldset[disabled] .btn-primary:focus
-, .btn-primary.disabled:active
-, .btn-primary[disabled]:active
-, fieldset[disabled] .btn-primary:active
-, .btn-primary.disabled.active
-, .btn-primary[disabled].active
-, fieldset[disabled] .btn-primary.active {
-  background-color: #407bbf;
-  border-color: #407bbf; }
+.btn-round {
+  padding: 3px;
+  height: 24px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%; }
 
 /* Fenix UI Catalog */
 .fx-catalog-welcome {
@@ -5713,6 +5669,16 @@ fieldset {
 
   .col-lg-bottom {
     vertical-align: bottom; } }
+/* Fenix Icons */
+.fx-icon {
+  height: 15px;
+  width: 15px;
+  display: inline-block;
+  background: url(".//css/img/fenix-catalog-sprite-small.svg") 150px 30px no-repeat; }
+
+.fx-icon-close {
+  background-position: 0 -15px; }
+
 /* Fenix - Inputs Component */
 /* remove x icon in IE 10+ */
 input[type=text]::-ms-clear {
@@ -6206,6 +6172,88 @@ input[type="checkbox"]:checked + label {
     -ms-transition: all 0.3s ease 0s;
     -o-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s; }
+
+/* Radio Buttons */
+input[type="radio"] {
+  display: none; }
+
+input[type="radio"] + label {
+  cursor: pointer;
+  margin: 0 7px;
+  font-weight: normal; }
+  input[type="radio"] + label:before {
+    content: '';
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    background-color: #dddddd;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    border-radius: 100%;
+    border: 0 solid #0076ff;
+    position: relative;
+    top: 2px;
+    left: -4px; }
+
+input[type="radio"]:checked + label {
+  color: #0076ff; }
+  input[type="radio"]:checked + label:before {
+    border-width: 5px; }
+
+input[type="radio"] + label:before,
+input[type="radio"]:checked + label:before {
+  -webkit-transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -ms-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s; }
+
+/* Checkbox Buttons */
+input[type="checkbox"] {
+  display: none; }
+
+input[type="checkbox"] + label {
+  cursor: pointer;
+  margin: 0 7px;
+  font-weight: normal; }
+  input[type="checkbox"] + label:before {
+    content: '';
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    background-color: #dddddd;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    border-radius: 100%;
+    border: 0 solid #0076ff;
+    position: relative;
+    top: 2px;
+    left: -4px; }
+
+input[type="checkbox"]:checked + label {
+  color: #0076ff; }
+  input[type="checkbox"]:checked + label:before {
+    border-width: 5px; }
+
+input[type="checkbox"] + label:before,
+input[type="checkbox"]:checked + label:before {
+  -webkit-transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -ms-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s; }
+
+/* Disabled */
+input[type="checkbox"]:disabled + label,
+input[type="radio"]:disabled + label {
+  cursor: no-drop;
+  opacity: 0.4; }
+  input[type="checkbox"]:disabled + label:before,
+  input[type="radio"]:disabled + label:before {
+    cursor: no-drop;
+    opacity: 0.4; }
 
 /* Fenix Range Slider */
 .ui-rangeSlider-innerBar {

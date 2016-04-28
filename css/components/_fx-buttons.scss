@@ -23,29 +23,9 @@ input[type="button"]::-moz-focus-inner{
   border:0;
 }
 
-.btn {
-  @include fx-btn-filled;
-}
 
-.fx-button-reset{
-  @include fx-btn-reset;
-}
-
-.btn-primary.disabled
-, .btn-primary[disabled]
-, fieldset[disabled] .btn-primary
-, .btn-primary.disabled:hover
-, .btn-primary[disabled]:hover
-, fieldset[disabled] .btn-primary:hover
-, .btn-primary.disabled:focus
-, .btn-primary[disabled]:focus
-, fieldset[disabled] .btn-primary:focus
-, .btn-primary.disabled:active
-, .btn-primary[disabled]:active
-, fieldset[disabled] .btn-primary:active
-, .btn-primary.disabled.active
-, .btn-primary[disabled].active
-, fieldset[disabled] .btn-primary.active{
-  background-color: desaturate( $fx-cool-blue, 50% );
-  border-color: desaturate( $fx-cool-blue, 50% );
+.btn-round{
+  padding: 3px;
+  height: 24px;
+  @include fx-border-radius(50%);
 }
