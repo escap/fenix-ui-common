@@ -1,6 +1,7 @@
 /* Fenix Interface Style */
 /* Produced By Fenix Team and Mentaltoy 2014 All rights reserved */
 /* Variables */
+/*#0076ff*/
 /* Style with no variables */
 /* Fenix Style No Variables */
 /* Boostrap Queries */
@@ -5209,7 +5210,7 @@ body {
   font: normal normal 300 14px/normal "Roboto Condensed"; }
 
 a {
-  color: #0076ff; }
+  color: red; }
   a:focus {
     outline: none; }
   a:active {
@@ -5221,24 +5222,24 @@ a {
 
 h1 {
   font: normal normal 100 36px/normal "Roboto";
-  color: #0076ff; }
+  color: red; }
 
 h2 {
   font: normal normal 100 26px/normal "Roboto";
-  color: #2679d9; }
+  color: #d92626; }
 
 h3 {
   font: normal normal 300 28px/normal "Roboto";
-  color: #407bbf; }
+  color: #bf4040; }
 
 h4 {
   font: normal normal 500 14px/normal "Roboto Condensed";
-  color: #597da6; }
+  color: #a65959; }
 
 h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small, h1 .small, h2 .small, h3 .small, h4 .small, h5 .small, h6 .small, .h1 .small, .h2 .small, .h3 .small, .h4 .small, .h5 .small, .h6 .small {
   font-family: Roboto;
   font-weight: 700;
-  color: #0076ff;
+  color: red;
   text-transform: uppercase;
   font-size: 12px; }
 
@@ -5424,7 +5425,7 @@ input[type="button"]::-moz-focus-inner {
   width: 20px;
   line-height: 20px;
   text-align: center;
-  background-color: #0076ff;
+  background-color: red;
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
   -ms-border-radius: 100%;
@@ -5442,9 +5443,9 @@ input[type="button"]::-moz-focus-inner {
     -ms-border-radius: 0;
     border-radius: 0; }
   .datepicker .datepicker-days .day.active {
-    background-color: #0076ff; }
+    background-color: red; }
   .datepicker .datepicker-days .day.today:before {
-    border-bottom-color: #0076ff; }
+    border-bottom-color: red; }
   .datepicker .datepicker-days .day.active.today:before {
     border-bottom-color: white; }
 
@@ -5676,7 +5677,9 @@ fieldset {
   height: 15px;
   width: 15px;
   display: inline-block;
-  background: url(".//css/img/fenix-catalog-sprite-small.svg") 150px 30px no-repeat; }
+  background-image: url(".//css/img/fenix-catalog-sprite-small.svg");
+  background-repeat: no-repeat;
+  background-size: 150px 30px; }
 
 .fx-icon-close {
   background-position: 0 -15px; }
@@ -5816,7 +5819,7 @@ legend {
     background-color: transparent;
     font: normal normal 300 14px/normal "Roboto Condensed"; }
     .fx-md-viewer-wrapper .popover-title .text-info {
-      color: #0076ff; }
+      color: red; }
   .fx-md-viewer-wrapper .popover-content {
     font: normal normal 300 14px/normal "Roboto Condensed"; }
 
@@ -5887,7 +5890,7 @@ legend {
   top: 4px;
   left: 30px;
   font-weight: 300;
-  color: #407bbf; }
+  color: #bf4040; }
 
 .fx-catalog-modular-form-content {
   padding: 10px 10px 10px 10px;
@@ -5911,14 +5914,14 @@ div[data-module="sector"] .fx-catalog-modular-form-content {
   border-width: 0; }
 
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
-  border-color: #0076ff; }
+  border-color: red; }
 
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
   background-color: transparent;
   color: #333333; }
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-  color: #0076ff; }
+  color: red; }
 
 /* Fenix - Object Box Component */
 .obj-box, .obj-box-radius10, .obj-box-title {
@@ -5948,7 +5951,7 @@ div[data-module="sector"] .fx-catalog-modular-form-content {
 .obj-box-title {
   padding-top: 5px; }
   .obj-box-title h4 {
-    color: #0076ff;
+    color: red;
     font: normal normal 500 14px/normal "Roboto Condensed"; }
 
 /* Fenix - Panel Component */
@@ -5987,7 +5990,7 @@ div[data-module="sector"] .fx-catalog-modular-form-content {
         .panel-group .panel-heading .panel-title a:focus {
           text-decoration: none; }
   .panel-group .panel-heading.fx-active-panel .panel-title a {
-    color: #0076ff; }
+    color: red; }
   .panel-group .panel-body .btn {
     background-color: transparent;
     color: #333333;
@@ -6079,7 +6082,7 @@ div[data-module="sector"] .fx-catalog-modular-form-content {
   -ms-border-radius: 0;
   border-radius: 0; }
 .metadata-container .btn-success, .metadata-container .btn-warning {
-  border-color: #0076ff; }
+  border-color: red; }
 
 /* Fenix Popover Component */
 .popover {
@@ -6105,13 +6108,13 @@ input[type="radio"] + label {
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
     border-radius: 100%;
-    border: 0 solid #0076ff;
+    border: 0 solid red;
     position: relative;
     top: 4px;
     left: -4px; }
 
 input[type="radio"]:checked + label {
-  color: #0076ff; }
+  color: red; }
   input[type="radio"]:checked + label:before {
     border-width: 5px; }
 
@@ -6150,13 +6153,13 @@ input[type="checkbox"] + label {
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
     border-radius: 100%;
-    border: 0 solid #0076ff;
+    border: 0 solid red;
     position: relative;
     top: 4px;
     left: -4px; }
 
 input[type="checkbox"]:checked + label {
-  color: #0076ff; }
+  color: red; }
   input[type="checkbox"]:checked + label:before {
     border-width: 5px; }
 
@@ -6193,13 +6196,13 @@ input[type="radio"] + label {
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
     border-radius: 100%;
-    border: 0 solid #0076ff;
+    border: 0 solid red;
     position: relative;
     top: 2px;
     left: -4px; }
 
 input[type="radio"]:checked + label {
-  color: #0076ff; }
+  color: red; }
   input[type="radio"]:checked + label:before {
     border-width: 5px; }
 
@@ -6229,13 +6232,13 @@ input[type="checkbox"] + label {
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
     border-radius: 100%;
-    border: 0 solid #0076ff;
+    border: 0 solid red;
     position: relative;
     top: 2px;
     left: -4px; }
 
 input[type="checkbox"]:checked + label {
-  color: #0076ff; }
+  color: red; }
   input[type="checkbox"]:checked + label:before {
     border-width: 5px; }
 
@@ -6290,14 +6293,14 @@ input[type="radio"]:disabled + label {
 .ui-rangeSlider-leftHandle, .ui-rangeSlider-rightHandle {
   width: 20px !important;
   height: 20px !important;
-  background-color: #0076ff !important;
+  background-color: red !important;
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
   -ms-border-radius: 100%;
   border-radius: 100%; }
 
 .ui-rangeSlider-bar {
-  background-color: #0076ff !important;
+  background-color: red !important;
   margin-top: 8px !important;
   height: 5px !important; }
 
@@ -6313,7 +6316,7 @@ input[type="radio"]:disabled + label {
   min-height: 60px; }
 
 .fx-resume-title {
-  color: #0076ff;
+  color: red;
   padding-left: 15px;
   padding-top: 5px;
   font: normal normal 400 10px/normal "Roboto";
@@ -6328,7 +6331,7 @@ input[type="radio"]:disabled + label {
 #fx-catalog-submit-btn {
   color: white;
   text-transform: uppercase;
-  background-color: #0076ff;
+  background-color: red;
   width: 150px;
   position: absolute;
   bottom: 0;
@@ -6353,7 +6356,7 @@ input[type="radio"]:disabled + label {
     padding-left: 15px; }
     .fx-resume-item-selected .fx-resume-module-title em {
       font: normal normal 400 10px/normal "Roboto";
-      color: #0076ff;
+      color: red;
       font-size: 12px;
       /* Not expected */
       position: absolute;
@@ -6410,7 +6413,7 @@ input[type="radio"]:disabled + label {
       position: absolute;
       width: calc(100% - 20px);
       height: 2px;
-      background-color: #0076ff;
+      background-color: red;
       left: 10px;
       bottom: -2px;
       pointer-events: none; }
@@ -6435,14 +6438,14 @@ input[type="radio"]:disabled + label {
 
 .bs-docs-sidebar .nav > li > a:hover, .bs-docs-sidebar .nav > li > a:focus {
   background-color: transparent;
-  border-left: 1px solid #0076ff;
-  color: #0076ff;
+  border-left: 1px solid red;
+  color: red;
   text-decoration: none; }
 
 .bs-docs-sidebar .nav > .active > a, .bs-docs-sidebar .nav > .active:hover > a, .bs-docs-sidebar .nav > .active:focus > a {
   background-color: transparent;
-  border-left: 1px solid #0076ff;
-  color: #0076ff;
+  border-left: 1px solid red;
+  color: red;
   font-weight: 700; }
 
 .bs-docs-sidebar .nav .nav {
@@ -6588,7 +6591,7 @@ input[type="radio"]:disabled + label {
     .fx-tabs .nav-tabs > li > a:hover, .fx-tabs .nav-tabs > li > a:focus {
       border-color: transparent;
       background-color: transparent;
-      color: #0076ff; }
+      color: red; }
     .fx-tabs .nav-tabs > li > a:before {
       -webkit-transition: all 0.3s ease 0s;
       -moz-transition: all 0.3s ease 0s;
@@ -6599,7 +6602,7 @@ input[type="radio"]:disabled + label {
       position: absolute;
       width: 100%;
       height: 2px;
-      background-color: #0076ff;
+      background-color: red;
       left: 0;
       bottom: 5px;
       pointer-events: none;
@@ -6607,7 +6610,7 @@ input[type="radio"]:disabled + label {
       -webkit-transform: scaleX(0);
       transform: scaleX(0); }
   .fx-tabs .nav-tabs > li.active > a {
-    color: #0076ff; }
+    color: red; }
     .fx-tabs .nav-tabs > li.active > a:before {
       -webkit-transition: all 0.3s ease 0s;
       -moz-transition: all 0.3s ease 0s;
@@ -6620,7 +6623,7 @@ input[type="radio"]:disabled + label {
     .fx-tabs .nav-tabs > li.active > a:hover, .fx-tabs .nav-tabs > li.active > a:focus {
       border-color: transparent;
       background-color: transparent;
-      color: #0076ff; }
+      color: red; }
 .fx-tabs li {
   margin: 12px 0; }
 
@@ -6738,7 +6741,7 @@ input[type="radio"]:disabled + label {
     cursor: pointer; }
     .fx-visualization-box [data-control="remove"]:hover, .fx-visualization-box [data-control="remove"]:active, .fx-visualization-box [data-control="remove"]:focus {
       text-decoration: none;
-      color: #0076ff; }
+      color: red; }
     .fx-visualization-box [data-control="remove"] span.fx-widget-icons {
       font-size: 16px; }
 
@@ -6773,9 +6776,9 @@ input[type="radio"]:disabled + label {
         .fx-widget .nav-tabs > li > a:hover, .fx-widget .nav-tabs > li > a:active, .fx-widget .nav-tabs > li > a:focus, .fx-widget .nav-tabs > li > a:visited {
           border-color: transparent;
           background-color: transparent;
-          color: #0076ff; }
+          color: red; }
     .fx-widget .nav-tabs > li.active > a {
-      color: #0076ff; }
+      color: red; }
       .fx-widget .nav-tabs > li.active > a:hover, .fx-widget .nav-tabs > li.active > a:active, .fx-widget .nav-tabs > li.active > a:focus, .fx-widget .nav-tabs > li.active > a:visited {
         border-color: transparent;
         background-color: transparent; }
@@ -6783,7 +6786,7 @@ input[type="radio"]:disabled + label {
       content: '';
       width: 100%;
       height: 3px;
-      background-color: #0076ff;
+      background-color: red;
       position: absolute;
       bottom: -7px; }
 
@@ -6808,7 +6811,7 @@ input[type="radio"]:disabled + label {
     text-transform: uppercase;
     font-weight: 700;
     font-size: 11px;
-    color: #407bbf; }
+    color: #bf4040; }
 
 .fx-widget:before {
   content: "";
@@ -6912,15 +6915,15 @@ input[type="radio"]:disabled + label {
   display: none; }
 
 .fx-closepanel-container {
-  border-bottom: 1px solid #0076ff;
+  border-bottom: 1px solid red;
   padding: 5px 10px; }
   .fx-closepanel-container .fx-widget-icons {
-    color: #0076ff;
+    color: red;
     margin-right: 5px;
     cursor: pointer; }
   .fx-closepanel-container #fx-ws-close-btn {
     text-transform: uppercase;
-    color: #0076ff;
+    color: red;
     cursor: pointer;
     line-height: 1;
     display: inline-block;
@@ -6945,7 +6948,7 @@ input[type="radio"]:disabled + label {
   list-style-type: none;
   padding: 16px 16px 35px 16px;
   position: relative;
-  border-bottom: 1px solid #0076ff; }
+  border-bottom: 1px solid red; }
 
 .fx-sessionstore-item-title {
   text-transform: uppercase;
@@ -6990,7 +6993,7 @@ input[type="radio"]:disabled + label {
   width: 20px;
   line-height: 20px;
   text-align: center;
-  background-color: #0076ff;
+  background-color: red;
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
   -ms-border-radius: 100%;
@@ -7009,7 +7012,7 @@ input[type="radio"]:disabled + label {
 
 .introjs-button:hover, .introjs-button:active, .introjs-button:focus {
   text-shadow: none;
-  color: #0076ff;
+  color: red;
   text-decoration: none; }
 
 /* Fenix - JQwidgets */
@@ -7026,14 +7029,14 @@ input[type="radio"]:disabled + label {
   color: #333333;
   text-shadow: none;
   border-color: transparent;
-  background-color: #e5f1ff;
-  background-image: -moz-linear-gradient(top, #e5f1ff, #e5f1ff);
-  background-image: -ms-linear-gradient(top, #e5f1ff, #e5f1ff);
-  background-image: -o-linear-gradient(top, #e5f1ff, #e5f1ff);
-  background-image: -webkit-gradient(linear, center top, center bottom, from(#e5f1ff), to(#e5f1ff));
-  background-image: -webkit-linear-gradient(top, #e5f1ff, #e5f1ff);
-  background-image: linear-gradient(top, #e5f1ff, #e5f1ff);
-  background-image: linear-gradient(to bottom, #e5f1ff, #e5f1ff);
+  background-color: #ffe5e5;
+  background-image: -moz-linear-gradient(top, #ffe5e5, #ffe5e5);
+  background-image: -ms-linear-gradient(top, #ffe5e5, #ffe5e5);
+  background-image: -o-linear-gradient(top, #ffe5e5, #ffe5e5);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#ffe5e5), to(#ffe5e5));
+  background-image: -webkit-linear-gradient(top, #ffe5e5, #ffe5e5);
+  background-image: linear-gradient(top, #ffe5e5, #ffe5e5);
+  background-image: linear-gradient(to bottom, #ffe5e5, #ffe5e5);
   -moz-background-clip: padding;
   background-clip: padding-box;
   -webkit-background-clip: padding-box;
@@ -7100,14 +7103,14 @@ input[type="radio"]:disabled + label {
   color: #333333;
   text-shadow: none;
   border-color: transparent;
-  background-color: #e5f1ff;
-  background-image: -moz-linear-gradient(top, #e5f1ff, #e5f1ff);
-  background-image: -ms-linear-gradient(top, #e5f1ff, #e5f1ff);
-  background-image: -o-linear-gradient(top, #e5f1ff, #e5f1ff);
-  background-image: -webkit-gradient(linear, center top, center bottom, from(#e5f1ff), to(#e5f1ff));
-  background-image: -webkit-linear-gradient(top, #e5f1ff, #e5f1ff);
-  background-image: linear-gradient(top, #e5f1ff, #e5f1ff);
-  background-image: linear-gradient(to bottom, #e5f1ff, #e5f1ff);
+  background-color: #ffe5e5;
+  background-image: -moz-linear-gradient(top, #ffe5e5, #ffe5e5);
+  background-image: -ms-linear-gradient(top, #ffe5e5, #ffe5e5);
+  background-image: -o-linear-gradient(top, #ffe5e5, #ffe5e5);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#ffe5e5), to(#ffe5e5));
+  background-image: -webkit-linear-gradient(top, #ffe5e5, #ffe5e5);
+  background-image: linear-gradient(top, #ffe5e5, #ffe5e5);
+  background-image: linear-gradient(to bottom, #ffe5e5, #ffe5e5);
   -moz-background-clip: padding;
   background-clip: padding-box;
   -webkit-background-clip: padding-box;
@@ -7116,15 +7119,15 @@ input[type="radio"]:disabled + label {
 .jqx-fill-state-pressed, .jqx-widget .jqx-grid-cell-selected {
   color: #333333;
   text-shadow: none;
-  border-color: #cce4ff;
-  background-color: #cce4ff;
-  background-image: -moz-linear-gradient(top, #cce4ff, #cce4ff);
-  background-image: -ms-linear-gradient(top, #cce4ff, #cce4ff);
-  background-image: -o-linear-gradient(top, #cce4ff, #cce4ff);
-  background-image: -webkit-gradient(linear, center top, center bottom, from(#cce4ff), to(#cce4ff));
-  background-image: -webkit-linear-gradient(top, #cce4ff, #cce4ff);
-  background-image: linear-gradient(top, #cce4ff, #cce4ff);
-  background-image: linear-gradient(to bottom, #cce4ff, #cce4ff);
+  border-color: #ffcccc;
+  background-color: #ffcccc;
+  background-image: -moz-linear-gradient(top, #ffcccc, #ffcccc);
+  background-image: -ms-linear-gradient(top, #ffcccc, #ffcccc);
+  background-image: -o-linear-gradient(top, #ffcccc, #ffcccc);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#ffcccc), to(#ffcccc));
+  background-image: -webkit-linear-gradient(top, #ffcccc, #ffcccc);
+  background-image: linear-gradient(top, #ffcccc, #ffcccc);
+  background-image: linear-gradient(to bottom, #ffcccc, #ffcccc);
   -moz-background-clip: padding;
   background-clip: padding-box;
   -webkit-background-clip: padding-box;
@@ -7433,15 +7436,15 @@ input[type="radio"]:disabled + label {
 
 .jstree-default .jstree-wholerow-clicked {
   background: none;
-  background-color: #cce4ff; }
+  background-color: #ffcccc; }
 
 .jstree-default .jstree-wholerow-hovered {
   background: none;
-  background-color: #e5f1ff; }
+  background-color: #ffe5e5; }
 
 .jstree-default .jstree-disabled.jstree-clicked {
   background: none;
-  background-color: #cce4ff; }
+  background-color: #ffcccc; }
 
 .jstree-container-ul .jstree-anchor {
   white-space: normal;
