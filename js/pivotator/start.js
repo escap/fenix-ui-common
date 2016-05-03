@@ -352,117 +352,6 @@ function buildPivotResult(data, opt) {
 	}
 
 	
-<<<<<<< b0ff3daad64e98250ccb2de37ee6acb27f7e9060
-   
-        
-        var defaultOptions = {extractor: null,comparators: {}};
-
-        function extractData(data, options) {
-            var extractor = options.extractor;
-            if (typeof extractor === 'function') {
-                var extracted = [];
-                var length = data.length;
-                for (var i = 0; i < length; i++) {
-                    //console.log("verif",data[i])
-                    extracted = extracted.concat(extractor(data[i]));
-                    //extracted.push(extractor(data[i]));
-                }
-                return extracted;
-            } else {
-                return data;
-            }
-        }
-
-
-        function buildPivotResult(data, row, cols, getValue, cumulative) {
-
-			 //console.log("buildPivotResult","data",data, "row",row,"cols", cols,"getValue",getValue);
-            if (!getValue) {getValue = function (a) {return a}}//mapping
-
-            var listTotalColumns = {};
-            var listTotalRows = {};
-			var columns=[];
-			var rows=[];
-            var len = data.length;
-            var dat;
-
-            var result = {};
-            for (var i = 0; i < len; i++) {
-			
-                var indexR = [];
-                var indexC = [];
-                dat = data[i];
-                for (var r in row) {indexR.push(data[i][row[r]]);}
-                for (var c in cols) {indexC.push(data[i][cols[c]]);}
-                indexR = indexR.join("|*");
-                indexC = indexC.join("|*");
-                if (!result[indexR]) {result[indexR] = {};}
-
-
-                if (!result[indexR][indexC]) {result[indexR][indexC] = [getValue(dat)];}
-                else {result[indexR][indexC].push(getValue(dat));}
-
-                listTotalColumns[indexC] = true;
-                listTotalRows[indexR] = true;
-            }
-
-				for(var i in listTotalColumns){columns.push(i)}
-				for(var i in listTotalRows){rows.push(i)}
-				rows.sort();
-				cols.sort();
-				//console.log("result",result)
-            return {data: result, columns: columns, rows: rows};
-        }
-
-
-      /*  function makeHeaders(data, fieldNames) {
-            var result = [];
-            var dataLength = data.length;
-            var namesLength = fieldNames.length;
-            var i, j;
-            for (i = 0; i < dataLength; i++) {
-                var datum = data[i];
-                var entry = [];
-                for (j = 0; j < namesLength; j++) {
-                    entry[j] = datum[fieldNames[j]];
-                }
-                result[i] = entry;
-            }
-            return result;
-        }*/
- function pivotData(data, userOptions) {
-			//console.log("pivotData");
-            if (userOptions === undefined) {userOptions = {};}
-            var options = {};
-            Utils.copyProperties(defaultOptions, options);
-            if (userOptions) {Utils.copyProperties(userOptions, options);}
-           // var leftSet = new SortedSet(Utils.makeComparator(rowNames, data, options));
-            //var topSet = new SortedSet(Utils.makeComparator(columnNames, data, options));
-
-            //console.log("leftSet",leftSet,"topSet",topSet)
-//ONLY if we want to use an derived attributs function or a filter attribute
-            //options.extractor=function(e){return e}
-            if (options.extractor) {data = extractData(data, options);}
-
-            return buildPivotResult(data, userOptions.ROWS, userOptions.COLS, myfunc.getGetValue(userOptions.GetValue), userOptions.cumulative);
-        }
-
-       
-function toPivotData(FX,  userOptions){
-var data = [];
-for (var i in FX.data) {
-	var tmp = {}
-	for (var j in FX.metadata.dsd.columns) {tmp[FX.metadata.dsd.columns[j].id] = FX.data[i][j];}
-	data.push(tmp);
-    }
-	return  pivotData(data,  userOptions);
-}
-
-	   function toFX(FX,  userOptions) {
-           var result = {data: [], metadata: {dsd: {columns: []}}}
-            var pivotdata = toPivotData(FX,  userOptions);
-            for (var ii in pivotdata.rows) {
-=======
 	function toPivotData(FX,  userOptions){
 		var data = [];
 		for (var i in FX.data) {
@@ -477,7 +366,6 @@ for (var i in FX.data) {
 		var result = {data: [], metadata: {dsd: {columns: []}}}
 		var pivotdata = toPivotData(FX,  userOptions);
 		for (var ii in pivotdata.rows) {
->>>>>>> 8a38c86ac81501d8bae99bee30877f9a22900267
 			var i=pivotdata.rows[ii];
 			var temp = i.split("|*");
 			

@@ -10,7 +10,7 @@ define(function () {
             'fx-common/html': '../html',
             'fx-common/config': '../config',
             'faostat_commons': 'FAOSTATCommons',
-
+'fenixtool':'../js/pivotator/fenixtool',
             // third party libs
             'jquery': '{FENIX_CDN}/js/jquery/2.1.1/jquery.min',
             'amplify': '{FENIX_CDN}/js/amplify/1.1.2/amplify.min',

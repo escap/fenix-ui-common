@@ -115,7 +115,6 @@ require([
 
 		log.warn("~~~~~ FENIX Visualization Box: test");
 		log.info("===== Start testing:...");
-
 		Test.start();
 
 		log.info("===== End testing");
