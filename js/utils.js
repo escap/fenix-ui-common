@@ -417,7 +417,8 @@ define([
     };
 
     Utils.prototype._processBooleanColumn = function (c) {
-        log.warn("TODO process");
+        return this._configInput(c, {type: "checkbox"});
+
     };
 
     /* Common processes */
