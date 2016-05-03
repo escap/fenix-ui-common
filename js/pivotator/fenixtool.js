@@ -126,7 +126,7 @@ var retObj={
  {
 	//console.log("initFX",opt)
 var FXmod=convertFX(FX,opt);
-console.log("FXmod",FXmod)
+//console.log("FXmod",FXmod)
 	 var HIDDEN=[];
 	var COLS=[];
 	var ROWS=[];
@@ -175,7 +175,7 @@ var retObj={
 		COLS:COLS,
 		AGG:AGG,
 		VALS:VALS}
-		console.log("FIN initFXD",retObj)
+//		console.log("FIN initFXD",retObj)
 	return retObj;
 }
  
