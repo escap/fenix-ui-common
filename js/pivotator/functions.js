@@ -73,12 +73,13 @@ formater:function(e){return Math.floor(e*100)/100}
 }
 */
 var Aggregator={
-				value:{
-					default:function(cell,format,nbDec){
+				"value":{
+				
+					"default":function(cell,format,nbDec){
 				//	console.log("AGG DEFAULT",cell)
 					var a= jStat(cell);return format(a.sum(),nbDec)},
-					sum:function(cell,format,nbDec){
-					console.log("AGG SUM",cell)
+					"sum":function(cell,format,nbDec){
+					
 					var a= jStat(cell);return format(a.sum(),nbDec)},
 					avg:function(cell,format,nbDec){var a= jStat(cell);return format(a.mean(),nbDec)},
 					median:function(cell,format,nbDec){var a= jStat(cell);return format(a.median(),nbDec)},
@@ -97,8 +98,11 @@ var Aggregator={
 						diff:function(cell,format,nbDec){
 						var ret=cell[0];
 						for(var i in cell)
-							{if(ret[i]!=ret){ret="_";}}
+							{
+							
+							if(cell[i]!=ret){ret="_";}}
 						return ret;
+						
 						}
 				},
 				flag:{
@@ -106,19 +110,21 @@ var Aggregator={
 					default:function(cell,format,nbDec){var a= cell;return a.join(" - ")}
 					},
 				default:function(cell,format,nbDec){var a=cell;return a.join(" ")}
-			}
-				
+			};
+			//	console.log("Aggregator",Aggregator.value)
+			
+			
 var GetValue={
-default:function(rec,champ){return rec[champ];},
-value:{number:function(rec)
-{if(rec.value==null)
-{return null}return parseFloat(rec.value)
-}
-,
-string:function(rec){return rec.value}
-},
-Value:{number:function(rec){if(rec.Value==null){return null}return parseFloat(rec.Value)},string:function(rec){return rec.Value}}
-	
+	default:function(rec,champ){return rec[champ];},
+	value:{number:function(rec)
+	{if(rec.value==null)
+	{return null}return parseFloat(rec.value)
+	}
+	,
+	string:function(rec){return rec.value}
+	},
+	Value:{number:function(rec){if(rec.Value==null){return null}return parseFloat(rec.Value)},string:function(rec){return rec.Value}}
+		
 };
 
 /*Classic:function(rec){return rec.Value},
@@ -133,19 +139,32 @@ Value:{number:function(rec){if(rec.Value==null){return null}return parseFloat(re
 
 var Formater={
 	localstring:function(e,nbdecimal){return (Math.floor(e*Math.pow(10,nbdecimal))/Math.pow(10,nbdecimal)).toLocaleString()},
-	value:function(e,nbdecimal){return Math.floor(e*Math.pow(10,nbdecimal))/Math.pow(10,nbdecimal)}
+	value:function(e,nbdecimal){return Math.floor(e*Math.pow(10,nbdecimal))/Math.pow(10,nbdecimal)},
+	string:function(e,nbdecimal){return e}
+
 	};
 
 var getListAggregator=function(){//for toolbar
-ret=[];
-for(var i in Aggregator){ret.push(i)}
+ret={};
+for(var i in Aggregator)
+{
+console.log(i,Aggregator[i])
+ret[i]={};
+for(var j in Aggregator[i])
+	{
+	ret[i][j]=Aggregator[i][j];
+	}
+
+}console.log("ret",ret);
 return ret;
 	}
 	
 var getAgg=function(champ,choix){
+
 if(!Aggregator[champ]){return Aggregator.default}
 if(!choix){choix="default";}
-return Aggregator[champ][choix]}
+return Aggregator[champ][choix];
+}
 
 var getGetValue=function(champ,choix){
 if(!GetValue[champ]){return GetValue["default"]}

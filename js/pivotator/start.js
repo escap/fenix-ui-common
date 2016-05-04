@@ -255,7 +255,7 @@ makeComparator: function (fields, data, comparators) {
 	//function buildPivotResult(data, row, cols, getValue, cumulative) {
 function buildPivotResult(data, opt) {
 
-	var row=opt.ROWS, cols=opt.COLS, getValue= myfunc.getGetValue(opt.GetValue), cumulative=opt.cumulative
+	var row=opt.rows, cols=opt.columns, getValue= myfunc.getGetValue(opt.valueOutputType), cumulative=opt.cumulative
 	
 		//console.log("buildPivotResult","data",data, "opt",opt);
 		if (!getValue) {getValue = function (a) {return a}}//mapping
@@ -269,9 +269,10 @@ function buildPivotResult(data, opt) {
 
 		//var result = {};
 		var result = {};
-		for(var i=0;i<opt.VALS.length;i++)
+		console.log("opt",opt)
+		for(var i=0;i<opt.values.length;i++)
 		{
-			result[opt.VALS[i]]={}
+			result[opt.values[i]]={}
 		}
 		
 		
@@ -285,19 +286,19 @@ function buildPivotResult(data, opt) {
 			indexR = indexR.join("|*");
 			indexC = indexC.join("|*");
 			
-			for(var j=0;j<opt.VALS.length;j++)
+			for(var j=0;j<opt.values.length;j++)
 			
 			{
-			if (!result[opt.VALS[j]][indexR]) {result[opt.VALS[j]][indexR] = {};}
+			if (!result[opt.values[j]][indexR]) {result[opt.values[j]][indexR] = {};}
 			
 
 			/*if (!result[opt.VALS[j]][indexR][indexC])
 			{result[opt.VALS[j]][indexR][indexC] =[dat[opt.VALS[j]]];}
 			else {result[opt.VALS[j]][indexR][indexC].push(dat[opt.VALS[j]]);}
 			*/
-			if (!result[opt.VALS[j]][indexR][indexC])
-			{result[opt.VALS[j]][indexR][indexC] =[myfunc.getGetValue(opt.VALS[j],"number")(dat,opt.VALS[j])];}
-			else {result[opt.VALS[j]][indexR][indexC].push(myfunc.getGetValue(opt.VALS[j],"number")(dat,opt.VALS[j]));}
+			if (!result[opt.values[j]][indexR][indexC])
+			{result[opt.values[j]][indexR][indexC] =[myfunc.getGetValue(opt.values[j],"number")(dat,opt.values[j])];}
+			else {result[opt.values[j]][indexR][indexC].push(myfunc.getGetValue(opt.values[j],"number")(dat,opt.values[j]));}
 			
 		
 			}
@@ -426,7 +427,7 @@ function buildPivotResult(data, opt) {
 	
 	
 	function toFXJson(FX,userOptions) {
-		//console.log("toFXJon",userOptions)
+		console.log("toFXJon",userOptions)
 		MYFINALRESULT = {data: [],unit:[],flag:[],attribute:[], rows: [], cols: [],cols2: [],cols2label: [], okline: [], nookline: [],rowname:[],colsname:[]};//to internal test and dataset function
 		var pivotdata = toPivotData(FX,  userOptions);
 		//console.log("pivotdata",pivotdata,userOptions)
@@ -444,18 +445,18 @@ function buildPivotResult(data, opt) {
 			for (var jj in pivotdata.columns) {
 				var j=pivotdata.columns[jj];
 				
-				for(var vtemp in userOptions.VALS)
+				for(var vtemp in userOptions.values)
 				{
-				var vindex= userOptions.VALS[vtemp]
+				var vindex= userOptions.values[vtemp]
 				if (pivotdata.data[vindex][i][j]) {
 				var myAgg=null;
-				if(userOptions.Aggregator[vindex])
-				{myAgg=userOptions.Aggregator[vindex]}
+				//console.log(userOptions.formatter,vindex)
+				if(userOptions.aggregationFn[vindex])
+				{myAgg=userOptions.aggregationFn[vindex]}
 				else{myAgg="default"}
-				
 					temp2.push(myfunc.getAgg(vindex,myAgg)(pivotdata.data[vindex][i][j], 
-															myfunc.getFormater(userOptions.Formater), 
-															userOptions.nbDecimal));
+															myfunc.getFormater(userOptions.formatter), 
+															userOptions.decimals));
 				}
 				else {temp2.push(null)}
 				}
@@ -481,11 +482,11 @@ function buildPivotResult(data, opt) {
 		var traduc = {}
 		for (var i in FX.metadata.dsd.columns) {traduc[FX.metadata.dsd.columns[i].id] = FX.metadata.dsd.columns[i].title["EN"]}
 		
-		for (var i in userOptions.ROWS) {
-			MYFINALRESULT.rowname.push({id: userOptions.ROWS[i], title: {EN: traduc[userOptions.ROWS[i]]}})
+		for (var i in userOptions.rows) {
+			MYFINALRESULT.rowname.push({id: userOptions.rows[i], title: {EN: traduc[userOptions.rows[i]]}})
 		}
-		for (var i in userOptions.COLS) {
-			MYFINALRESULT.colsname.push({id:  userOptions.COLS[i], title: {EN: traduc[ userOptions.COLS[i]]}})
+		for (var i in userOptions.columns) {
+			MYFINALRESULT.colsname.push({id:  userOptions.columns[i], title: {EN: traduc[ userOptions.columns[i]]}})
 		}
 		
 		

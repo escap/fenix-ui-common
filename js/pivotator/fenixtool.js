@@ -99,10 +99,10 @@ define(function () {
                         setValue("value", "flag", myColumns.id)
                     }
                     else {
-                        setDimension(myColumns.id, "label", myColumns.title[lang]||myColumns.id);
-                        setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);
+                        //setDimension(myColumns.id, "label", myColumns.title[lang]||myColumns.id);
+                        //setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);
 
-                        //setValue("value", "attribute", myColumns.id)
+                        setValue("value", "attribute", myColumns.id)
                     }
                 }
             }
@@ -126,32 +126,32 @@ define(function () {
         function initFXT(FX, opt)//for Toolbar
         {
             var FXmod = convertFX(FX, opt);
-            var HIDDEN = [];
-            var COLS = [];
-            var ROWS = [];
-            var AGG = [];
-            var VALS = [];
+            var hidden = [];
+            var columns = [];
+            var rows = [];
+            var aggregations = [];
+            var values = [];
 
             for (var i in FXmod.dimensions) {
                 if (FXmod.dimensions[i].subject == "time") {
-                    COLS.push({value: FXmod.dimensions[i].code, label: FXmod.dimensions[i].label});
+                    columns.push({value: FXmod.dimensions[i].code, label: FXmod.dimensions[i].label});
                 }
                 else {
-                    ROWS.push({value: FXmod.dimensions[i].code, label: FXmod.dimensions[i].label});
+                    rows.push({value: FXmod.dimensions[i].code, label: FXmod.dimensions[i].label});
                 }
             }
 
             for (var i in FXmod.values) {
 //console.log(FXmod.values[i].label)
-                VALS.push({value: FXmod.values[i].value, label: FXmod.values[i].label});
+                values.push({value: FXmod.values[i].value, label: FXmod.values[i].label});
             }
 
             var retObj = {
-                HIDDEN: HIDDEN,
-                ROWS: ROWS,
-                COLS: COLS,
-                AGG: AGG,
-                VALS: VALS
+                hidden: hidden,
+                rows: rows,
+                columns: columns,
+                aggregations: aggregations,
+                values: values
             }
             //	console.log(retObj)
             return retObj;
@@ -162,43 +162,43 @@ define(function () {
             //console.log("initFX",opt)
             var FXmod = convertFX(FX, opt);
 //console.log("FXmod",FXmod)
-            var HIDDEN = [];
-            var COLS = [];
-            var ROWS = [];
-            var AGG = [];
-            var VALS = [];
+            var hidden = [];
+            var columns = [];
+            var rows = [];
+            var aggregations = [];
+            var values = [];
             for (var i in FXmod.dimensions) {
 
                 //console.log("ici",opt.ROWS,opt.COLS,FXmod.dimensions[i],"test",FXmod.dimensions[i].title||FXmod.dimensions[i].code);
-                if (opt.ROWS[FXmod.dimensions[i].code]) {
-                    ROWS.push(FXmod.dimensions[i].title || FXmod.dimensions[i].code)
+                if (opt.rows[FXmod.dimensions[i].code]) {
+                    rows.push(FXmod.dimensions[i].title || FXmod.dimensions[i].code)
                     if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
                         //console.log("add CODE")
-                        ROWS.push(FXmod.dimensions[i].code)
+                        rows.push(FXmod.dimensions[i].code)
                     }
                 }
-                if (opt.COLS[FXmod.dimensions[i].code]) {
-                    COLS.push(FXmod.dimensions[i].title || FXmod.dimensions[i].code)
+                if (opt.columns[FXmod.dimensions[i].code]) {
+                    columns.push(FXmod.dimensions[i].title || FXmod.dimensions[i].code)
                     if (opt.showCode == true && FXmod.dimensions[i].title != FXmod.dimensions[i].code && FXmod.dimensions[i].title != null) {
-                        COLS.push(FXmod.dimensions[i].code)
+                        columns.push(FXmod.dimensions[i].code)
                     }
                 }
             }
 //console.log("opt FXMOD",opt)
             for (var i in FXmod.values) {
                 //console.log(FXmod.values[i])
-                if (opt.VALS[FXmod.values[i].value]) {
+                if (opt.values[FXmod.values[i].value]) {
 
-                    VALS.push(FXmod.values[i].value)
+                    values.push(FXmod.values[i].value)
                     if (opt.showUnit == true && FXmod.values[i].unit) {
-                        VALS.push(FXmod.values[i].unit)
+                        values.push(FXmod.values[i].unit)
                     }
 
                     if (opt.showFlag == true && FXmod.values[i].flag) {
-                        VALS.push(FXmod.values[i].flag)
+                        values.push(FXmod.values[i].flag)
                     }
                     for (var h in FXmod.values[i].attribute)
-                    {HIDDEN.push(FXmod.values[i].attribute[h])}
+                    {hidden.push(FXmod.values[i].attribute[h])}
                     /*if(opt.showUnit==true &&
                      FXmod.values[i].title!=FXmod.values[i].code &&
                      FXmod.values[i].title!=null )
@@ -210,11 +210,11 @@ define(function () {
 
 
             var retObj = {
-                HIDDEN: HIDDEN,
-                ROWS: ROWS,
-                COLS: COLS,
-                AGG: AGG,
-                VALS: VALS
+                hidden: hidden,
+                rows: rows,
+                columns: columns,
+                aggregations: aggregations,
+                values: values
             }
 //		console.log("FIN initFXD",retObj)
             return retObj;
