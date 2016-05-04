@@ -269,11 +269,8 @@ function buildPivotResult(data, opt) {
 
 		//var result = {};
 		var result = {};
-		console.log("opt",opt)
-		for(var i=0;i<opt.values.length;i++)
-		{
-			result[opt.values[i]]={}
-		}
+		//console.log("opt",opt)
+		for(var i=0;i<opt.values.length;i++){result[opt.values[i]]={};		}
 		
 		
 		for (var i = 0; i < len; i++) {
@@ -427,7 +424,7 @@ function buildPivotResult(data, opt) {
 	
 	
 	function toFXJson(FX,userOptions) {
-		console.log("toFXJon",userOptions)
+	//	console.log("toFXJon",userOptions)
 		MYFINALRESULT = {data: [],unit:[],flag:[],attribute:[], rows: [], cols: [],cols2: [],cols2label: [], okline: [], nookline: [],rowname:[],colsname:[]};//to internal test and dataset function
 		var pivotdata = toPivotData(FX,  userOptions);
 		//console.log("pivotdata",pivotdata,userOptions)

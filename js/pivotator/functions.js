@@ -1,77 +1,5 @@
 define(["jstat"], function() {
-	/*
-ret=
-	{
-		CUMULATIVE:{median:{
-getValue:function(rec){
-				//console.log(rec);
-				return rec.value;},
-aggregator:function(cell){
-				var a= jStat(cell);
-				return this.formater(a.median());},
-cumulative:false,
-formater:function(e){return (Math.floor(e*100)/100).toLocaleString()}
-}
 
-		}
-
-,
-
-
-
-		NONCUMULATIVE:{sum:{
-getValue:function(entry,rec){
-
-				if(entry === undefined){entry={sum:rec.value,num:1}}
-				else{entry.sum+=rec.value;entry.num++;}
-				return entry;},
-aggregator:function(cell){
-				return this.formater(cell.sum)},
-cumulative:true,
-formater:function(e){return Math.floor(e*100)/100}
-		}}
-		
-	};
-
-
-
-var fonctionsNoCum={
-getValue:function(rec){
-				//console.log(rec);
-				return rec.value;},
-aggregator:function(cell){
-				var a= jStat(cell);
-				return this.formater(a.sum());},
-cumulative:false,
-formater:function(e){return Math.floor(e*100)/100}
-		}
-
-
-
-		//cumulative sum function
-		var fonctionsCum={
-getValue:function(entry,rec){
-
-				if(entry === undefined){entry={sum:rec.value,num:1}}
-				else{entry.sum+=rec.value;entry.num++;}
-				return entry;},
-aggregator:function(cell){
-				return this.formater(cell.sum)},
-cumulative:true,
-formater:function(e){return Math.floor(e*100)/100}
-
-		}
-		return function()
-		{
-			return{
-			fonctionsCum:fonctionsCum,
-			fonctionsNoCum:fonctionsNoCum,
-			list:ret
-			}
-		}
-		
-}
-*/
 var Aggregator={
 				"value":{
 				
@@ -148,14 +76,14 @@ var getListAggregator=function(){//for toolbar
 ret={};
 for(var i in Aggregator)
 {
-console.log(i,Aggregator[i])
+
 ret[i]={};
 for(var j in Aggregator[i])
 	{
 	ret[i][j]=Aggregator[i][j];
 	}
 
-}console.log("ret",ret);
+}
 return ret;
 	}
 	
