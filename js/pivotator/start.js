@@ -435,7 +435,8 @@ function buildPivotResult(data, opt) {
 			MYFINALRESULT.rows.push(temp);
 			
 			var temp2 = [];
-			if(userOptions.hasOwnProperty("fulldataformat") && userOptions.fulldataformat==true){temp2=JSON.parse(JSON.stringify(temp))}
+			if(userOptions.hasOwnProperty("showRowHeaders") && userOptions.showRowHeaders==true)
+			{temp2=JSON.parse(JSON.stringify(temp))}
 			//for internaldata
 			
 			

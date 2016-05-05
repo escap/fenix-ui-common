@@ -4,9 +4,8 @@ define([
     'fx-common/pivotator/start',
     'fx-common/pivotator/functions',
     'test/models/data',
-	'test/js/toolbar',
-	'fenixtool'
-], function (log, Pivotator, PivotatorFunctions, Model,ToolBar,fenixTool) {
+	'test/js/toolbar'
+], function (log, Pivotator, PivotatorFunctions, Model,ToolBar) {
 
     'use strict';
 
@@ -34,10 +33,13 @@ define([
             onchange: function () {
                 var optGr = myToolbar.getConfigCOLROW(Model);
                 console.log("optGr",optGr);
-				optGr["fulldataformat"]=false;
-				optGr["showunit"]=false;
-				optGr["showAtt"]=false;
+				optGr["showRowHeaders"]=false;
+				optGr["showUnit"]=false;
+				optGr["showFlag"]=false;
 				optGr["showCode"]=false;
+
+                document.getElementById('toExport').innerHTML=JSON.stringify(optGr)
+
                 //console.log("toPivotData",myPivot.toPivotData(Model,optGr));
                 //console.log("ToFX",myPivot.toFX(Model,optGr));
 

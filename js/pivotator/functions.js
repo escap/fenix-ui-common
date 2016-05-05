@@ -1,6 +1,23 @@
 define(["jstat"], function() {
 
 var Aggregator={
+	"Value":{
+
+		"default":function(cell,format,nbDec){
+			//	console.log("AGG DEFAULT",cell)
+			var a= jStat(cell);return format(a.sum(),nbDec)},
+		"sum":function(cell,format,nbDec){
+
+			var a= jStat(cell);return format(a.sum(),nbDec)},
+		avg:function(cell,format,nbDec){var a= jStat(cell);return format(a.mean(),nbDec)},
+		median:function(cell,format,nbDec){var a= jStat(cell);return format(a.median(),nbDec)},
+		stdev:function(cell,format,nbDec){var a= jStat(cell);return format(a.stdev(),nbDec)},
+		count:function(cell,format,nbDec){var a= cell;return format(a.length,nbDec)},
+		concat:function(cell,format,nbDec){var a= cell;return a.join(" - ")}
+	},
+
+
+
 				"value":{
 				
 					"default":function(cell,format,nbDec){
