@@ -23,9 +23,44 @@ input[type="button"]::-moz-focus-inner{
   border:0;
 }
 
+/**  end of **/
 
 .btn-round{
   padding: 3px;
   height: 24px;
   @include fx-border-radius(50%);
 }
+
+
+/* Visualization Box btns */
+
+.btn-default.meta-btn{
+
+  background-color: $fenix-secondary-text;
+  font-size: 11px;
+  color: white;
+  padding: 2px 8px;
+  border-color: transparent;
+  @include fx-border-radius(5px);
+
+  &.active, &:active{
+
+
+  }
+
+  &.focus, &:focus{
+
+  }
+
+  &[disabled]{
+
+  }
+
+  &:hover{
+    background-color: lighten($fenix-secondary-text, 10%) ;
+    border-color: transparent;
+  }
+
+
+}
+

@@ -5269,6 +5269,7 @@ button:active {
 input[type="button"]::-moz-focus-inner {
   border: 0; }
 
+/**  end of **/
 .btn-round {
   padding: 3px;
   height: 24px;
@@ -5276,6 +5277,21 @@ input[type="button"]::-moz-focus-inner {
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   border-radius: 50%; }
+
+/* Visualization Box btns */
+.btn-default.meta-btn {
+  background-color: #999999;
+  font-size: 11px;
+  color: white;
+  padding: 2px 8px;
+  border-color: transparent;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px; }
+  .btn-default.meta-btn:hover {
+    background-color: #b3b3b3;
+    border-color: transparent; }
 
 /* Fenix UI Catalog */
 .fx-catalog-welcome {
