@@ -283,9 +283,7 @@ function buildPivotResult(data, opt) {
 			indexR = indexR.join("|*");
 			indexC = indexC.join("|*");
 			
-			for(var j=0;j<opt.values.length;j++)
-			
-			{
+			for(var j=0;j<opt.values.length;j++){
 			if (!result[opt.values[j]][indexR]) {result[opt.values[j]][indexR] = {};}
 			
 

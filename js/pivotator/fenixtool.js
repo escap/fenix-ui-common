@@ -25,36 +25,24 @@ define(function () {
         function convertFX(FX, opt) {
 
             var lang = "EN";
-            if (opt.lang) {
-                lang = opt.lang;
-            }
+            if (opt.lang) {lang = opt.lang;}
             var structInter = {dimensions: {}, values: {}}
 
             function setDimension(id, att, val, subject) {
 
                 //console.log("setDimension ",id, att, val, subject)
-                if (!structInter.dimensions[id]) {
-                    structInter.dimensions[id] = {};
-                }
+                if (!structInter.dimensions[id]) {structInter.dimensions[id] = {};}
                 structInter.dimensions[id][att] = val;
-                if (subject) {
-                    structInter.dimensions[id]["subject"] = subject;
-                }
+                if (subject) {structInter.dimensions[id]["subject"] = subject;}
             }
 
             function setValue(id, att, val) {
                 //	console.log("setDim",id,att,val);
-                if (!structInter.values[id]) {
-                    structInter.values[id] = {};
-                }
-                if (att != "attribute") {
-                    structInter.values[id][att] = val
-                }
+                if (!structInter.values[id]) {structInter.values[id] = {};}
+                if (att != "attribute") {structInter.values[id][att] = val;}
                 else {
-                    if (!structInter.values[id]["attributes"]) {
-                        structInter.values[id]["attributes"] = []
-                    }
-                    structInter.values[id]["attributes"].push(val)
+                    if (!structInter.values[id]["attributes"]) {structInter.values[id]["attributes"] = [];}
+                    structInter.values[id]["attributes"].push(val);
                 }
             }
 
@@ -70,7 +58,6 @@ define(function () {
                 else if (myColumns.id.split("_" + lang).length == 2)//label
                 {
                     //console.log("add dimension 2 ",myColumns,myColumns.id.split("_" + lang)[0]);
-
                     setDimension(myColumns.id.split("_" + lang)[0], "title", myColumns.id)
                 }
 
@@ -92,12 +79,8 @@ define(function () {
                 }
                 else//attribut de value
                 {
-                    if (myColumns.subject == "um") {
-                        setValue("value", "unit", myColumns.id)
-                    }
-                    else if (myColumns.subject == "flag") {
-                        setValue("value", "flag", myColumns.id)
-                    }
+                    if (myColumns.subject == "um") {setValue("value", "unit", myColumns.id);}
+                    else if (myColumns.subject == "flag") {setValue("value", "flag", myColumns.id);}
                     else {
                         //setDimension(myColumns.id, "label", myColumns.title[lang]||myColumns.id);
                         //setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);
@@ -106,19 +89,7 @@ define(function () {
                     }
                 }
             }
-//console.log("structInter",JSON.stringify(structInter))
-            /*
-             for(var i in FX.columns)
-             {
-             if(FX.columns[i].dataType=="number"){HIDDEN.push({value:FX.columns[i].id,label:FX.columns[i].title[lang]})}
-             else if(FX.columns[i].subject=="time"){COLS.push({value:FX.columns[i].id,label:FX.columns[i].title[lang]})}
-
-             else if (FX.columns[i].subject!="time" && FX.columns[i].key==true ){ROWS.push({value:FX.columns[i].id,label:FX.columns[i].title[lang]});}
-             else {AGG.push({value:FX.columns[i].id,label:FX.columns[i].title[lang]})}
-             }*/
-
-
-            return structInter;
+			return structInter;
 
 
         }
@@ -142,7 +113,6 @@ define(function () {
             }
 
             for (var i in FXmod.values) {
-//console.log(FXmod.values[i].label)
                 values.push({value: FXmod.values[i].value, label: FXmod.values[i].label});
             }
 
@@ -159,9 +129,7 @@ define(function () {
 
         function initFXD(FX, opt)//for Data
         {
-            //console.log("initFX",opt)
             var FXmod = convertFX(FX, opt);
-//console.log("FXmod",FXmod)
             var hidden = [];
             var columns = [];
             var rows = [];
@@ -173,7 +141,6 @@ define(function () {
                 if (opt.rows[FXmod.dimensions[i].code]) {
                     rows.push(FXmod.dimensions[i].title || FXmod.dimensions[i].code)
                     if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
-                        //console.log("add CODE")
                         rows.push(FXmod.dimensions[i].code)
                     }
                 }
@@ -184,7 +151,6 @@ define(function () {
                     }
                 }
             }
-//console.log("opt FXMOD",opt)
             for (var i in FXmod.values) {
                 //console.log(FXmod.values[i])
                 if (opt.values[FXmod.values[i].value]) {
