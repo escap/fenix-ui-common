@@ -352,7 +352,8 @@ function buildPivotResult(data, opt) {
 		var data = [];
 		for (var i in FX.data) {
 			var tmp = {}
-			for (var j in FX.metadata.dsd.columns) {tmp[FX.metadata.dsd.columns[j].id] = FX.data[i][j];}
+			for (var j in FX.metadata.dsd.columns)
+			{tmp[FX.metadata.dsd.columns[j].id] = FX.data[i][j];}
 			data.push(tmp);
 		}
 		return  pivotData(data,  userOptions);
@@ -364,20 +365,43 @@ function buildPivotResult(data, opt) {
 		for (var ii in pivotdata.rows) {
 			var i=pivotdata.rows[ii];
 			var temp = i.split("|*");
-			
-			
+
+
+
+
 			//for internaldata
 			for (var jj in pivotdata.columns) {
 				var j=pivotdata.columns[jj];
-				if (pivotdata.data[i][j]) {
-					temp.push(myfunc.getAgg(userOptions.Aggregator)(pivotdata.data[i][j],myfunc.getFormater(userOptions.Formater),userOptions.nbDecimal) )
+				/*if (pivotdata.data[i][j]) {
+					temp.push(myfunc.getAgg(userOptions.Aggregator)(pivotdata.data[i][j],
+						myfunc.getFormater(userOptions.Formater),userOptions.nbDecimal) )
 					//temp2.push(myfunc.getAgg(userOptions.aggregator)(pivotdata.data[i][j], myfunc.getFormater(userOptions.formater), userOptions.nbDecimal));
 					//console.log(pivotdata.data[i][j])
 				}
 				else {
 					temp.push(null);
 					//temp2.push(null)
+				}*/
+
+
+				for(var vtemp in userOptions.values)
+				{
+					var vindex= userOptions.values[vtemp]
+					if (pivotdata.data[vindex][i][j]) {
+						var myAgg=null;
+						//console.log(userOptions.formatter,vindex)
+						if(userOptions.aggregationFn[vindex])
+						{myAgg=userOptions.aggregationFn[vindex]}
+						else{myAgg="default"}
+						temp.push(myfunc.getAgg(vindex,myAgg)(pivotdata.data[vindex][i][j],
+							myfunc.getFormater(userOptions.formatter),
+							userOptions.decimals));
+					}
+					else {temp.push(null)}
 				}
+
+
+
 			}
 			result.data.push(temp)
 			//MYFINALRESULT.data.push(temp2)
@@ -425,7 +449,7 @@ function buildPivotResult(data, opt) {
 	//	console.log("toFXJon",userOptions)
 		MYFINALRESULT = {data: [],unit:[],flag:[],attribute:[], rows: [], cols: [],cols2: [],cols2label: [], okline: [], nookline: [],rowname:[],colsname:[]};//to internal test and dataset function
 		var pivotdata = toPivotData(FX,  userOptions);
-		//console.log("pivotdata",pivotdata,userOptions)
+		console.log("pivotdata",pivotdata,userOptions)
 		for (var ii in pivotdata.rows) {
 			var i=pivotdata.rows[ii];
 			
@@ -450,9 +474,9 @@ function buildPivotResult(data, opt) {
 				if(userOptions.aggregationFn[vindex])
 				{myAgg=userOptions.aggregationFn[vindex]}
 				else{myAgg="default"}
-					temp2.push(myfunc.getAgg(vindex,myAgg)(pivotdata.data[vindex][i][j], 
-															myfunc.getFormater(userOptions.formatter), 
-															userOptions.decimals));
+					temp2.push(myfunc.getAgg(vindex,myAgg)(pivotdata.data[vindex][i][j],
+						myfunc.getFormater(userOptions.formatter),
+						userOptions.decimals));
 				}
 				else {temp2.push(null)}
 				}
@@ -504,9 +528,13 @@ function buildPivotResult(data, opt) {
 	return function () {
 		return {
 			pivot: toFXJson,
+			
+			
 			toFXJson:toFXJson,
 			toPivotData:toPivotData,
 			toFX:toFX,
+			
+			
 			identity: identity,
 			toTree:toTree
 		}

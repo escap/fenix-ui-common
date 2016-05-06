@@ -58,7 +58,7 @@ define([
 				console.log("optGr",optGr);
 
 		 console.log("MODEL : FX initial",Model);
-		  //console.log("toPivotData",myPivot.toPivotData(Model,optGr));
+		//  console.log("toPivotData",myPivot.toPivotData(Model,optGr));
         //console.log("ToFX",myPivot.toFX(Model,optGr));
 		 
 		  console.log("toFXJson",optGr,myPivot.toFXJson(Model,optGr));
