@@ -132,6 +132,8 @@
 }
 
 @mixin fx-border-radius($radius) {
+
+
   -webkit-border-radius: $radius;
   -moz-border-radius: $radius;
   -ms-border-radius: $radius;
@@ -200,13 +202,12 @@
 
 
 // Animations 
-@mixin animate($duration:0.3s) {
-  -webkit-transition: all $duration ease 0s;
-  -moz-transition: all $duration ease 0s;
-  -ms-transition: all $duration ease 0s;
-  -o-transition: all $duration ease 0s;
-  transition: all $duration ease 0s;
-
+@mixin animate($duration:0.3s, $delay: 0s) {
+  -webkit-transition: all $duration ease $delay;
+  -moz-transition: all $duration ease $delay;
+  -ms-transition: all $duration ease $delay;
+  -o-transition: all $duration ease $delay;
+  transition: all $duration ease $delay;
 }
 
 

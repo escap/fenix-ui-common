@@ -29,6 +29,13 @@ input[type="button"]::-moz-focus-inner{
   padding: 3px;
   height: 24px;
   @include fx-border-radius(50%);
+
+
+
+  &:last-child:not(:first-child), &:not(:first-child){
+    @include fx-border-radius(50%);
+  }
+
 }
 
 
