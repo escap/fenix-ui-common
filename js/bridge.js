@@ -8,8 +8,9 @@ define([
     'underscore',
     'q',
     'loglevel',
+    'object-hash',
     'amplify'
-], function (ERR, EVT, C, DC, $, _, Q, log) {
+], function (ERR, EVT, C, DC, $, _, Q, log, Hash) {
 
     'use strict';
 
@@ -18,12 +19,14 @@ define([
 
     Bridge.prototype.find = function (obj) {
 
-        var key = $.extend({type: "find"}, obj.body),
+        var key = $.extend(true, {
+                type: "find"
+            }, obj),
             cached = this._getCacheItem(key),
             self = this;
 
         if (cached) {
-             return Q.promise(function (resolve) {
+            return Q.promise(function (resolve) {
                 return resolve(cached);
             });
         }
@@ -57,10 +60,9 @@ define([
 
     Bridge.prototype.getEnumeration = function (obj) {
 
-        var key = {
-                type: "enumeration",
-                uid: obj.uid
-            },
+        var key = $.extend(true, {
+                type: "enumeration"
+            }, obj),
             cached = this._getCacheItem(key),
             self = this;
 
@@ -96,7 +98,9 @@ define([
 
     Bridge.prototype.getCodeList = function (obj) {
 
-        var key = $.extend({type: "codelist"}, obj.body),
+        var key = $.extend(true, {
+                type: "codelist"
+            }, obj),
             cached = this._getCacheItem(key),
             self = this;
 
@@ -136,6 +140,18 @@ define([
 
     Bridge.prototype.getResource = function (obj) {
 
+        var key = $.extend(true, {
+                type: "resource"
+            }, obj),
+            cached = this._getCacheItem(key),
+            self = this;
+
+        if (cached) {
+            return Q.promise(function (resolve) {
+                return resolve(cached);
+            });
+        }
+
         var serviceProvider = obj.serviceProvider || C.SERVICE_PROVIDER || DC.SERVICE_PROVIDER,
             processesService = obj.processesService || C.PROCESSES_SERVICE || DC.PROCESSES_SERVICE;
 
@@ -145,11 +161,36 @@ define([
             dataType: obj.dataType || 'json',
             contentType: obj.contentType || "application/json",
             data: JSON.stringify(obj.body)
-        }));
+        })).then(function (data) {
 
+            self._setCacheItem(key, data);
+
+            return Q.promise(function (resolve, reject, notify) {
+                return resolve(self._getCacheItem(key));
+            });
+
+        }, function (error) {
+
+            return Q.promise(function (resolve, reject, notify) {
+                return reject(error);
+            });
+
+        });
     };
 
     Bridge.prototype.getMetadata = function (obj) {
+
+        var key = $.extend(true, {
+                type: "metadata"
+            }, obj),
+            cached = this._getCacheItem(key),
+            self = this;
+
+        if (cached) {
+            return Q.promise(function (resolve) {
+                return resolve(cached);
+            });
+        }
 
         var serviceProvider = obj.serviceProvider || C.SERVICE_PROVIDER || DC.SERVICE_PROVIDER,
             processesService = obj.metadataService || C.METADATA_SERVICE || DC.METADATA_SERVICE;
@@ -158,7 +199,21 @@ define([
             url: serviceProvider + processesService + this._parseUidAndVersion(obj, true) + this._parseQueryParams(obj.params),
             type: obj.type || "GET",
             dataType: obj.dataType || 'json'
-        }));
+        })).then(function (data) {
+
+            self._setCacheItem(key, data);
+
+            return Q.promise(function (resolve, reject, notify) {
+                return resolve(self._getCacheItem(key));
+            });
+
+        }, function (error) {
+
+            return Q.promise(function (resolve, reject, notify) {
+                return reject(error);
+            });
+
+        });
 
     };
 
@@ -215,15 +270,12 @@ define([
 
     Bridge.prototype._getCacheKey = function (obj) {
 
-        var key = "_",
-            keys = Object.keys(obj).sort();
+        var key = Hash(obj);
 
-        for (var i = 0; i < keys.length; i++) {
-            key += "_" + keys[i] + ":" + obj[keys[i]];
-        }
+        console.log(obj)
+        console.log(key)
 
         return key;
-
 
     };
 

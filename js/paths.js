@@ -16,6 +16,7 @@ define(function () {
             'bootstrap': '{FENIX_CDN}/js/bootstrap/3.3.2/js/bootstrap.min',
             'moment': '{FENIX_CDN}/js/moment/2.9.0/moment.min',
             'SparkMD5': '{FENIX_CDN}/js/spark-md5/spark-md5.min',
+            'object-hash': '{FENIX_CDN}/js/object-hash/1.1.2/dist/object_hash',
             'q': '{FENIX_CDN}/js/q/1.1.2/q',
 
             //AuthManager
@@ -38,6 +39,8 @@ define(function () {
 
             'draggabilly': '{FENIX_CDN}/js/draggabilly/2.1.0/dist/draggabilly.pkgd.min',
             'packery': '{FENIX_CDN}/js/packery/1.4.3/dist/packery.pkgd.min',
+
+
 
             'jstat': '{FENIX_CDN}/js/jStat/1.5.2/jstat.min',
             loglevel: '{FENIX_CDN}/js/loglevel/1.4.0/loglevel'
