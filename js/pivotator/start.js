@@ -449,7 +449,7 @@ function buildPivotResult(data, opt) {
 	//	console.log("toFXJon",userOptions)
 		MYFINALRESULT = {data: [],unit:[],flag:[],attribute:[], rows: [], cols: [],cols2: [],cols2label: [], okline: [], nookline: [],rowname:[],colsname:[]};//to internal test and dataset function
 		var pivotdata = toPivotData(FX,  userOptions);
-		console.log("pivotdata",pivotdata,userOptions)
+
 		for (var ii in pivotdata.rows) {
 			var i=pivotdata.rows[ii];
 			

@@ -73,12 +73,15 @@ define([
             }
 
             if (v.length > 0) {
-                filter[key] = $.extend(true, {}, self.compileFilter(id, v, items));
+                $.extend(true, filter, self.compileFilter(id, v, items));
             } else {
                 log.warn(id + " column excluded from FENIX filter because it has no values");
             }
 
         });
+
+        console.log("********************************")
+        console.log(filter)
 
         return filter;
     };
@@ -159,7 +162,7 @@ define([
 
     Utils.prototype.createTimeFilter = function (id, values, config, key) {
 
-        var result = {}, time = [],
+        var time = [],
             v = values.sort(function (a, b) {
                 return a - b;
             }).map(function (a) {
@@ -178,9 +181,7 @@ define([
             time.push($.extend({}, couple));
         }
 
-        result[key] = {time: time};
-
-        return result;
+        return {time: time};
     };
 
     Utils.prototype.createEnumerationFilter = function (id, values, config, key) {
