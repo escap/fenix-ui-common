@@ -15,6 +15,7 @@ define([
     'use strict';
 
     function Bridge() {
+        this.cache = {};
     }
 
     Bridge.prototype.find = function (obj) {
@@ -222,6 +223,11 @@ define([
         return Q.all(promises);
     };
 
+    Bridge.prototype.getCacheKey = function (obj) {
+
+        return this._getCacheKey(obj);
+    };
+
     Bridge.prototype._parseQueryParams = function (params) {
 
         if (!params) {
@@ -260,20 +266,27 @@ define([
 
     Bridge.prototype._setCacheItem = function (key, value) {
 
-        return amplify.store.sessionStorage(this._getCacheKey(key), value);
+        try {
+            amplify.store.sessionStorage(this.getCacheKey(key), value)
+        } catch (e) {
+
+            this.cache[key] = value;
+        }
+
+        return this._getCacheItem(key);
     };
 
     Bridge.prototype._getCacheItem = function (key) {
 
-        return key ? amplify.store.sessionStorage(this._getCacheKey(key)) : null;
+        var item = amplify.store.sessionStorage(this.getCacheKey(key));
+
+        return item ? item : this.cache[key];
+
     };
 
     Bridge.prototype._getCacheKey = function (obj) {
 
         var key = Hash(obj);
-
-        console.log(obj)
-        console.log(key)
 
         return key;
 
