@@ -20,9 +20,9 @@ define([
 
             var $ul = $("<ul class='dropdown-menu json-menu'></ul>");
 
-            this.$el.append($ul);
-
             this._buildUL($ul, this._buildData(o.model));
+
+            this.$el.append($ul);
 
             this._addBootstrapClass();
 
@@ -82,11 +82,11 @@ define([
                         }
                     }
 
-                    li.appendTo(parent);
+                    parent.append(li);
 
                     if (item.items && item.items.length > 0) {
                         var ul = $("<ul class='dropdown-menu js-menu'></ul>");
-                        ul.appendTo(li);
+                        li.append(ul);
                         this._buildUL(ul, item.items);
                     }
                 }
