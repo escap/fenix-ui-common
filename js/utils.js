@@ -73,7 +73,7 @@ define([
             }
 
             if (v.length > 0) {
-                $.extend(true, filter, self.compileFilter(id, v, items));
+                filter[key] = $.extend(true, {}, self.compileFilter(id, v, items));
             } else {
                 log.warn(id + " column excluded from FENIX filter because it has no values");
             }
