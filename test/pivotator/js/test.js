@@ -4,7 +4,7 @@ define([
     'fx-common/pivotator/start',
     'fx-common/pivotator/functions',
     'test/models/data',
-	'test/js/toolbar'
+	'fx-common/pivotator/toolbar'
 ], function (log, Pivotator, PivotatorFunctions, Model,ToolBar) {
 
     'use strict';
