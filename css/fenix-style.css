@@ -6173,7 +6173,7 @@ input[type="radio"] + label {
     display: inline-block;
     height: 15px;
     width: 15px;
-    background-color: #dddddd;
+    background-color: #bdbdbd;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
@@ -6209,11 +6209,7 @@ input[type="checkbox"] + label {
     display: inline-block;
     height: 15px;
     width: 15px;
-    background-color: #dddddd;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    -ms-border-radius: 100%;
-    border-radius: 100%;
+    background-color: #bdbdbd;
     border: 0 solid #0076ff;
     position: relative;
     top: 2px;

@@ -1,4 +1,7 @@
 /* Radio Buttons */
+$radio-checkbox-background: #bdbdbd;
+
+
 
 input[type="radio"] {
   display:none;
@@ -15,7 +18,7 @@ input[type="radio"] + label  {
     display: inline-block;
     height: 15px;
     width: 15px;
-    background-color: $fenix-light-gray;
+    background-color: $radio-checkbox-background;
     @include fx-border-radius(100%);
     border: 0 solid $fx-cool-blue;
     position: relative;
@@ -60,8 +63,8 @@ input[type="checkbox"] + label  {
     display: inline-block;
     height: 15px;
     width: 15px;
-    background-color: $fenix-light-gray;
-    @include fx-border-radius(100%);
+    background-color: $radio-checkbox-background;
+    //@include fx-border-radius(100%); //Square Checkboxes
     border: 0 solid $fx-cool-blue;
     position: relative;
     top: 2px;
