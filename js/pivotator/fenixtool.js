@@ -25,7 +25,7 @@ define(function () {
 		 
 		 function parseInut(FX,opt)// FX.metadata.dsd,options
 		 {
-			 var ret=opt;
+			 var ret=$.extend(true,{},opt);
 			 if(opt.inputFormat=="raw"){}
 			else{
 				var FXmod=convertFX(FX,opt);
