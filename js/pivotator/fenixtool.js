@@ -66,7 +66,7 @@ define(function () {
 				
 				
 			}
-			return ret//to remove
+			return ret
 		 }
 		 
         function convertFX(FX, opt) {
