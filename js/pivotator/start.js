@@ -513,7 +513,6 @@ function buildPivotResult(data, opt) {
 
 	
 
-
 	return function () {
 		return {
 			pivot: toFXJson,

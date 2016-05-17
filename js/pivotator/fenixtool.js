@@ -22,16 +22,12 @@ define(function () {
          }
          */
 
-		 function exportConf(olapModel)
-			{
-				console.log("exportConf",olapModel)
-				
-			}
+		
 		 
 		 
 		 function parseInut(FX,opt)// FX.metadata.dsd,options
 		 {
-			 console.log("FT parseinput",opt)
+			 //console.log("FT parseinput",opt)
 			 var ret=$.extend(true,{},opt);
 			 if(opt.inputFormat=="fenixtool"){
 				var FXmod=convertFX(FX,opt);
@@ -79,7 +75,7 @@ define(function () {
 		 }
 		 
         function convertFX(FX, opt) {
-
+console.log("convertFX",FX,opt)
             var lang = "EN";
             if (opt.lang) {lang = opt.lang;}
             var structInter = {dimensions: {}, values: {}}
@@ -212,10 +208,7 @@ define(function () {
 		
  function initFXDgraph(FX, opt)//for Data for chart
         {
-		
             var FXmod = convertFX(FX, opt);
-			
-				console.log("initFXD opt",opt,FXmod)
             var hidden = [];
             var x = [];
             var series = [];
@@ -248,10 +241,7 @@ define(function () {
                     }
                     for (var h in FXmod.values[i].attribute)
                     {hidden.push(FXmod.values[i].attribute[h])}
-                    /*if(opt.showUnit==true &&
-                     FXmod.values[i].title!=FXmod.values[i].code &&
-                     FXmod.values[i].title!=null )
-                     {VALS.push(FXmod.dimensions[i].code)}*/
+                
                 }
 
 
@@ -276,8 +266,7 @@ define(function () {
                 initFXT: initFXT,
                 initFXD: initFXD,
 				initFXDgraph:initFXDgraph,
-				parseInut:parseInut,
-				exportConf:exportConf
+				parseInut:parseInut
             }
         };
     }
