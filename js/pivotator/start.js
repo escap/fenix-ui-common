@@ -7,96 +7,7 @@ define([
 	var MYFINALRESULT;
 	var myfunc = new myFunction();
 
-	/* var SortedSet = (function () {
-
-		function find(val, array, comparator) {
-			var l = 0;
-			var r = array.length - 1;
-			var i;
-			var compare;
-			while (l <= r) {
-				i = ((l + r) / 2) | 0;
-				compare = comparator(array[i], val);
-				if (compare < 0) {
-					l = i + 1;
-					continue;
-				}
-				if (compare > 0) {
-					r = i - 1;
-					continue;
-				}
-				return i;
-			}
-			return null;
-		}
-
-		var concat = (function () {
-			var a = [];
-			var c = a.concat;
-
-			function concat() {
-				return c.apply(a, arguments);
-			}
-
-			return concat;
-		}());
-
-
-		function insert(value, comparator, values) {
-			//console.log("insert",value,comparator,values)
-			var r = values.length - 1;
-			if (r === -1) {
-				return [value];
-			}
-			var l = 0;
-			var i, compare;
-			while (l <= r) {
-				i = ((l + r) / 2) | 0;
-				compare = comparator(values[i], value);
-				if (compare < 0) {
-					//array[i] is less than our value
-					l = i + 1;
-
-				} else if (compare > 0) {
-					r = i - 1;
-				} else {
-					//already here
-					return values;
-				}
-			}
-
-			if (comparator(values[i], value) < 0) {
-				//insert after i
-				return concat(values.slice(0, i + 1), [value], values.slice(i + 1));
-			} else {
-				//insert before i
-
-				return concat(values.slice(0, i), [value], values.slice(i));
-			}
-		}
-
-
-		function SortedSet(comparator) {
-			this.comparator = comparator;
-			this.values = [];
-		}
-
-		SortedSet.prototype.insert = function (value) {
-			this.values = insert(value, this.comparator, this.values);
-		};
-
-		SortedSet.prototype.indexOf = function (value) {
-			return find(value, this.values, this.comparator);
-		};
-
-		SortedSet.prototype.size = function () {
-			return this.values.length;
-		};
-
-		return SortedSet;
-	}());
-*/
-	var Utils = {
+		var Utils = {
 copyProperties: function (source, dest) {
 			for (var k in source) {
 				if (source.hasOwnProperty(k)) {
@@ -113,7 +24,6 @@ makeComparator: function (fields, data, comparators) {
 			var i;
 			var c = [];
 			for (i = 0; i < len; i++) {
-				//console.log(data,fields,i)
 				var entry = data[0][fields[i]];
 				var entryType = typeof entry;
 				if (typeof comparators[fields[i]] === 'function') {
@@ -415,27 +325,21 @@ function buildPivotResult(data, opt) {
 		
 		for (var i in userOptions.ROWS) {
 			result.metadata.dsd.columns.push({id: userOptions.ROWS[i], title: {EN: traduc[userOptions.ROWS[i]]}})
-			//MYFINALRESULT.rowname.push({id: rowNames[i], title: {EN: traduc[rowNames[i]]}})
 		}
 		for (var i in userOptions.COLS) {
 			result.metadata.dsd.columns.push({id: userOptions.COLS[i], title: {EN: traduc[userOptions.COLS[i]]}})
-			//MYFINALRESULT.colsname.push({id: columnNames[i], title: {EN: traduc[columnNames[i]]}})
 		}
 		
 		
 		for (var i in pivotdata.columns) {
 			result.metadata.dsd.columns.push({id: i.replace(/\|\*/g, "_"),title: {EN: i.replace(/\|\*/g, "\n")},subject: "value"})
-			//MYFINALRESULT.cols.push({id: i.replace(/\|\*/g, "_"),title: {EN: i.replace(/\|\*/g, "\n")}})
 		}
-		//console.log("MYFINALRESULT",MYFINALRESULT)
 		return result;
-		//return MYFINALRESULT;
 
 	}
 	
 	
 	function toFXJson(FX,userOptions) {
-		console.log("toFXJon",FX,userOptions)
 		MYFINALRESULT = {data: [],unit:[],flag:[],attribute:[], rows: [], cols: [],cols2: [],cols2label: [], okline: [], nookline: [],rowname:[],colsname:[]};//to internal test and dataset function
 		var pivotdata = toPivotData(FX,  userOptions);
 
@@ -459,7 +363,6 @@ function buildPivotResult(data, opt) {
 				var vindex= userOptions.values[vtemp]
 				if (pivotdata.data[vindex][i][j]) {
 				var myAgg=null;
-				//console.log(userOptions.formatter,vindex)
 				if(userOptions.aggregationFn[vindex])
 				{myAgg=userOptions.aggregationFn[vindex]}
 				else{myAgg="default"}

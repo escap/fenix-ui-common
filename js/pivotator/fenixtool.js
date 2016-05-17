@@ -27,11 +27,9 @@ define(function () {
 		 
 		 function parseInut(FX,opt)// FX.metadata.dsd,options
 		 {
-			 //console.log("FT parseinput",opt)
 			 var ret=$.extend(true,{},opt);
 			 if(opt.inputFormat=="fenixtool"){
 				var FXmod=convertFX(FX,opt);
-				console.log(FXmod)
 				  var lang = "EN";
 					if (opt.lang) {lang = opt.lang;}
 				var aggregations=[],
@@ -44,7 +42,6 @@ define(function () {
 						var showCode=opt.showCode;
 						var ret=[];
 						for (var i in arr){
-							console.log("i",arr[i],FXmod.dimensions[arr[i]])
 								if(showCode && FXmod.dimensions[arr[i]].label)
 									{ret.push(FXmod.dimensions[arr[i]].code)}
 								ret.push(FXmod.dimensions[arr[i]].label|| FXmod.dimensions[arr[i]].code)
@@ -66,29 +63,24 @@ define(function () {
 				"showFlag":opt.showFlag || false,
 				"showUnit":opt.showUnit || false
 				};
-			//	console.log("fenixTool parse input",FX,FXmod,JSON.stringify(opt))
 				
 				
 			}
-			console.log(ret)
 			return ret//to remove
 		 }
 		 
         function convertFX(FX, opt) {
-console.log("convertFX",FX,opt)
             var lang = "EN";
             if (opt.lang) {lang = opt.lang;}
             var structInter = {dimensions: {}, values: {}}
 
             function setDimension(id, att, val, subject) {
-                //console.log("setDimension ",id, att, val, subject)
                 if (!structInter.dimensions[id]) {structInter.dimensions[id] = {};}
                 structInter.dimensions[id][att] = val;
                 if (subject) {structInter.dimensions[id]["subject"] = subject;}
             }
 
             function setValue(id, att, val) {
-                //console.log("setDim",id,att,val);
                 if (!structInter.values[id]) {structInter.values[id] = {};}
                 if (att != "attribute") {structInter.values[id][att] = val;}
                 else {
@@ -97,16 +89,13 @@ console.log("convertFX",FX,opt)
                 }
             }
 
-//console.log('inside convertFX',FX);
             for (var i in FX.columns) {
                 var myColumns = FX.columns[i];
                 if (myColumns.key == true){//c est le code
-                    //console.log("add dimension 1 ",lang,myColumns);
                     setDimension(myColumns.id, "title", myColumns.title[lang]||myColumns.id);
                     setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);
                 }
                 else if (myColumns.id.split("_" + lang).length == 2){//label
-                    //console.log("add dimension 2 ",myColumns,myColumns.id.split("_" + lang)[0]);
                     setDimension(myColumns.id.split("_" + lang)[0], "label", myColumns.id)
                 }
 				else if (myColumns.dataType == "number" && myColumns.subject == "value") {
@@ -154,21 +143,17 @@ console.log("convertFX",FX,opt)
                 aggregations: aggregations,
                 values: values
             }
-            //	console.log(retObj)
             return retObj;
         }
 
         function initFXD(FX, opt){//for Data
-			console.log("initFXD opt",opt)
             var FXmod = convertFX(FX, opt);
-			console.log("FXMOD",FXmod)
             var hidden = [];
             var columns = [];
             var rows = [];
             var aggregations = [];
             var values = [];
             for (var i in FXmod.dimensions) {
-                //console.log("ici",opt.ROWS,opt.COLS,FXmod.dimensions[i],"test",FXmod.dimensions[i].title||FXmod.dimensions[i].code);
                 if (opt.rows[FXmod.dimensions[i].code]) {
                     rows.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
                     if (opt.showCode == true && FXmod.dimensions[i].title != FXmod.dimensions[i].code && FXmod.dimensions[i].title != null) {
@@ -183,16 +168,12 @@ console.log("convertFX",FX,opt)
                 }
             }
             for (var i in FXmod.values) {
-                //console.log(FXmod.values[i])
                 if (opt.values[FXmod.values[i].value]) {
                     values.push(FXmod.values[i].value)
                     if (opt.showUnit == true && FXmod.values[i].unit) {values.push(FXmod.values[i].unit);}
                     if (opt.showFlag == true && FXmod.values[i].flag) {values.push(FXmod.values[i].flag);}
                     for (var h in FXmod.values[i].attribute){hidden.push(FXmod.values[i].attribute[h])}
-                    /*if(opt.showUnit==true &&
-                     FXmod.values[i].title!=FXmod.values[i].code &&
-                     FXmod.values[i].title!=null )
-                     {VALS.push(FXmod.dimensions[i].code)}*/
+                   
                 }
             }
             var retObj = {
@@ -202,7 +183,6 @@ console.log("convertFX",FX,opt)
                 aggregations: aggregations,
                 values: values
             }
-			//console.log("FIN initFXD",retObj)
             return retObj;
         }
 		
@@ -215,7 +195,6 @@ console.log("convertFX",FX,opt)
             var aggregations = [];
             var y = [];
             for (var i in FXmod.dimensions) {
-                //console.log("ici",opt.ROWS,opt.COLS,FXmod.dimensions[i],"test",FXmod.dimensions[i].title||FXmod.dimensions[i].code);
                 if (opt.series[FXmod.dimensions[i].code]) {
                     series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
                     if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
@@ -228,7 +207,6 @@ console.log("convertFX",FX,opt)
                 }
             }
             for (var i in FXmod.values) {
-                //console.log(FXmod.values[i])
                 if (opt.y[FXmod.values[i].value]) {
 
                     y.push(FXmod.values[i].value)
@@ -255,7 +233,6 @@ console.log("convertFX",FX,opt)
                 aggregations: aggregations,
                 y: y
             }
-//		console.log("FIN initFXD",retObj)
             return retObj;
         }
 
