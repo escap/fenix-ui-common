@@ -97,6 +97,9 @@ define(function () {
                 }
                 else if (myColumns.id.split("_" + lang).length == 2){//label
                     setDimension(myColumns.id.split("_" + lang)[0], "label", myColumns.id)
+				if(!structInter.dimensions[myColumns.id.split("_" + lang)[0]]){  
+				setDimension(myColumns.id, "title", myColumns.id.split("_" + lang)[0]);
+                    setDimension(myColumns.id, "code",myColumns.id.split("_" + lang)[0]);}
                 }
 				else if (myColumns.dataType == "number" && myColumns.subject == "value") {
                     setValue(myColumns.id, "value", myColumns.id);
@@ -114,7 +117,9 @@ define(function () {
                     else {
                         //setDimension(myColumns.id, "label", myColumns.title[lang]||myColumns.id);
                         //setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);
-                        setValue("value", "attribute", myColumns.id)
+                        
+						
+						setValue("value", "attribute", myColumns.id)
                     }
                 }
             }
@@ -123,6 +128,7 @@ define(function () {
 
         function initFXT(FX, opt){//for Toolbar
             var FXmod = convertFX(FX, opt);
+			
             var hidden = [];
             var columns = [];
             var rows = [];
