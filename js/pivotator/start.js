@@ -266,11 +266,10 @@ function buildPivotResult(data, opt) {
 		var rows=[];
 		var len = data.length;
 		var dat;
-
 		//var result = {};
 		var result = {};
 		//console.log("opt",opt)
-		for(var i=0;i<opt.values.length;i++){result[opt.values[i]]={};		}
+		for(var i=0;i<opt.values.length;i++){result[opt.values[i]]={};}
 		
 		
 		for (var i = 0; i < len; i++) {
@@ -284,18 +283,11 @@ function buildPivotResult(data, opt) {
 			indexC = indexC.join("|*");
 			
 			for(var j=0;j<opt.values.length;j++){
-			if (!result[opt.values[j]][indexR]) {result[opt.values[j]][indexR] = {};}
-			
-
-			/*if (!result[opt.VALS[j]][indexR][indexC])
-			{result[opt.VALS[j]][indexR][indexC] =[dat[opt.VALS[j]]];}
-			else {result[opt.VALS[j]][indexR][indexC].push(dat[opt.VALS[j]]);}
-			*/
-			if (!result[opt.values[j]][indexR][indexC])
-			{result[opt.values[j]][indexR][indexC] =[myfunc.getGetValue(opt.values[j],"number")(dat,opt.values[j])];}
-			else {result[opt.values[j]][indexR][indexC].push(myfunc.getGetValue(opt.values[j],"number")(dat,opt.values[j]));}
-			
-		
+				if (!result[opt.values[j]][indexR]) {result[opt.values[j]][indexR] = {};}
+				
+				if (!result[opt.values[j]][indexR][indexC])
+				{result[opt.values[j]][indexR][indexC] =[myfunc.getGetValue(opt.values[j],"number")(dat,opt.values[j])];}
+				else {result[opt.values[j]][indexR][indexC].push(myfunc.getGetValue(opt.values[j],"number")(dat,opt.values[j]));}
 			}
 			
 			
@@ -365,9 +357,6 @@ function buildPivotResult(data, opt) {
 		for (var ii in pivotdata.rows) {
 			var i=pivotdata.rows[ii];
 			var temp = i.split("|*");
-
-
-
 
 			//for internaldata
 			for (var jj in pivotdata.columns) {
@@ -446,7 +435,7 @@ function buildPivotResult(data, opt) {
 	
 	
 	function toFXJson(FX,userOptions) {
-	//	console.log("toFXJon",userOptions)
+		console.log("toFXJon",FX,userOptions)
 		MYFINALRESULT = {data: [],unit:[],flag:[],attribute:[], rows: [], cols: [],cols2: [],cols2label: [], okline: [], nookline: [],rowname:[],colsname:[]};//to internal test and dataset function
 		var pivotdata = toPivotData(FX,  userOptions);
 
@@ -500,7 +489,7 @@ function buildPivotResult(data, opt) {
 			}*/
 
 		var traduc = {}
-		for (var i in FX.metadata.dsd.columns) {traduc[FX.metadata.dsd.columns[i].id] = FX.metadata.dsd.columns[i].title["EN"]}
+		for (var i in FX.metadata.dsd.columns) {traduc[FX.metadata.dsd.columns[i].id] =FX.metadata.dsd.columns[i].title["EN"]}
 		
 		for (var i in userOptions.rows) {
 			MYFINALRESULT.rowname.push({id: userOptions.rows[i], title: {EN: traduc[userOptions.rows[i]]}})

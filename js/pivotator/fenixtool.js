@@ -22,12 +22,18 @@ define(function () {
          }
          */
 
+		 function exportConf(olapModel)
+			{
+				console.log("exportConf",olapModel)
+				
+			}
+		 
 		 
 		 function parseInut(FX,opt)// FX.metadata.dsd,options
 		 {
+			 console.log("FT parseinput",opt)
 			 var ret=$.extend(true,{},opt);
-			 if(opt.inputFormat=="raw"){}
-			else{
+			 if(opt.inputFormat=="fenixtool"){
 				var FXmod=convertFX(FX,opt);
 				console.log(FXmod)
 				  var lang = "EN";
@@ -38,12 +44,13 @@ define(function () {
 					rows=[],
 					values=[];
 					
-					function getListDim(arr,opt,FXmod)
-					{var showCode=opt.showCode;
+					function getListDim(arr,opt,FXmod){
+						var showCode=opt.showCode;
 						var ret=[];
 						for (var i in arr){
 							console.log("i",arr[i],FXmod.dimensions[arr[i]])
-								if(showCode && FXmod.dimensions[arr[i]].label){ret.push(FXmod.dimensions[arr[i]].code)}
+								if(showCode && FXmod.dimensions[arr[i]].label)
+									{ret.push(FXmod.dimensions[arr[i]].code)}
 								ret.push(FXmod.dimensions[arr[i]].label|| FXmod.dimensions[arr[i]].code)
 							}
 							return ret
@@ -167,13 +174,13 @@ define(function () {
             for (var i in FXmod.dimensions) {
                 //console.log("ici",opt.ROWS,opt.COLS,FXmod.dimensions[i],"test",FXmod.dimensions[i].title||FXmod.dimensions[i].code);
                 if (opt.rows[FXmod.dimensions[i].code]) {
-                    rows.push(FXmod.dimensions[i].title || FXmod.dimensions[i].code)
-                    if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
+                    rows.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
+                    if (opt.showCode == true && FXmod.dimensions[i].title != FXmod.dimensions[i].code && FXmod.dimensions[i].title != null) {
                         rows.push(FXmod.dimensions[i].code)
                     }
                 }
                 if (opt.columns[FXmod.dimensions[i].code]) {
-                    columns.push(FXmod.dimensions[i].title || FXmod.dimensions[i].code)
+                    columns.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
                     if (opt.showCode == true && FXmod.dimensions[i].title != FXmod.dimensions[i].code && FXmod.dimensions[i].title != null) {
                         columns.push(FXmod.dimensions[i].code)
                     }
@@ -217,14 +224,14 @@ define(function () {
             for (var i in FXmod.dimensions) {
                 //console.log("ici",opt.ROWS,opt.COLS,FXmod.dimensions[i],"test",FXmod.dimensions[i].title||FXmod.dimensions[i].code);
                 if (opt.series[FXmod.dimensions[i].code]) {
-                    series.push(FXmod.dimensions[i].title || FXmod.dimensions[i].code)
+                    series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
                     if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
                         series.push(FXmod.dimensions[i].code)
                     }
                 }
                 if (opt.x[FXmod.dimensions[i].code]) {
-                    x.push(FXmod.dimensions[i].title || FXmod.dimensions[i].code)
-                    if (opt.showCode == true && FXmod.dimensions[i].title != FXmod.dimensions[i].code && FXmod.dimensions[i].title != null) {x.push(FXmod.dimensions[i].code);}
+                    x.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
+                    if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {x.push(FXmod.dimensions[i].code);}
                 }
             }
             for (var i in FXmod.values) {
@@ -269,7 +276,8 @@ define(function () {
                 initFXT: initFXT,
                 initFXD: initFXD,
 				initFXDgraph:initFXDgraph,
-				parseInut:parseInut
+				parseInut:parseInut,
+				exportConf:exportConf
             }
         };
     }
