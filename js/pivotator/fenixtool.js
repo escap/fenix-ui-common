@@ -38,8 +38,9 @@ define(function () {
 					rows=[],
 					values=[];
 					
-					function getListDim(arr,showCode,FXmod)
-					{var ret=[];
+					function getListDim(arr,opt,FXmod)
+					{var showCode=opt.showCode;
+						var ret=[];
 						for (var i in arr){
 							console.log("i",arr[i],FXmod.dimensions[arr[i]])
 								if(showCode && FXmod.dimensions[arr[i]].label){ret.push(FXmod.dimensions[arr[i]].code)}
@@ -50,11 +51,11 @@ define(function () {
 				
 				ret={"inputFormat":"fenixTool",
 				"aggregationFn":opt.aggregationFn|| {"value":"sum"},
-				"aggregations":getListDim(opt.aggregations,opt.showCode,FXmod),
-				"hidden":getListDim(opt.hidden,opt.showCode,FXmod),
-				"columns":getListDim(opt.columns,opt.showCode,FXmod),
+				"aggregations":getListDim(opt.aggregations,opt,FXmod),
+				"hidden":getListDim(opt.hidden,opt,FXmod),
+				"columns":getListDim(opt.columns,opt,FXmod),
 				"values":opt.values,
-				"rows":getListDim(opt.rows,opt.showCode,FXmod),
+				"rows":getListDim(opt.rows,opt,FXmod),
 				"formatter":opt.formatter || "value",
 				"showRowHeaders":opt.showRowHeaders || false,
 				"decimals":opt.decimals || 2,
