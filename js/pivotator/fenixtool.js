@@ -22,6 +22,54 @@ define(function () {
          }
          */
 
+		 
+		 function parseInut(FX,opt)// FX.metadata.dsd,options
+		 {
+			 var ret=opt;
+			 if(opt.inputFormat=="raw"){}
+			else{
+				var FXmod=convertFX(FX,opt);
+				console.log(FXmod)
+				  var lang = "EN";
+					if (opt.lang) {lang = opt.lang;}
+				var aggregations=[],
+					hidden=[],
+					columns=[],
+					rows=[],
+					values=[];
+					
+					function getListDim(arr,showCode,FXmod)
+					{var ret=[];
+						for (var i in arr){
+							console.log("i",arr[i],FXmod.dimensions[arr[i]])
+								if(showCode && FXmod.dimensions[arr[i]].label){ret.push(FXmod.dimensions[arr[i]].code)}
+								ret.push(FXmod.dimensions[arr[i]].label|| FXmod.dimensions[arr[i]].code)
+							}
+							return ret
+					}
+				
+				ret={"inputFormat":"fenixTool",
+				"aggregationFn":opt.aggregationFn|| {"value":"sum"},
+				"aggregations":getListDim(opt.aggregations,opt.showCode,FXmod),
+				"hidden":getListDim(opt.hidden,opt.showCode,FXmod),
+				"columns":getListDim(opt.columns,opt.showCode,FXmod),
+				"values":opt.values,
+				"rows":getListDim(opt.rows,opt.showCode,FXmod),
+				"formatter":opt.formatter || "value",
+				"showRowHeaders":opt.showRowHeaders || false,
+				"decimals":opt.decimals || 2,
+				"showCode":opt.showCode || false,
+				"showFlag":opt.showFlag || false,
+				"showUnit":opt.showUnit || false
+				};
+			//	console.log("fenixTool parse input",FX,FXmod,JSON.stringify(opt))
+				
+				
+			}
+			console.log(ret)
+			return ret//to remove
+		 }
+		 
         function convertFX(FX, opt) {
 
             var lang = "EN";
@@ -50,12 +98,12 @@ define(function () {
                 var myColumns = FX.columns[i];
                 if (myColumns.key == true){//c est le code
                     //console.log("add dimension 1 ",lang,myColumns);
-                    setDimension(myColumns.id, "label", myColumns.title[lang]||myColumns.id);
+                    setDimension(myColumns.id, "title", myColumns.title[lang]||myColumns.id);
                     setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);
                 }
                 else if (myColumns.id.split("_" + lang).length == 2){//label
                     //console.log("add dimension 2 ",myColumns,myColumns.id.split("_" + lang)[0]);
-                    setDimension(myColumns.id.split("_" + lang)[0], "title", myColumns.id)
+                    setDimension(myColumns.id.split("_" + lang)[0], "label", myColumns.id)
                 }
 				else if (myColumns.dataType == "number" && myColumns.subject == "value") {
                     setValue(myColumns.id, "value", myColumns.id);
@@ -89,8 +137,8 @@ define(function () {
             var values = [];
 
             for (var i in FXmod.dimensions) {
-                if (FXmod.dimensions[i].subject == "time") {columns.push({value: FXmod.dimensions[i].code, label: FXmod.dimensions[i].label});}
-                else {rows.push({value: FXmod.dimensions[i].code, label: FXmod.dimensions[i].label});}
+                if (FXmod.dimensions[i].subject == "time") {columns.push({value: FXmod.dimensions[i].code, label: FXmod.dimensions[i].title});}
+                else {rows.push({value: FXmod.dimensions[i].code, label: FXmod.dimensions[i].title});}
             }
 
             for (var i in FXmod.values) {values.push({value: FXmod.values[i].value, label: FXmod.values[i].label});}
@@ -219,7 +267,8 @@ define(function () {
                 convertFX: convertFX,
                 initFXT: initFXT,
                 initFXD: initFXD,
-				initFXDgraph:initFXDgraph
+				initFXDgraph:initFXDgraph,
+				parseInut:parseInut
             }
         };
     }

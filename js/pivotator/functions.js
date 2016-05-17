@@ -7,7 +7,6 @@ var Aggregator={
 			//	console.log("AGG DEFAULT",cell)
 			var a= jStat(cell);return format(a.sum(),nbDec)},
 		"sum":function(cell,format,nbDec){
-
 			var a= jStat(cell);return format(a.sum(),nbDec)},
 		avg:function(cell,format,nbDec){var a= jStat(cell);return format(a.mean(),nbDec)},
 		median:function(cell,format,nbDec){var a= jStat(cell);return format(a.median(),nbDec)},
