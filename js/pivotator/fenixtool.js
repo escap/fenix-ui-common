@@ -24,9 +24,9 @@ define([
          }
          */
 
+		 var FXmod;
 
-        function parseInut(FX, opt)// FX.metadata.dsd,options
-        {
+        function parseInut(FX, opt){// FX.metadata.dsd,options
             var ret = $.extend(true, {}, opt);
             if (opt.inputFormat == "fenixtool") {
                 var FXmod = convertFX(FX, opt);
@@ -161,7 +161,7 @@ define([
         }
 
    function convertFXDirty(FX, opt) {
-			console.log("FXDIRTY ",FX);
+			//console.log("FXDIRTY ",FX);
 			var structInter = {dimensions: {}, values: {},attributes:{}}
 			var structDirty={};           
 
@@ -203,7 +203,7 @@ define([
 					
 					setDirty(myColumns.id,"type","value");
 					setDirty(myColumns.id,"value",myColumns.id);
-					setDirty(myColumns.id,"label",myColumns.id);
+					setDirty(myColumns.id,"title",myColumns.id);
 					if(myColumns.subject){
 					setDirty(myColumns.id,"subject",myColumns.subject);}
 
@@ -247,8 +247,7 @@ define([
 					}
                 }
             }
-//			for()
-		console.log("FXDIRTY interm ",JSON.stringify(structDirty));
+		//console.log("FXDIRTY interm ",JSON.stringify(structDirty));
 		for(var i in structDirty)
 			{
 				if(structDirty[i].type=="dimension"){structInter.dimensions[i]=	structDirty[i];}
@@ -256,7 +255,7 @@ define([
 			else {structInter.attributes[i]=structDirty[i];}
 				
 			}	//console.log("structInterDirty",structDirty,"structInter",structInter);
-			console.log("FXDIRTY return ",structInter);
+			//console.log("FXDIRTY return ",structInter);
 			
 			return structInter;
         }
@@ -264,11 +263,13 @@ define([
       
 
 		function initFXT(FX, opt){//for Toolbar
-		
-            var FXmodold = convertFX(FX, opt);
+	
+           // var FXmodold = convertFX(FX, opt);
 			var FXmodnew = convertFXDirty(FX, opt);
-			var FXmod=FXmodnew;
-			console.log("compar",FXmodold,FXmodnew)
+			
+			
+			 FXmod=FXmodnew;
+			
 			
             var hidden = [];
             var columns = [];
@@ -398,8 +399,10 @@ define([
 
         function toFilter(model) {
 
-            var fxt = initFXT(model),
-                configuration = {
+            var fxt = initFXT(model.metadata.dsd);
+			console.log("FXT",fxt);
+			
+			var configuration = {
                     fxSortDimension: {
                         selector: {
                             id: "sortable",
@@ -409,7 +412,9 @@ define([
                                 groups : {
                                     rows : "Rows",
                                     columns : "Columns",
-                                    hidden : "Hidden"
+                                    hidden : "Hidden",
+									 aggregations : "Aggregation",
+									  values : "Values"
                                 }
                             }
                         },
@@ -436,6 +441,7 @@ define([
                     return item
                 }),
                 hidden = _.map(fxt.hidden, function (item) {
+					
                     item.parent = "hidden";
                     return item
                 }),
@@ -444,28 +450,142 @@ define([
                     return item
                 });
 
-            configuration.fxSortDimension.selector.source = _.union(/* aggregations,hidden, */columns, rows, values);
+            configuration.fxSortDimension.selector.source = _.union( aggregations,hidden, columns, rows, values);
 
             return configuration
 
         }
 
         function toChartConfig(values) {
-
+			//console.log("toChartConfig",values)
+			var hidden = [];
+            var x = [];
+            var series = [];
+            var aggregations = [];
+            var y = [];
+			
             //convert to chart creator configuration here
+			var opt={x:{},y:{},series:{},showUnit:false,showCode:false,showFlag:false};
+			for (var i in values.values.show){
+				var t=values.values.show[i];
+				if(t=="code"){opt.showCode=true}
+				else if(t=="unit"){opt.showUnit=true}
+				else if(t=="flag"){opt.showFlag=true}
+			}
+				for (var i in values.values.fxSortDimension){
+				var t=values.values.fxSortDimension[i];
+				if(t.parent=="rows"){opt.series[t.value]=true}
+				else if(t.parent=="columns"){opt.x[t.value]=true}
+				else if(t.parent=="values"){opt.y[t.value]=true}
+				else if(t.parent=="hidden"){/* to decide what we want to do*/}
+			}
+			
 
-            return {
-                test: "Chart"
-            };
+			  for (var i in FXmod.dimensions) {
+                if (opt.series[FXmod.dimensions[i].code]) {
+                    series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
+                    if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
+                        series.push(FXmod.dimensions[i].code)
+                    }
+                }
+                if (opt.x[FXmod.dimensions[i].code]) {
+                    x.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
+                    if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
+                        x.push(FXmod.dimensions[i].code);
+                    }
+                }
+            }
+            for (var i in FXmod.values) {
+                if (opt.y[FXmod.values[i].value]) {
+                    y.push(FXmod.values[i].value)
+                    if (opt.showUnit == true && FXmod.values[i].unit) {
+                        y.push(FXmod.values[i].unit)
+                    }
+                    if (opt.showFlag == true && FXmod.values[i].flag) {
+                        y.push(FXmod.values[i].flag)
+                    }
+                    for (var h in FXmod.values[i].attribute) {
+                        hidden.push(FXmod.values[i].attribute[h])
+                    }
+                }
+            }
+			
+		var retObj = {
+                hidden: hidden,
+                series: series,
+                x: x,
+                aggregations: aggregations,
+                y: y
+            }
+            return retObj;
+			
+		
         }
 
         function toTableConfig(values) {
+//console.log("toChartConfig",values)
+			var hidden = [];
+            var x = [];
+            var series = [];
+            var aggregations = [];
+            var y = [];
+			
+            //convert to chart creator configuration here
+			var opt={x:{},y:{},series:{},showUnit:false,showCode:false,showFlag:false};
+			for (var i in values.values.show){
+				var t=values.values.show[i];
+				if(t=="code"){opt.showCode=true}
+				else if(t=="unit"){opt.showUnit=true}
+				else if(t=="flag"){opt.showFlag=true}
+			}
+				for (var i in values.values.fxSortDimension){
+				var t=values.values.fxSortDimension[i];
+				if(t.parent=="rows"){opt.series[t.value]=true}
+				else if(t.parent=="columns"){opt.x[t.value]=true}
+				else if(t.parent=="values"){opt.y[t.value]=true}
+				else if(t.parent=="hidden"){/* to decide what we want to do*/}
+			}
+			
 
-            //convert to olap creator configuration here
-
-            return {
-                test: "Table"
-            };
+			  for (var i in FXmod.dimensions) {
+                if (opt.series[FXmod.dimensions[i].code]) {
+                    series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
+                    if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
+                        series.push(FXmod.dimensions[i].code)
+                    }
+                }
+                if (opt.x[FXmod.dimensions[i].code]) {
+                    x.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
+                    if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
+                        x.push(FXmod.dimensions[i].code);
+                    }
+                }
+            }
+            for (var i in FXmod.values) {
+                if (opt.y[FXmod.values[i].value]) {
+                    y.push(FXmod.values[i].value)
+                    if (opt.showUnit == true && FXmod.values[i].unit) {
+                        y.push(FXmod.values[i].unit)
+                    }
+                    if (opt.showFlag == true && FXmod.values[i].flag) {
+                        y.push(FXmod.values[i].flag)
+                    }
+                    for (var h in FXmod.values[i].attribute) {
+                        hidden.push(FXmod.values[i].attribute[h])
+                    }
+                }
+            }
+			
+		var retObj = {
+                hidden: hidden,
+                rows: series,
+                columns: x,
+                aggregations: aggregations,
+                values: y
+            }
+            return retObj;
+			
+           
         }
 
         return function () {
