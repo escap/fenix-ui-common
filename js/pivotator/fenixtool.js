@@ -24,9 +24,9 @@ define([
          }
          */
 
-		 var FXmod;
+        var FXmod;
 
-        function parseInut(FX, opt){// FX.metadata.dsd,options
+        function parseInut(FX, opt) {// FX.metadata.dsd,options
             var ret = $.extend(true, {}, opt);
             if (opt.inputFormat == "fenixtool") {
                 var FXmod = convertFX(FX, opt);
@@ -74,7 +74,7 @@ define([
         }
 
         function convertFX(FX, opt) {
-			console.log("FX",FX)
+            console.log("FX", FX)
             var lang = "EN";
             if (opt && opt.hasOwnProperty("lang")) {
                 lang = opt.lang;
@@ -90,11 +90,17 @@ define([
                     structInter.dimensions[id]["subject"] = subject;
                 }
             }
-			function setAttribute(id, att, val, subject) {
-                if (!structInter.attribute[id]) {structInter.attribute[id] = {};}
+
+            function setAttribute(id, att, val, subject) {
+                if (!structInter.attribute[id]) {
+                    structInter.attribute[id] = {};
+                }
                 structInter.attribute[id][att] = val;
-                if (subject) {structInter.attribute[id]["subject"] = subject;}
+                if (subject) {
+                    structInter.attribute[id]["subject"] = subject;
+                }
             }
+
             function setValue(id, att, val) {
                 if (!structInter.values[id]) {
                     structInter.values[id] = {};
@@ -118,9 +124,9 @@ define([
                 }
                 else if (myColumns.id.split("_" + lang).length == 2) {//label
                     setDimension(myColumns.id.split("_" + lang)[0], "label", myColumns.id)
-			/*	if(!structInter.dimensions[myColumns.id.split("_" + lang)[0]]){ 
-				setDimension(myColumns.id, "title", myColumns.id.split("_" + lang)[0]);
-                    setDimension(myColumns.id, "code",myColumns.id.split("_" + lang)[0]);}*/
+                    /*	if(!structInter.dimensions[myColumns.id.split("_" + lang)[0]]){
+                     setDimension(myColumns.id, "title", myColumns.id.split("_" + lang)[0]);
+                     setDimension(myColumns.id, "code",myColumns.id.split("_" + lang)[0]);}*/
                 }
                 else if (myColumns.dataType == "number" && myColumns.subject == "value") {
                     setValue(myColumns.id, "value", myColumns.id);
@@ -146,131 +152,145 @@ define([
                         setValue("value", "flag", myColumns.id);
                     }
                     else {
-                       // setDimension(myColumns.id, "label", myColumns.title[lang]||myColumns.id);
-                      //  setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);
-                        
-						//setAttribute(myColumns.id, "id", myColumns.id)
+                        // setDimension(myColumns.id, "label", myColumns.title[lang]||myColumns.id);
+                        //  setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);
 
-						setValue("value", "attribute", myColumns.id)
+                        //setAttribute(myColumns.id, "id", myColumns.id)
+
+                        setValue("value", "attribute", myColumns.id)
                     }
                 }
             }
 //			for()
-			console.log("structInter",structInter)
-			return structInter;
+            console.log("structInter", structInter)
+            return structInter;
         }
 
-   function convertFXDirty(FX, opt) {
-			//console.log("FXDIRTY ",FX);
-			var structInter = {dimensions: {}, values: {},attributes:{}}
-			var structDirty={};           
+        function convertFXDirty(FX, opt) {
+            //console.log("FXDIRTY ",FX);
+            var structInter = {dimensions: {}, values: {}, attributes: {}}
+            var structDirty = {};
 
-		   var lang = "EN";
-            if (opt && opt.lang) {lang = opt.lang;}
-           
-		   function setDirty(id,field,val){
-			   if(!structDirty[id]){structDirty[id]={}}
-			  if(field=="attributes"){
-				  if(structDirty[id][field]){structDirty[id][field].push(val);}
-				  else{structDirty[id][field]=[val];}
-				  
-			  }
-			  else{
-			   structDirty[id][field]=val;
-			  }
-		   }
+            var lang = "EN";
+            if (opt && opt.lang) {
+                lang = opt.lang;
+            }
+
+            function setDirty(id, field, val) {
+                if (!structDirty[id]) {
+                    structDirty[id] = {}
+                }
+                if (field == "attributes") {
+                    if (structDirty[id][field]) {
+                        structDirty[id][field].push(val);
+                    }
+                    else {
+                        structDirty[id][field] = [val];
+                    }
+
+                }
+                else {
+                    structDirty[id][field] = val;
+                }
+            }
 
             for (var i in FX.columns) {
                 var myColumns = FX.columns[i];
-                if (myColumns.key == true){//c est le code
-				setDirty(myColumns.id,"code",myColumns.id);
-				setDirty(myColumns.id,"title", myColumns.title[lang]||myColumns.id);
-				setDirty(myColumns.id,"type","dimension");
-				if(myColumns.subject){
-				setDirty(myColumns.id,"subject", myColumns.subject);
-				}
+                if (myColumns.key == true) {//c est le code
+                    setDirty(myColumns.id, "code", myColumns.id);
+                    setDirty(myColumns.id, "title", myColumns.title[lang] || myColumns.id);
+                    setDirty(myColumns.id, "type", "dimension");
+                    if (myColumns.subject) {
+                        setDirty(myColumns.id, "subject", myColumns.subject);
+                    }
 
-                 /*setDimension(myColumns.id, "title", myColumns.title[lang]||myColumns.id);
-                  setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);*/
+                    /*setDimension(myColumns.id, "title", myColumns.title[lang]||myColumns.id);
+                     setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);*/
                 }
-                else if (myColumns.id.split("_" + lang).length == 2){//label
-				setDirty(myColumns.id.split("_" + lang)[0],"label", myColumns.id);
+                else if (myColumns.id.split("_" + lang).length == 2) {//label
+                    setDirty(myColumns.id.split("_" + lang)[0], "label", myColumns.id);
 
-                   //setDimension(myColumns.id.split("_" + lang)[0], "label", myColumns.id)
-			
+                    //setDimension(myColumns.id.split("_" + lang)[0], "label", myColumns.id)
+
                 }
-				else if (myColumns.dataType == "number" && myColumns.subject == "value") {
-					
-					setDirty(myColumns.id,"type","value");
-					setDirty(myColumns.id,"value",myColumns.id);
-					setDirty(myColumns.id,"title",myColumns.id);
-					if(myColumns.subject){
-					setDirty(myColumns.id,"subject",myColumns.subject);}
+                else if (myColumns.dataType == "number" && myColumns.subject == "value") {
 
-					//setValue(myColumns.id, "value", myColumns.id);
+                    setDirty(myColumns.id, "type", "value");
+                    setDirty(myColumns.id, "value", myColumns.id);
+                    setDirty(myColumns.id, "title", myColumns.id);
+                    if (myColumns.subject) {
+                        setDirty(myColumns.id, "subject", myColumns.subject);
+                    }
+
+                    //setValue(myColumns.id, "value", myColumns.id);
                     //setValue(myColumns.id, "label", myColumns.id);
                     //setValue(myColumns.id, "subject", myColumns.subject);
                 }
                 else if (myColumns.id.split("|*").length == 2) {//attribut d une valeur X
-                    if (myColumns.subject == "um") 
-						{
-							setDirty(myColumns.id.split("|*")[0],"unit",myColumns.id);
-							//setDirty(myColumns.id.split("|*")[0],"unit",myColumns.id);
-							//setValue(myColumns.id.split("|*")[0], "unit", myColumns.id);
-						} 
-					else if (myColumns.subject == "flag")
-						{
-							setDirty(myColumns.id.split("|*")[0],"flag",myColumns.id);
-						//	setValue(myColumns.id.split("|*")[0], "flag", myColumns.id);
-						}
-                    else {setDirty(myColumns.id.split("|*")[0], "attributes", myColumns.id);}
-                }
-                else{//attribut de value
-                   /* if (myColumns.subject == "um") {
-						//setValue("value", "unit", myColumns.id);
-						setDirty("value","unit",myColumns.id)
-						}
+                    if (myColumns.subject == "um") {
+                        setDirty(myColumns.id.split("|*")[0], "unit", myColumns.id);
+                        //setDirty(myColumns.id.split("|*")[0],"unit",myColumns.id);
+                        //setValue(myColumns.id.split("|*")[0], "unit", myColumns.id);
+                    }
                     else if (myColumns.subject == "flag") {
-						//setValue("value", "flag", myColumns.id);
-						setDirty("value","flag",myColumns.id)
+                        setDirty(myColumns.id.split("|*")[0], "flag", myColumns.id);
+                        //	setValue(myColumns.id.split("|*")[0], "flag", myColumns.id);
+                    }
+                    else {
+                        setDirty(myColumns.id.split("|*")[0], "attributes", myColumns.id);
+                    }
+                }
+                else {//attribut de value
+                    /* if (myColumns.subject == "um") {
+                     //setValue("value", "unit", myColumns.id);
+                     setDirty("value","unit",myColumns.id)
+                     }
+                     else if (myColumns.subject == "flag") {
+                     //setValue("value", "flag", myColumns.id);
+                     setDirty("value","flag",myColumns.id)
 
-						}
-                    else*/ {
-						//// setDimension(myColumns.id, "label", myColumns.title[lang]||myColumns.id);
-						////  setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);
-						////setAttribute(myColumns.id, "id", myColumns.id)
+                     }
+                     else*/
+                    {
+                        //// setDimension(myColumns.id, "label", myColumns.title[lang]||myColumns.id);
+                        ////  setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);
+                        ////setAttribute(myColumns.id, "id", myColumns.id)
 
-						//setValue("value", "attribute", myColumns.id)
-						setDirty( myColumns.id,"type","attribute");
-						setDirty( myColumns.id,"value",myColumns.id);
-						setDirty( myColumns.id,"title",myColumns.title[lang]||myColumns.id);
-					}
+                        //setValue("value", "attribute", myColumns.id)
+                        setDirty(myColumns.id, "type", "attribute");
+                        setDirty(myColumns.id, "value", myColumns.id);
+                        setDirty(myColumns.id, "title", myColumns.title[lang] || myColumns.id);
+                    }
                 }
             }
-		//console.log("FXDIRTY interm ",JSON.stringify(structDirty));
-		for(var i in structDirty)
-			{
-				if(structDirty[i].type=="dimension"){structInter.dimensions[i]=	structDirty[i];}
-			else if(structDirty[i].type=="value"){structInter.values[i]=structDirty[i];}
-			else {structInter.attributes[i]=structDirty[i];}
-				
-			}	//console.log("structInterDirty",structDirty,"structInter",structInter);
-			//console.log("FXDIRTY return ",structInter);
-			
-			return structInter;
+            //console.log("FXDIRTY interm ",JSON.stringify(structDirty));
+            for (var i in structDirty) {
+                if (structDirty[i].type == "dimension") {
+                    structInter.dimensions[i] = structDirty[i];
+                }
+                else if (structDirty[i].type == "value") {
+                    structInter.values[i] = structDirty[i];
+                }
+                else {
+                    structInter.attributes[i] = structDirty[i];
+                }
+
+            }	//console.log("structInterDirty",structDirty,"structInter",structInter);
+            //console.log("FXDIRTY return ",structInter);
+
+            return structInter;
         }
 
-      
 
-		function initFXT(FX, opt){//for Toolbar
-	
-           // var FXmodold = convertFX(FX, opt);
-			var FXmodnew = convertFXDirty(FX, opt);
-			
-			
-			 FXmod=FXmodnew;
-			
-			
+        function initFXT(FX, opt) {//for Toolbar
+
+            // var FXmodold = convertFX(FX, opt);
+            var FXmodnew = convertFXDirty(FX, opt);
+
+
+            FXmod = FXmodnew;
+
+
             var hidden = [];
             var columns = [];
             var rows = [];
@@ -278,15 +298,21 @@ define([
             var values = [];
 
             for (var i in FXmod.dimensions) {
-                if (FXmod.dimensions[i].subject == "time") {columns.push({value: FXmod.dimensions[i].code , label: FXmod.dimensions[i].title});}
-                else {rows.push({value: FXmod.dimensions[i].code, label: FXmod.dimensions[i].title});}
+                if (FXmod.dimensions[i].subject == "time") {
+                    columns.push({value: FXmod.dimensions[i].code, label: FXmod.dimensions[i].title});
+                }
+                else {
+                    rows.push({value: FXmod.dimensions[i].code, label: FXmod.dimensions[i].title});
+                }
             }
 
-            for (var i in FXmod.values) {values.push({value: FXmod.values[i].value, label: FXmod.values[i].title});}
+            for (var i in FXmod.values) {
+                values.push({value: FXmod.values[i].value, label: FXmod.values[i].title});
+            }
             for (var i in FXmod.attributes) {
-				
-				hidden.push({value: FXmod.attributes[i].value, label: FXmod.attributes[i].title});
-				}
+
+                hidden.push({value: FXmod.attributes[i].value, label: FXmod.attributes[i].title});
+            }
 
             var retObj = {
                 hidden: hidden,
@@ -295,7 +321,7 @@ define([
                 aggregations: aggregations,
                 values: values
             }
-			console.log(retObj)
+            console.log(retObj)
             return retObj;
         }
 
@@ -344,8 +370,8 @@ define([
             }
             return retObj;
         }
-		
-		function initFXDgraph(FX, opt){//for Data for chart
+
+        function initFXDgraph(FX, opt) {//for Data for chart
             var FXmod = convertFX(FX, opt);
             var hidden = [];
             var x = [];
@@ -400,33 +426,33 @@ define([
         function toFilter(model) {
 
             var fxt = initFXT(model.metadata.dsd);
-			console.log("FXT",fxt);
-			
-			var configuration = {
-                    fxSortDimension: {
-                        selector: {
-                            id: "sortable",
-                            source: [],
-                            config: { //SortableJS configuration
-                                //disabled: true
-                                groups : {
-                                    rows : "Rows",
-                                    columns : "Columns",
-                                    hidden : "Hidden",
-									 aggregations : "Aggregation",
-									  values : "Values"
-                                }
-                            }
-                        },
+            console.log("FXT", fxt);
 
-                        template: {
-                            //"hideHeader": true,
-                            hideSwitch: true,
-                            hideRemoveButton: true,
-                            title: "Sort dimension"
+            var configuration = {
+                fxSortDimension: {
+                    selector: {
+                        id: "sortable",
+                        source: [],
+                        config: { //SortableJS configuration
+                            //disabled: true
+                            groups: {
+                                rows: "Rows",
+                                columns: "Columns",
+                                hidden: "Hidden",
+                                aggregations: "Aggregation",
+                                values: "Values"
+                            }
                         }
+                    },
+
+                    template: {
+                        //"hideHeader": true,
+                        hideSwitch: true,
+                        hideRemoveButton: true,
+                        title: "Sort dimension"
                     }
-                };
+                }
+            };
 
             var aggregations = _.map(fxt.aggregations, function (item) {
                     item.parent = "aggregations";
@@ -441,7 +467,7 @@ define([
                     return item
                 }),
                 hidden = _.map(fxt.hidden, function (item) {
-					
+
                     item.parent = "hidden";
                     return item
                 }),
@@ -450,38 +476,51 @@ define([
                     return item
                 });
 
-            configuration.fxSortDimension.selector.source = _.union( aggregations,hidden, columns, rows, values);
+            configuration.fxSortDimension.selector.source = _.union(aggregations, hidden, columns, rows, values);
 
             return configuration
 
         }
 
         function toChartConfig(values) {
-			//console.log("toChartConfig",values)
-			var hidden = [];
+            //console.log("toChartConfig",values)
+            var hidden = [];
             var x = [];
             var series = [];
             var aggregations = [];
             var y = [];
-			
-            //convert to chart creator configuration here
-			var opt={x:{},y:{},series:{},showUnit:false,showCode:false,showFlag:false};
-			for (var i in values.values.show){
-				var t=values.values.show[i];
-				if(t=="code"){opt.showCode=true}
-				else if(t=="unit"){opt.showUnit=true}
-				else if(t=="flag"){opt.showFlag=true}
-			}
-				for (var i in values.values.fxSortDimension){
-				var t=values.values.fxSortDimension[i];
-				if(t.parent=="rows"){opt.series[t.value]=true}
-				else if(t.parent=="columns"){opt.x[t.value]=true}
-				else if(t.parent=="values"){opt.y[t.value]=true}
-				else if(t.parent=="hidden"){/* to decide what we want to do*/}
-			}
-			
 
-			  for (var i in FXmod.dimensions) {
+            //convert to chart creator configuration here
+            var opt = {x: {}, y: {}, series: {}, showUnit: false, showCode: false, showFlag: false};
+            for (var i in values.values.show) {
+                var t = values.values.show[i];
+                if (t == "code") {
+                    opt.showCode = true
+                }
+                else if (t == "unit") {
+                    opt.showUnit = true
+                }
+                else if (t == "flag") {
+                    opt.showFlag = true
+                }
+            }
+            for (var i in values.values.fxSortDimension) {
+                var t = values.values.fxSortDimension[i];
+                if (t.parent == "rows") {
+                    opt.series[t.value] = true
+                }
+                else if (t.parent == "columns") {
+                    opt.x[t.value] = true
+                }
+                else if (t.parent == "values") {
+                    opt.y[t.value] = true
+                }
+                else if (t.parent == "hidden") {/* to decide what we want to do*/
+                }
+            }
+
+
+            for (var i in FXmod.dimensions) {
                 if (opt.series[FXmod.dimensions[i].code]) {
                     series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
                     if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
@@ -509,45 +548,62 @@ define([
                     }
                 }
             }
-			
-		var retObj = {
+
+            var retObj = {
+                aggregationFn: "sum",
+                formatter: "value",
+                decimals: 2,
                 hidden: hidden,
                 series: series,
                 x: x,
                 aggregations: aggregations,
                 y: y
-            }
+            };
+
             return retObj;
-			
-		
+
+
         }
 
         function toTableConfig(values) {
 //console.log("toChartConfig",values)
-			var hidden = [];
+            var hidden = [];
             var x = [];
             var series = [];
             var aggregations = [];
             var y = [];
-			
-            //convert to chart creator configuration here
-			var opt={x:{},y:{},series:{},showUnit:false,showCode:false,showFlag:false};
-			for (var i in values.values.show){
-				var t=values.values.show[i];
-				if(t=="code"){opt.showCode=true}
-				else if(t=="unit"){opt.showUnit=true}
-				else if(t=="flag"){opt.showFlag=true}
-			}
-				for (var i in values.values.fxSortDimension){
-				var t=values.values.fxSortDimension[i];
-				if(t.parent=="rows"){opt.series[t.value]=true}
-				else if(t.parent=="columns"){opt.x[t.value]=true}
-				else if(t.parent=="values"){opt.y[t.value]=true}
-				else if(t.parent=="hidden"){/* to decide what we want to do*/}
-			}
-			
 
-			  for (var i in FXmod.dimensions) {
+            //convert to chart creator configuration here
+            var opt = {x: {}, y: {}, series: {}, showUnit: false, showCode: false, showFlag: false};
+            for (var i in values.values.show) {
+                var t = values.values.show[i];
+                if (t == "code") {
+                    opt.showCode = true
+                }
+                else if (t == "unit") {
+                    opt.showUnit = true
+                }
+                else if (t == "flag") {
+                    opt.showFlag = true
+                }
+            }
+            for (var i in values.values.fxSortDimension) {
+                var t = values.values.fxSortDimension[i];
+                if (t.parent == "rows") {
+                    opt.series[t.value] = true
+                }
+                else if (t.parent == "columns") {
+                    opt.x[t.value] = true
+                }
+                else if (t.parent == "values") {
+                    opt.y[t.value] = true
+                }
+                else if (t.parent == "hidden") {/* to decide what we want to do*/
+                }
+            }
+
+
+            for (var i in FXmod.dimensions) {
                 if (opt.series[FXmod.dimensions[i].code]) {
                     series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
                     if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
@@ -575,8 +631,12 @@ define([
                     }
                 }
             }
-			
-		var retObj = {
+
+            var retObj = {
+                aggregationFn: "sum",
+                formatter: "value",
+                decimals: 2,
+                showRowHeaders: true,
                 hidden: hidden,
                 rows: series,
                 columns: x,
@@ -584,8 +644,8 @@ define([
                 values: y
             }
             return retObj;
-			
-           
+
+
         }
 
         return function () {
