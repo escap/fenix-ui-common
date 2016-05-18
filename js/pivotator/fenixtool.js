@@ -1,4 +1,6 @@
-define(function () {
+define([
+        "underscore"
+    ], function (_) {
 
         /*exemple DSD
 
@@ -22,63 +24,71 @@ define(function () {
          }
          */
 
-		
-		 
-		 
-		 function parseInut(FX,opt)// FX.metadata.dsd,options
-		 {
-			 var ret=$.extend(true,{},opt);
-			 if(opt.inputFormat=="fenixtool"){
-				var FXmod=convertFX(FX,opt);
-				  var lang = "EN";
-					if (opt.lang) {lang = opt.lang;}
-				var aggregations=[],
-					hidden=[],
-					columns=[],
-					rows=[],
-					values=[];
-					
-					function getListDim(arr,opt,FXmod){
-						var showCode=opt.showCode;
-						var ret=[];
-						for (var i in arr){
-								if(showCode && FXmod.dimensions[arr[i]].label)
-									{ret.push(FXmod.dimensions[arr[i]].code)}
-								ret.push(FXmod.dimensions[arr[i]].label|| FXmod.dimensions[arr[i]].code)
-							}
-							return ret
-					}
-				
-				ret={"inputFormat":"fenixTool",
-				"aggregationFn":opt.aggregationFn|| {"value":"sum"},
-				"aggregations":getListDim(opt.aggregations,opt,FXmod),
-				"hidden":getListDim(opt.hidden,opt,FXmod),
-				"columns":getListDim(opt.columns,opt,FXmod),
-				"values":opt.values,
-				"rows":getListDim(opt.rows,opt,FXmod),
-				"formatter":opt.formatter || "value",
-				"showRowHeaders":opt.showRowHeaders || false,
-				"decimals":opt.decimals || 2,
-				"showCode":opt.showCode || false,
-				"showFlag":opt.showFlag || false,
-				"showUnit":opt.showUnit || false
-				};
-				
-				
-			}
-			return ret
-		 }
-		 
+
+        function parseInut(FX, opt)// FX.metadata.dsd,options
+        {
+            var ret = $.extend(true, {}, opt);
+            if (opt.inputFormat == "fenixtool") {
+                var FXmod = convertFX(FX, opt);
+                var lang = "EN";
+                if (opt.lang) {
+                    lang = opt.lang;
+                }
+                var aggregations = [],
+                    hidden = [],
+                    columns = [],
+                    rows = [],
+                    values = [];
+
+                function getListDim(arr, opt, FXmod) {
+                    var showCode = opt.showCode;
+                    var ret = [];
+                    for (var i in arr) {
+                        if (showCode && FXmod.dimensions[arr[i]].label) {
+                            ret.push(FXmod.dimensions[arr[i]].code)
+                        }
+                        ret.push(FXmod.dimensions[arr[i]].label || FXmod.dimensions[arr[i]].code)
+                    }
+                    return ret
+                }
+
+                ret = {
+                    "inputFormat": "fenixTool",
+                    "aggregationFn": opt.aggregationFn || {"value": "sum"},
+                    "aggregations": getListDim(opt.aggregations, opt, FXmod),
+                    "hidden": getListDim(opt.hidden, opt, FXmod),
+                    "columns": getListDim(opt.columns, opt, FXmod),
+                    "values": opt.values,
+                    "rows": getListDim(opt.rows, opt, FXmod),
+                    "formatter": opt.formatter || "value",
+                    "showRowHeaders": opt.showRowHeaders || false,
+                    "decimals": opt.decimals || 2,
+                    "showCode": opt.showCode || false,
+                    "showFlag": opt.showFlag || false,
+                    "showUnit": opt.showUnit || false
+                };
+
+
+            }
+            return ret
+        }
+
         function convertFX(FX, opt) {
 			console.log("FX",FX)
             var lang = "EN";
-            if (opt.lang) {lang = opt.lang;}
-            var structInter = {dimensions: {}, values: {},attributes:{}}
+            if (opt && opt.hasOwnProperty("lang")) {
+                lang = opt.lang;
+            }
+            var structInter = {dimensions: {}, values: {}}
 
             function setDimension(id, att, val, subject) {
-                if (!structInter.dimensions[id]) {structInter.dimensions[id] = {};}
+                if (!structInter.dimensions[id]) {
+                    structInter.dimensions[id] = {};
+                }
                 structInter.dimensions[id][att] = val;
-                if (subject) {structInter.dimensions[id]["subject"] = subject;}
+                if (subject) {
+                    structInter.dimensions[id]["subject"] = subject;
+                }
             }
 			function setAttribute(id, att, val, subject) {
                 if (!structInter.attribute[id]) {structInter.attribute[id] = {};}
@@ -86,39 +96,55 @@ define(function () {
                 if (subject) {structInter.attribute[id]["subject"] = subject;}
             }
             function setValue(id, att, val) {
-                if (!structInter.values[id]) {structInter.values[id] = {};}
-                if (att != "attribute") {structInter.values[id][att] = val;}
+                if (!structInter.values[id]) {
+                    structInter.values[id] = {};
+                }
+                if (att != "attribute") {
+                    structInter.values[id][att] = val;
+                }
                 else {
-                    if (!structInter.values[id]["attributes"]) {structInter.values[id]["attributes"] = [];}
+                    if (!structInter.values[id]["attributes"]) {
+                        structInter.values[id]["attributes"] = [];
+                    }
                     structInter.values[id]["attributes"].push(val);
                 }
             }
 
             for (var i in FX.columns) {
                 var myColumns = FX.columns[i];
-                if (myColumns.key == true){//c est le code
-                    setDimension(myColumns.id, "title", myColumns.title[lang]||myColumns.id);
+                if (myColumns.key == true) {//c est le code
+                    setDimension(myColumns.id, "title", myColumns.title[lang] || myColumns.id);
                     setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);
                 }
-                else if (myColumns.id.split("_" + lang).length == 2){//label
+                else if (myColumns.id.split("_" + lang).length == 2) {//label
                     setDimension(myColumns.id.split("_" + lang)[0], "label", myColumns.id)
 			/*	if(!structInter.dimensions[myColumns.id.split("_" + lang)[0]]){ 
 				setDimension(myColumns.id, "title", myColumns.id.split("_" + lang)[0]);
                     setDimension(myColumns.id, "code",myColumns.id.split("_" + lang)[0]);}*/
                 }
-				else if (myColumns.dataType == "number" && myColumns.subject == "value") {
+                else if (myColumns.dataType == "number" && myColumns.subject == "value") {
                     setValue(myColumns.id, "value", myColumns.id);
                     setValue(myColumns.id, "label", myColumns.id);
                     setValue(myColumns.id, "subject", myColumns.subject);
                 }
                 else if (myColumns.id.split("|*").length == 2) {//attribut d une valeur X
-                    if (myColumns.subject == "um") {setValue(myColumns.id.split("|*")[0], "unit", myColumns.id)} 
-					else if (myColumns.subject == "flag") {setValue(myColumns.id.split("|*")[0], "flag", myColumns.id);}
-                    else {setValue(myColumns.id.split("|*")[0], "attributes", myColumns.id);}
+                    if (myColumns.subject == "um") {
+                        setValue(myColumns.id.split("|*")[0], "unit", myColumns.id)
+                    }
+                    else if (myColumns.subject == "flag") {
+                        setValue(myColumns.id.split("|*")[0], "flag", myColumns.id);
+                    }
+                    else {
+                        setValue(myColumns.id.split("|*")[0], "attributes", myColumns.id);
+                    }
                 }
-                else{//attribut de value
-                    if (myColumns.subject == "um") {setValue("value", "unit", myColumns.id);}
-                    else if (myColumns.subject == "flag") {setValue("value", "flag", myColumns.id);}
+                else {//attribut de value
+                    if (myColumns.subject == "um") {
+                        setValue("value", "unit", myColumns.id);
+                    }
+                    else if (myColumns.subject == "flag") {
+                        setValue("value", "flag", myColumns.id);
+                    }
                     else {
                        // setDimension(myColumns.id, "label", myColumns.title[lang]||myColumns.id);
                       //  setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);
@@ -140,7 +166,7 @@ define(function () {
 			var structDirty={};           
 
 		   var lang = "EN";
-            if (opt.lang) {lang = opt.lang;}
+            if (opt && opt.lang) {lang = opt.lang;}
            
 		   function setDirty(id,field,val){
 			   if(!structDirty[id]){structDirty[id]={}}
@@ -272,7 +298,7 @@ define(function () {
             return retObj;
         }
 
-        function initFXD(FX, opt){//for Data
+        function initFXD(FX, opt) {//for Data
             var FXmod = convertFX(FX, opt);
             var hidden = [];
             var columns = [];
@@ -296,10 +322,16 @@ define(function () {
             for (var i in FXmod.values) {
                 if (opt.values[FXmod.values[i].value]) {
                     values.push(FXmod.values[i].value)
-                    if (opt.showUnit == true && FXmod.values[i].unit) {values.push(FXmod.values[i].unit);}
-                    if (opt.showFlag == true && FXmod.values[i].flag) {values.push(FXmod.values[i].flag);}
-                    for (var h in FXmod.values[i].attribute){hidden.push(FXmod.values[i].attribute[h])}
-                   
+                    if (opt.showUnit == true && FXmod.values[i].unit) {
+                        values.push(FXmod.values[i].unit);
+                    }
+                    if (opt.showFlag == true && FXmod.values[i].flag) {
+                        values.push(FXmod.values[i].flag);
+                    }
+                    for (var h in FXmod.values[i].attribute) {
+                        hidden.push(FXmod.values[i].attribute[h])
+                    }
+
                 }
             }
             var retObj = {
@@ -328,7 +360,9 @@ define(function () {
                 }
                 if (opt.x[FXmod.dimensions[i].code]) {
                     x.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
-                    if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {x.push(FXmod.dimensions[i].code);}
+                    if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
+                        x.push(FXmod.dimensions[i].code);
+                    }
                 }
             }
             for (var i in FXmod.values) {
@@ -342,9 +376,10 @@ define(function () {
                     if (opt.showFlag == true && FXmod.values[i].flag) {
                         y.push(FXmod.values[i].flag)
                     }
-                    for (var h in FXmod.values[i].attribute)
-                    {hidden.push(FXmod.values[i].attribute[h])}
-                
+                    for (var h in FXmod.values[i].attribute) {
+                        hidden.push(FXmod.values[i].attribute[h])
+                    }
+
                 }
 
 
@@ -361,14 +396,88 @@ define(function () {
             return retObj;
         }
 
-   
+        function toFilter(model) {
+
+            var fxt = initFXT(model),
+                configuration = {
+                    fxSortDimension: {
+                        selector: {
+                            id: "sortable",
+                            source: [],
+                            config: { //SortableJS configuration
+                                //disabled: true
+                                groups : {
+                                    rows : "Rows",
+                                    columns : "Columns",
+                                    hidden : "Hidden"
+                                }
+                            }
+                        },
+
+                        template: {
+                            //"hideHeader": true,
+                            hideSwitch: true,
+                            hideRemoveButton: true,
+                            title: "Sort dimension"
+                        }
+                    }
+                };
+
+            var aggregations = _.map(fxt.aggregations, function (item) {
+                    item.parent = "aggregations";
+                    return item
+                }),
+                columns = _.map(fxt.columns, function (item) {
+                    item.parent = "columns";
+                    return item
+                }),
+                rows = _.map(fxt.rows, function (item) {
+                    item.parent = "rows";
+                    return item
+                }),
+                hidden = _.map(fxt.hidden, function (item) {
+                    item.parent = "hidden";
+                    return item
+                }),
+                values = _.map(fxt.values, function (item) {
+                    item.parent = "values";
+                    return item
+                });
+
+            configuration.fxSortDimension.selector.source = _.union(/* aggregations,hidden, */columns, rows, values);
+
+            return configuration
+
+        }
+
+        function toChartConfig(values) {
+
+            //convert to chart creator configuration here
+
+            return {
+                test: "Chart"
+            };
+        }
+
+        function toTableConfig(values) {
+
+            //convert to olap creator configuration here
+
+            return {
+                test: "Table"
+            };
+        }
+
         return function () {
             return {
                 convertFX: convertFX,
                 initFXT: initFXT,
                 initFXD: initFXD,
-				initFXDgraph:initFXDgraph,
-				parseInut:parseInut
+                initFXDgraph: initFXDgraph,
+                parseInut: parseInut,
+                toFilter: toFilter,
+                toChartConfig: toChartConfig,
+                toTableConfig: toTableConfig
             }
         };
     }
