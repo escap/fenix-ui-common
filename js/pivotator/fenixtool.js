@@ -503,6 +503,7 @@ define([
             var aggregations = [];
             var y = [];
 			var type=values.values.typeOfChart[0];
+			var aggValue={value:values.values.aggregator_value[0]} 
 
             //convert to chart creator configuration here
             var opt = {x: {}, y: {}, series: {}, showUnit: false, showCode: false, showFlag: false};
@@ -564,7 +565,7 @@ define([
             }
 
             var retObj = {
-                aggregationFn:{value:"sum",um:"count"},
+                aggregationFn:aggValue,
                 formatter: "value",
                 decimals: 2,
                 hidden: hidden,
@@ -581,7 +582,6 @@ define([
         }
 
         function toTableConfig(values) {
-//console.log("toChartConfig",values)
             var hidden = [];
             var x = [];
             var series = [];
