@@ -172,26 +172,16 @@ define([
             var structDirty = {};
 
             var lang = "EN";
-            if (opt && opt.lang) {
-                lang = opt.lang;
-            }
+            if (opt && opt.lang) {lang = opt.lang;}
 
             function setDirty(id, field, val) {
-                if (!structDirty[id]) {
-                    structDirty[id] = {}
-                }
+                if (!structDirty[id]) {structDirty[id] = {};}
                 if (field == "attributes") {
-                    if (structDirty[id][field]) {
-                        structDirty[id][field].push(val);
-                    }
-                    else {
-                        structDirty[id][field] = [val];
-                    }
+                    if (structDirty[id][field]) {structDirty[id][field].push(val);}
+                    else {structDirty[id][field] = [val];}
 
                 }
-                else {
-                    structDirty[id][field] = val;
-                }
+                else {structDirty[id][field] = val;}
             }
 
             for (var i in FX.columns) {
@@ -218,30 +208,21 @@ define([
                     setDirty(myColumns.id, "type", "value");
                     setDirty(myColumns.id, "value", myColumns.id);
                     setDirty(myColumns.id, "title", myColumns.id);
-                    if (myColumns.subject) {
-                        setDirty(myColumns.id, "subject", myColumns.subject);
-                    }
-
-                    //setValue(myColumns.id, "value", myColumns.id);
-                    //setValue(myColumns.id, "label", myColumns.id);
-                    //setValue(myColumns.id, "subject", myColumns.subject);
+                    if (myColumns.subject) {setDirty(myColumns.id, "subject", myColumns.subject);}
                 }
                 else if (myColumns.id.split("|*").length == 2) {//attribut d une valeur X
                     if (myColumns.subject == "um") {
                         setDirty(myColumns.id.split("|*")[0], "unit", myColumns.id);
-                        //setDirty(myColumns.id.split("|*")[0],"unit",myColumns.id);
-                        //setValue(myColumns.id.split("|*")[0], "unit", myColumns.id);
                     }
                     else if (myColumns.subject == "flag") {
                         setDirty(myColumns.id.split("|*")[0], "flag", myColumns.id);
-                        //	setValue(myColumns.id.split("|*")[0], "flag", myColumns.id);
                     }
                     else {
                         setDirty(myColumns.id.split("|*")[0], "attributes", myColumns.id);
                     }
                 }
                 else {//attribut de value
-                    /* if (myColumns.subject == "um") {
+                     if (myColumns.subject == "um") {
                      //setValue("value", "unit", myColumns.id);
                      setDirty("value","unit",myColumns.id)
                      }
@@ -250,7 +231,7 @@ define([
                      setDirty("value","flag",myColumns.id)
 
                      }
-                     else*/
+                     else
                     {
                         //// setDimension(myColumns.id, "label", myColumns.title[lang]||myColumns.id);
                         ////  setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);
@@ -260,6 +241,8 @@ define([
                         setDirty(myColumns.id, "type", "attribute");
                         setDirty(myColumns.id, "value", myColumns.id);
                         setDirty(myColumns.id, "title", myColumns.title[lang] || myColumns.id);
+						 if (myColumns.subject) {setDirty(myColumns.id, "subject", myColumns.subject);}
+
                     }
                 }
             }
@@ -321,7 +304,7 @@ define([
                 aggregations: aggregations,
                 values: values
             }
-            console.log(retObj)
+            //console.log(retObj)
             return retObj;
         }
 
@@ -598,11 +581,10 @@ define([
                 else if (t.parent == "values") {
                     opt.y[t.value] = true
                 }
-                else if (t.parent == "hidden") {/* to decide what we want to do*/
-                }
+                else if (t.parent == "hidden") {/* to decide what we want to do*/}
             }
 
-
+console.log("FXmod",FXmod)
             for (var i in FXmod.dimensions) {
                 if (opt.series[FXmod.dimensions[i].code]) {
                     series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
@@ -616,6 +598,14 @@ define([
                         x.push(FXmod.dimensions[i].code);
                     }
                 }
+				
+				
+				 if (opt.y[FXmod.dimensions[i].code]) {
+                    y.push( FXmod.dimensions[i].code)
+                   
+                }
+				
+				
             }
             for (var i in FXmod.values) {
                 if (opt.y[FXmod.values[i].value]) {
@@ -632,6 +622,18 @@ define([
                 }
             }
 
+			for(var i in FXmod.attributes)
+				{
+					if (opt.y[FXmod.attributes[i].value]) {
+					
+                    y.push( FXmod.attributes[i].value)
+						
+                }
+				}
+			
+			
+			
+			
             var retObj = {
                 aggregationFn: "sum",
                 formatter: "value",
