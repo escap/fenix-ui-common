@@ -340,6 +340,8 @@ function buildPivotResult(data, opt) {
 	
 	
 	function toFXJson(FX,userOptions) {
+				console.log("toFXJson",FX,userOptions);
+
 		MYFINALRESULT = {data: [],unit:[],flag:[],attribute:[], rows: [], cols: [],cols2: [],cols2label: [], okline: [], nookline: [],rowname:[],colsname:[]};//to internal test and dataset function
 		var pivotdata = toPivotData(FX,  userOptions);
 
@@ -363,10 +365,13 @@ function buildPivotResult(data, opt) {
 				var vindex= userOptions.values[vtemp]
 				if (pivotdata.data[vindex][i][j]) {
 				var myAgg=null;
+				
 				if(userOptions.aggregationFn[vindex])
 				{myAgg=userOptions.aggregationFn[vindex]}
-				else{myAgg="default"}
-					temp2.push(myfunc.getAgg(vindex,myAgg)(pivotdata.data[vindex][i][j],
+				else{myAgg="default";}
+				
+
+				temp2.push(myfunc.getAgg(vindex,myAgg)(pivotdata.data[vindex][i][j],
 						myfunc.getFormater(userOptions.formatter),
 						userOptions.decimals));
 				}

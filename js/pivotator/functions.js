@@ -14,10 +14,7 @@ var Aggregator={
 		count:function(cell,format,nbDec){var a= cell;return format(a.length,nbDec)},
 		concat:function(cell,format,nbDec){var a= cell;return a.join(" - ")}
 	},
-
-
-
-				"value":{
+	"value":{
 				
 					"default":function(cell,format,nbDec){
 				//	console.log("AGG DEFAULT",cell)
@@ -50,6 +47,11 @@ var Aggregator={
 						}
 				},
 				flag:{
+					concat:function(cell,format,nbDec){var a= cell;return a.join(" - ")},
+					default:function(cell,format,nbDec){var a= cell;return a.join(" - ")}
+					},
+				v1:{					
+					count:function(cell,format,nbDec){var a= cell;return format(a.length,nbDec)},
 					concat:function(cell,format,nbDec){var a= cell;return a.join(" - ")},
 					default:function(cell,format,nbDec){var a= cell;return a.join(" - ")}
 					},

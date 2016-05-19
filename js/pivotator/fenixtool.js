@@ -412,6 +412,7 @@ define([
             console.log("FXT", fxt);
 
             var configuration = {
+				
                 fxSortDimension: {
                     selector: {
                         id: "sortable",
@@ -434,6 +435,35 @@ define([
                         hideRemoveButton: true,
                         title: "Sort dimension"
                     }
+                },
+			aggregator_value: {  selector : {
+					id : 'dropdown',
+					source : [
+						{ value : "sum", label : "Sum"},
+						{ value : "avg", label : "avg"},
+						{ value : "median", label : "median"},
+						{ value : "stdev", label : "stdev"},
+						{ value : "count", label : "count"},
+					
+						{ value : "concat", label : "concat"},
+						/*
+					avg:function(cell,format,nbDec){var a= jStat(cell);return format(a.mean(),nbDec)},
+					median:function(cell,format,nbDec){var a= jStat(cell);return format(a.median(),nbDec)},
+					stdev:function(cell,format,nbDec){var a= jStat(cell);return format(a.stdev(),nbDec)},
+					count:function(cell,format,nbDec){var a= cell;return format(a.length,nbDec)},
+					concat
+					
+					*/
+					],
+					config : {
+						maxItems : 1
+					},
+					default : ['sum']
+					},
+
+					template : {
+						title : "Aggregator for Value"
+					}
                 }
             };
 
@@ -466,12 +496,13 @@ define([
         }
 
         function toChartConfig(values) {
-            //console.log("toChartConfig",values)
+            console.log("toChartConfig",values)
             var hidden = [];
             var x = [];
             var series = [];
             var aggregations = [];
             var y = [];
+			var type=values.values.typeOfChart[0];
 
             //convert to chart creator configuration here
             var opt = {x: {}, y: {}, series: {}, showUnit: false, showCode: false, showFlag: false};
@@ -533,14 +564,15 @@ define([
             }
 
             var retObj = {
-                aggregationFn: "sum",
+                aggregationFn:{value:"sum",um:"count"},
                 formatter: "value",
                 decimals: 2,
                 hidden: hidden,
                 series: series,
                 x: x,
                 aggregations: aggregations,
-                y: y
+                y: y,
+				type:type
             };
 
             return retObj;
@@ -555,7 +587,8 @@ define([
             var series = [];
             var aggregations = [];
             var y = [];
-
+			var formatter=values.values.format[0];
+			var aggValue={value:values.values.aggregator_value[0]} 
             //convert to chart creator configuration here
             var opt = {x: {}, y: {}, series: {}, showUnit: false, showCode: false, showFlag: false};
             for (var i in values.values.show) {
@@ -584,7 +617,7 @@ define([
                 else if (t.parent == "hidden") {/* to decide what we want to do*/}
             }
 
-console.log("FXmod",FXmod)
+//console.log("FXmod",FXmod)
             for (var i in FXmod.dimensions) {
                 if (opt.series[FXmod.dimensions[i].code]) {
                     series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
@@ -635,8 +668,8 @@ console.log("FXmod",FXmod)
 			
 			
             var retObj = {
-                aggregationFn: "sum",
-                formatter: "value",
+                aggregationFn:aggValue,
+                formatter: formatter,
                 decimals: 2,
                 showRowHeaders: true,
                 hidden: hidden,
