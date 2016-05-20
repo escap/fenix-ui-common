@@ -10,9 +10,7 @@ define([
 		var Utils = {
 copyProperties: function (source, dest) {
 			for (var k in source) {
-				if (source.hasOwnProperty(k)) {
-					dest[k] = source[k];
-				}
+				if (source.hasOwnProperty(k)) {dest[k] = source[k];}
 			}
 		},
 isArray: function (testObject) {return testObject && !(testObject.propertyIsEnumerable('length'))&& typeof testObject === 'object' && typeof testObject.length === 'number';},

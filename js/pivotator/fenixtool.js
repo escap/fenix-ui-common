@@ -2,27 +2,7 @@ define([
         "underscore"
     ], function (_) {
 
-        /*exemple DSD
-
-         {
-         dimensions:{
-         country:{title:'country',code:"country",label:"country_EN"},
-         indicator:{title:'indicator',code:"indicator",label:"indicator_EN"},
-         year:{title:'year',code:"year",label:"year"}
-         },
-         values:{
-         value:{label:"value",
-         value:"value",
-         attribute:["flag","um"]
-         },
-         poplation:{
-         label:"population",
-         value:"population",
-         attribute:[]
-         }
-         ]
-         }
-         */
+      
 
         var FXmod;
 
@@ -409,7 +389,7 @@ define([
         function toFilter(model) {
 
             var fxt = initFXT(model.metadata.dsd);
-            console.log("FXT", fxt);
+            //console.log("FXT", fxt);
 
             var configuration = {
 				
@@ -444,7 +424,6 @@ define([
 						{ value : "median", label : "median"},
 						{ value : "stdev", label : "stdev"},
 						{ value : "count", label : "count"},
-					
 						{ value : "concat", label : "concat"},
 						/*
 					avg:function(cell,format,nbDec){var a= jStat(cell);return format(a.mean(),nbDec)},
@@ -455,9 +434,7 @@ define([
 					
 					*/
 					],
-					config : {
-						maxItems : 1
-					},
+					config : {maxItems : 1},
 					default : ['sum']
 					},
 
@@ -509,15 +486,9 @@ define([
             var opt = {x: {}, y: {}, series: {}, showUnit: false, showCode: false, showFlag: false};
             for (var i in values.values.show) {
                 var t = values.values.show[i];
-                if (t == "code") {
-                    opt.showCode = true
-                }
-                else if (t == "unit") {
-                    opt.showUnit = true
-                }
-                else if (t == "flag") {
-                    opt.showFlag = true
-                }
+                if (t == "code") {opt.showCode = true;}
+                else if (t == "unit") {opt.showUnit = true;}
+                else if (t == "flag") {opt.showFlag = true;}
             }
             for (var i in values.values.fxSortDimension) {
                 var t = values.values.fxSortDimension[i];
@@ -563,7 +534,15 @@ define([
                     }
                 }
             }
-
+for(var i in FXmod.attributes)
+				{
+					
+					if (opt.y[FXmod.attributes[i].value]) {y.push( FXmod.attributes[i].value);}
+					else if(opt.x[FXmod.attributes[i].value]){x.push( FXmod.attributes[i].value);}
+					else if(opt.series[FXmod.attributes[i].value]){series.push( FXmod.attributes[i].value);}
+				}
+				
+				
             var retObj = {
                 aggregationFn:aggValue,
                 formatter: "value",
@@ -631,14 +610,7 @@ define([
                         x.push(FXmod.dimensions[i].code);
                     }
                 }
-				
-				
-				 if (opt.y[FXmod.dimensions[i].code]) {
-                    y.push( FXmod.dimensions[i].code)
-                   
-                }
-				
-				
+				 if (opt.y[FXmod.dimensions[i].code]) {y.push( FXmod.dimensions[i].code);}	
             }
             for (var i in FXmod.values) {
                 if (opt.y[FXmod.values[i].value]) {
@@ -657,11 +629,10 @@ define([
 
 			for(var i in FXmod.attributes)
 				{
-					if (opt.y[FXmod.attributes[i].value]) {
 					
-                    y.push( FXmod.attributes[i].value)
-						
-                }
+					if (opt.y[FXmod.attributes[i].value]) {y.push( FXmod.attributes[i].value);}
+					else if(opt.x[FXmod.attributes[i].value]){x.push( FXmod.attributes[i].value);}
+					else if(opt.series[FXmod.attributes[i].value]){series.push( FXmod.attributes[i].value);}
 				}
 			
 			
