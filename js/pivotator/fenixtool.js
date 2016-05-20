@@ -204,6 +204,13 @@ define([
                 else {//attribut de value
                      if (myColumns.subject == "um") {
                      //setValue("value", "unit", myColumns.id);
+			     setDirty(myColumns.id, "type", "attribute");
+                        setDirty(myColumns.id, "value", myColumns.id);
+                        setDirty(myColumns.id, "title", myColumns.title[lang] || myColumns.id);
+						 if (myColumns.subject) {setDirty(myColumns.id, "subject", myColumns.subject);}
+					
+					
+					//
                      setDirty("value","unit",myColumns.id)
                      }
                      else if (myColumns.subject == "flag") {
@@ -572,15 +579,9 @@ for(var i in FXmod.attributes)
             var opt = {x: {}, y: {}, series: {}, showUnit: false, showCode: false, showFlag: false};
             for (var i in values.values.show) {
                 var t = values.values.show[i];
-                if (t == "code") {
-                    opt.showCode = true
-                }
-                else if (t == "unit") {
-                    opt.showUnit = true
-                }
-                else if (t == "flag") {
-                    opt.showFlag = true
-                }
+                if (t == "code") {opt.showCode = true}
+                else if (t == "unit") {opt.showUnit = true}
+                else if (t == "flag") {opt.showFlag = true}
             }
             for (var i in values.values.fxSortDimension) {
                 var t = values.values.fxSortDimension[i];
@@ -596,7 +597,7 @@ for(var i in FXmod.attributes)
                 else if (t.parent == "hidden") {/* to decide what we want to do*/}
             }
 
-//console.log("FXmod",FXmod)
+console.log("FXmod",FXmod)
             for (var i in FXmod.dimensions) {
                 if (opt.series[FXmod.dimensions[i].code]) {
                     series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
@@ -630,9 +631,9 @@ for(var i in FXmod.attributes)
 			for(var i in FXmod.attributes)
 				{
 					
-					if (opt.y[FXmod.attributes[i].value]) {y.push( FXmod.attributes[i].value);}
-					else if(opt.x[FXmod.attributes[i].value]){x.push( FXmod.attributes[i].value);}
-					else if(opt.series[FXmod.attributes[i].value]){series.push( FXmod.attributes[i].value);}
+					if (opt.y[FXmod.attributes[i].value]) {y.push( FXmod.attributes[i].label || FXmod.attributes[i].value);}
+					else if(opt.x[FXmod.attributes[i].value]){x.push( FXmod.attributes[i].label || FXmod.attributes[i].value);}
+					else if(opt.series[FXmod.attributes[i].value]){series.push( FXmod.attributes[i].label || FXmod.attributes[i].value);}
 				}
 			
 			
