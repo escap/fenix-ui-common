@@ -6,6 +6,8 @@ define(function () {
 
     var SERVER = 'http://fenix.fao.org/';
 
+    //http://fenixservices.fao.org/d3s/
+
     return {
 
         //Bridge
