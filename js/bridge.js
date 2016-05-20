@@ -292,6 +292,32 @@ define([
 
     };
 
+    Bridge.prototype.exportResource = function (payload, successCallback, errorCallback, obj) {
+
+        var self = this;
+        var serviceprovider =(obj && obj.serviceProvider) || C.SERVICE_PROVIDER || DC.SERVICE_PROVIDER;
+        var url = serviceprovider + (C.EXPORT_ACCESS_POINT || DC.EXPORT_ACCESS_POINT);
+
+        return Q($.ajax({
+            url: url,
+            type: "POST",
+            contentType: "application/json",
+            data : JSON.stringify(payload)
+
+        })).then(function (data) {
+            var object = {   'data':data, 'url':url };
+            return Q.promise(function (resolve, reject, notify) {
+                return resolve(object);
+            });
+
+        }, function (error) {
+            return Q.promise(function (resolve, reject, notify) {
+                return resolve(error);
+            });
+        });
+
+    }
+
     return new Bridge();
 
 });
