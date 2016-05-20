@@ -185,10 +185,10 @@ define([
                 }
                 else if (myColumns.dataType == "number" && myColumns.subject == "value") {
 
-                    setDirty(myColumns.id, "type", "value");
-                    setDirty(myColumns.id, "value", myColumns.id);
-                    setDirty(myColumns.id, "title", myColumns.id);
-                    if (myColumns.subject) {setDirty(myColumns.id, "subject", myColumns.subject);}
+                    setDirty(myColumns.id.toLowerCase(), "type", "value");
+                    setDirty(myColumns.id.toLowerCase(), "value", myColumns.id);
+                    setDirty(myColumns.id.toLowerCase(), "title", myColumns.id);
+                    if (myColumns.subject) {setDirty(myColumns.id.toLowerCase(), "subject", myColumns.subject);}
                 }
                 else if (myColumns.id.split("|*").length == 2) {//attribut d une valeur X
                     if (myColumns.subject == "um") {
@@ -252,7 +252,7 @@ define([
 
 
             FXmod = FXmodnew;
-
+console.log("convertDirty",FX,FXmod)
 
             var hidden = [];
             var columns = [];
@@ -480,7 +480,7 @@ define([
             var aggregations = [];
             var y = [];
 			var type=values.values.typeOfChart[0];
-			var aggValue={value:values.values.aggregator_value[0]} 
+			var aggValue={value:values.values.aggregator_value[0],Value:values.values.aggregator_value[0]} 
 
             //convert to chart creator configuration here
             var opt = {x: {}, y: {}, series: {}, showUnit: false, showCode: false, showFlag: false};
@@ -567,7 +567,7 @@ for(var i in FXmod.attributes)
             var aggregations = [];
             var y = [];
 			var formatter=values.values.format[0];
-			var aggValue={value:values.values.aggregator_value[0]} 
+			var aggValue={value:values.values.aggregator_value[0],Value:values.values.aggregator_value[0]} 
             //convert to chart creator configuration here
             var opt = {x: {}, y: {}, series: {}, showUnit: false, showCode: false, showFlag: false};
             for (var i in values.values.show) {
