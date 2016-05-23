@@ -396,7 +396,6 @@ console.log("convertDirty",FX,FXmod)
         function toFilter(model) {
 
             var fxt = initFXT(model.metadata.dsd);
-            //console.log("FXT", fxt);
 
             var configuration = {
 				
