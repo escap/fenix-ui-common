@@ -252,7 +252,7 @@ define([
 
                 if (config.hasOwnProperty(key)) {
                     config[key].selector.default = values[key];
-                }
+                } 
 
             }, this));
         }

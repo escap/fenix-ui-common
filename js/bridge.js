@@ -14,8 +14,15 @@ define([
 
     'use strict';
 
-    function Bridge() {
+    function Bridge( o ) {
+        var obj = o || {};
         this.cache = {};
+        this.environment = obj.environment || 'distribution';
+        this.ENVIR = this.environment.toUpperCase();
+        this.SERVICE_PROVIDER = C['SERVICE_PROVIDER_' + this.ENVIR] || DC['SERVICE_PROVIDER_' + this.ENVIR];
+        if (!this.SERVICE_PROVIDER ) {
+            alert(this.environment + " is not a valid FENIX environment: [develop, distribution]");
+        }
     }
 
     Bridge.prototype.find = function (obj) {
@@ -32,7 +39,7 @@ define([
             });
         }
 
-        var serviceProvider = obj.SERVICE_PROVIDER || C.SERVICE_PROVIDER || DC.SERVICE_PROVIDER,
+        var serviceProvider = obj.SERVICE_PROVIDER || this.SERVICE_PROVIDER ,
             filterService = obj.FIND_SERVICE || C.FIND_SERVICE || DC.FIND_SERVICE,
             body = obj.body;
 
@@ -73,7 +80,7 @@ define([
             });
         }
 
-        var serviceProvider = obj.serviceProvider || C.SERVICE_PROVIDER || DC.SERVICE_PROVIDER,
+        var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER ,
             enumerationService = obj.enumerationService || C.ENUMERATION_SERVICE || DC.ENUMERATION_SERVICE;
 
         return Q($.ajax({
@@ -111,7 +118,7 @@ define([
             });
         }
 
-        var serviceProvider = obj.serviceProvider || C.SERVICE_PROVIDER || DC.SERVICE_PROVIDER,
+        var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER ,
             codeListService = obj.codeListService || C.CODELIST_SERVICE || DC.CODELIST_SERVICE,
             body = obj.body;
 
@@ -153,7 +160,7 @@ define([
             });
         }
 
-        var serviceProvider = obj.serviceProvider || C.SERVICE_PROVIDER || DC.SERVICE_PROVIDER,
+        var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER ,
             processesService = obj.processesService || C.PROCESSES_SERVICE || DC.PROCESSES_SERVICE;
 
         return Q($.ajax({
@@ -193,8 +200,10 @@ define([
             });
         }
 
-        var serviceProvider = obj.serviceProvider || C.SERVICE_PROVIDER || DC.SERVICE_PROVIDER,
+        var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER ,
             processesService = obj.metadataService || C.METADATA_SERVICE || DC.METADATA_SERVICE;
+
+        alert(serviceProvider)
 
         return Q($.ajax({
             url: serviceProvider + processesService + this._parseUidAndVersion(obj, true) + this._parseQueryParams(obj.params),
@@ -294,8 +303,7 @@ define([
 
     Bridge.prototype.exportResource = function (payload, successCallback, errorCallback, obj) {
 
-        var self = this;
-        var serviceprovider =(obj && obj.serviceProvider) || C.SERVICE_PROVIDER || DC.SERVICE_PROVIDER;
+        var serviceprovider =(obj && obj.serviceProvider) || this.SERVICE_PROVIDER;
         var url = serviceprovider + (C.EXPORT_ACCESS_POINT || DC.EXPORT_ACCESS_POINT);
 
         return Q($.ajax({
@@ -316,7 +324,7 @@ define([
             });
         });
 
-    }
+    };
 
     return new Bridge();
 

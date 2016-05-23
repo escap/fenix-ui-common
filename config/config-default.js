@@ -4,15 +4,14 @@ define(function () {
 
     'use strict';
 
-    var SERVER = 'http://fenix.fao.org/';
-
-    //http://fenixservices.fao.org/d3s/
+    var SERVER_DEVELOP = '//fenix.fao.org/',
+        SERVER_DISTRIBUTION = '//fenixservices.fao.org/';
 
     return {
 
         //Bridge
-        SERVER: SERVER,
-        SERVICE_PROVIDER : SERVER + "d3s_dev/",
+        SERVICE_PROVIDER_DISTRIBUTION : SERVER_DISTRIBUTION + "d3s/",
+        SERVICE_PROVIDER_DEVELOP : SERVER_DEVELOP + "d3s_dev/",
         EXPORT_ACCESS_POINT :"/fenix/export",
         FIND_SERVICE : "msd/resources/find",
         CODELIST_SERVICE: 'msd/codes/filter',
