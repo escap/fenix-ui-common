@@ -372,11 +372,11 @@ function buildPivotResult(data, opt) {
 				temp2.push(myfunc.getAgg(vindex,myAgg)(pivotdata.data[vindex][i][j],
 						myfunc.getFormater(userOptions.formatter),
 						userOptions.decimals));
+						
 				}
 				else {temp2.push(null)}
 				}
 			}
-			
 			MYFINALRESULT.data.push(temp2)
 		}
 

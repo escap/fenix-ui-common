@@ -13,6 +13,18 @@ var Aggregator={
 		stdev:function(cell,format,nbDec){var a= jStat(cell);return format(a.stdev(),nbDec)},
 		count:function(cell,format,nbDec){var a= cell;return format(a.length,nbDec)},
 		concat:function(cell,format,nbDec){var a= cell;return a.join(" - ")}
+	},"VALUE":{
+
+		"default":function(cell,format,nbDec){
+			//	console.log("AGG DEFAULT",cell)
+			var a= jStat(cell);return format(a.sum(),nbDec)},
+		"sum":function(cell,format,nbDec){
+			var a= jStat(cell);return format(a.sum(),nbDec)},
+		avg:function(cell,format,nbDec){var a= jStat(cell);return format(a.mean(),nbDec)},
+		median:function(cell,format,nbDec){var a= jStat(cell);return format(a.median(),nbDec)},
+		stdev:function(cell,format,nbDec){var a= jStat(cell);return format(a.stdev(),nbDec)},
+		count:function(cell,format,nbDec){var a= cell;return format(a.length,nbDec)},
+		concat:function(cell,format,nbDec){var a= cell;return a.join(" - ")}
 	},
 	"value":{
 				
@@ -28,6 +40,10 @@ var Aggregator={
 					count:function(cell,format,nbDec){var a= cell;return format(a.length,nbDec)},
 					concat:function(cell,format,nbDec){var a= cell;return a.join(" - ")}
 					},
+				
+				
+				
+				
 				um:{	default:function(cell,format,nbDec){
 						var ret=cell[0];
 						for(var i in cell)
@@ -64,7 +80,8 @@ var GetValue={
 	default:function(rec,champ){return rec[champ];},
 	value:{number:function(rec)
 	{if(rec.value==null)
-	{return null}return parseFloat(rec.value)
+	{return null}
+return parseFloat(rec.value)
 	}
 	,
 	string:function(rec){return rec.value}
@@ -72,7 +89,6 @@ var GetValue={
 	Value:{number:function(rec){if(rec.Value==null){return null}return parseFloat(rec.Value)},string:function(rec){return rec.Value}}
 		
 };
-
 /*Classic:function(rec){return rec.Value},
 	classic:function(rec){return rec.value},
 	ClassicToNumber:function(rec){if(rec.Value==null){return null}return parseFloat(rec.Value)},
