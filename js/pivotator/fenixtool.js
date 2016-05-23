@@ -480,13 +480,13 @@ console.log("convertDirty",FX,FXmod)
         }
 
         function toChartConfig(values) {
-            console.log("toChartConfig",values)
+
             var hidden = [];
             var x = [];
             var series = [];
             var aggregations = [];
             var y = [];
-			var type=values.values.typeOfChart[0];
+			var type = Array.isArray(values.values.typeOfChart) ? values.values.typeOfChart[0] : 'line';
 			var aggValue={value:values.values.aggregator_value[0],Value:values.values.aggregator_value[0]} 
 
             //convert to chart creator configuration here
