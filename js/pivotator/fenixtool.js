@@ -2,7 +2,6 @@ define([
         "underscore"
     ], function (_) {
 
-      
 
         var FXmod;
 
@@ -152,16 +151,26 @@ define([
             var structDirty = {};
 
             var lang = "EN";
-            if (opt && opt.lang) {lang = opt.lang;}
+            if (opt && opt.lang) {
+                lang = opt.lang;
+            }
 
             function setDirty(id, field, val) {
-                if (!structDirty[id]) {structDirty[id] = {};}
+                if (!structDirty[id]) {
+                    structDirty[id] = {};
+                }
                 if (field == "attributes") {
-                    if (structDirty[id][field]) {structDirty[id][field].push(val);}
-                    else {structDirty[id][field] = [val];}
+                    if (structDirty[id][field]) {
+                        structDirty[id][field].push(val);
+                    }
+                    else {
+                        structDirty[id][field] = [val];
+                    }
 
                 }
-                else {structDirty[id][field] = val;}
+                else {
+                    structDirty[id][field] = val;
+                }
             }
 
             for (var i in FX.columns) {
@@ -188,7 +197,9 @@ define([
                     setDirty(myColumns.id.toLowerCase(), "type", "value");
                     setDirty(myColumns.id.toLowerCase(), "value", myColumns.id);
                     setDirty(myColumns.id.toLowerCase(), "title", myColumns.id);
-                    if (myColumns.subject) {setDirty(myColumns.id.toLowerCase(), "subject", myColumns.subject);}
+                    if (myColumns.subject) {
+                        setDirty(myColumns.id.toLowerCase(), "subject", myColumns.subject);
+                    }
                 }
                 else if (myColumns.id.split("|*").length == 2) {//attribut d une valeur X
                     if (myColumns.subject == "um") {
@@ -202,24 +213,25 @@ define([
                     }
                 }
                 else {//attribut de value
-                     if (myColumns.subject == "um") {
-                     //setValue("value", "unit", myColumns.id);
-			     setDirty(myColumns.id, "type", "attribute");
+                    if (myColumns.subject == "um") {
+                        //setValue("value", "unit", myColumns.id);
+                        setDirty(myColumns.id, "type", "attribute");
                         setDirty(myColumns.id, "value", myColumns.id);
                         setDirty(myColumns.id, "title", myColumns.title[lang] || myColumns.id);
-						 if (myColumns.subject) {setDirty(myColumns.id, "subject", myColumns.subject);}
-					
-					
-					//
-                     setDirty("value","unit",myColumns.id)
-                     }
-                     else if (myColumns.subject == "flag") {
-                     //setValue("value", "flag", myColumns.id);
-                     setDirty("value","flag",myColumns.id)
+                        if (myColumns.subject) {
+                            setDirty(myColumns.id, "subject", myColumns.subject);
+                        }
 
-                     }
-                     else
-                    {
+
+                        //
+                        setDirty("value", "unit", myColumns.id)
+                    }
+                    else if (myColumns.subject == "flag") {
+                        //setValue("value", "flag", myColumns.id);
+                        setDirty("value", "flag", myColumns.id)
+
+                    }
+                    else {
                         //// setDimension(myColumns.id, "label", myColumns.title[lang]||myColumns.id);
                         ////  setDimension(myColumns.id, "code", myColumns.id, myColumns.subject);
                         ////setAttribute(myColumns.id, "id", myColumns.id)
@@ -228,7 +240,9 @@ define([
                         setDirty(myColumns.id, "type", "attribute");
                         setDirty(myColumns.id, "value", myColumns.id);
                         setDirty(myColumns.id, "title", myColumns.title[lang] || myColumns.id);
-						 if (myColumns.subject) {setDirty(myColumns.id, "subject", myColumns.subject);}
+                        if (myColumns.subject) {
+                            setDirty(myColumns.id, "subject", myColumns.subject);
+                        }
 
                     }
                 }
@@ -257,9 +271,7 @@ define([
             // var FXmodold = convertFX(FX, opt);
             var FXmodnew = convertFXDirty(FX, opt);
 
-
             FXmod = FXmodnew;
-console.log("convertDirty",FX,FXmod)
 
             var hidden = [];
             var columns = [];
@@ -398,8 +410,8 @@ console.log("convertDirty",FX,FXmod)
             var fxt = initFXT(model.metadata.dsd);
 
             var configuration = {
-				
-                fxSortDimension: {
+
+                dimension_sort: {
                     selector: {
                         id: "sortable",
                         source: [],
@@ -422,31 +434,32 @@ console.log("convertDirty",FX,FXmod)
                         title: "Sort dimension"
                     }
                 },
-			aggregator_value: {  selector : {
-					id : 'dropdown',
-					source : [
-						{ value : "sum", label : "Sum"},
-						{ value : "avg", label : "avg"},
-						{ value : "median", label : "median"},
-						{ value : "stdev", label : "stdev"},
-						{ value : "count", label : "count"},
-						{ value : "concat", label : "concat"},
-						/*
-					avg:function(cell,format,nbDec){var a= jStat(cell);return format(a.mean(),nbDec)},
-					median:function(cell,format,nbDec){var a= jStat(cell);return format(a.median(),nbDec)},
-					stdev:function(cell,format,nbDec){var a= jStat(cell);return format(a.stdev(),nbDec)},
-					count:function(cell,format,nbDec){var a= cell;return format(a.length,nbDec)},
-					concat
-					
-					*/
-					],
-					config : {maxItems : 1},
-					default : ['sum']
-					},
+                aggregator_value: {
+                    selector: {
+                        id: 'dropdown',
+                        source: [
+                            {value: "sum", label: "Sum"},
+                            {value: "avg", label: "avg"},
+                            {value: "median", label: "median"},
+                            {value: "stdev", label: "stdev"},
+                            {value: "count", label: "count"},
+                            {value: "concat", label: "concat"},
+                            /*
+                             avg:function(cell,format,nbDec){var a= jStat(cell);return format(a.mean(),nbDec)},
+                             median:function(cell,format,nbDec){var a= jStat(cell);return format(a.median(),nbDec)},
+                             stdev:function(cell,format,nbDec){var a= jStat(cell);return format(a.stdev(),nbDec)},
+                             count:function(cell,format,nbDec){var a= cell;return format(a.length,nbDec)},
+                             concat
 
-					template : {
-						title : "Aggregator for Value"
-					}
+                             */
+                        ],
+                        config: {maxItems: 1},
+                        default: ['sum']
+                    },
+
+                    template: {
+                        title: "Aggregator for Value"
+                    }
                 }
             };
 
@@ -472,32 +485,41 @@ console.log("convertDirty",FX,FXmod)
                     return item
                 });
 
-            configuration.fxSortDimension.selector.source = _.union(aggregations, hidden, columns, rows, values);
+            configuration.dimension_sort.selector.source = _.union(aggregations, hidden, columns, rows, values);
 
             return configuration
 
         }
 
         function toChartConfig(values) {
-            console.log("toChartConfig",values)
             var hidden = [];
             var x = [];
             var series = [];
             var aggregations = [];
             var y = [];
-			var type=values.values.typeOfChart[0];
-			var aggValue={value:values.values.aggregator_value[0],Value:values.values.aggregator_value[0],VALUE:values.values.aggregator_value[0]} 
+            var type = Array.isArray(values.values.typeOfChart) ? values.values.typeOfChart[0] : "line";
+            var aggValue = {
+                value: values.values.aggregator_value[0],
+                Value: values.values.aggregator_value[0],
+                VALUE: values.values.aggregator_value[0]
+            };
 
             //convert to chart creator configuration here
             var opt = {x: {}, y: {}, series: {}, showUnit: false, showCode: false, showFlag: false};
             for (var i in values.values.show) {
                 var t = values.values.show[i];
-                if (t == "code") {opt.showCode = true;}
-                else if (t == "unit") {opt.showUnit = true;}
-                else if (t == "flag") {opt.showFlag = true;}
+                if (t == "code") {
+                    opt.showCode = true;
+                }
+                else if (t == "unit") {
+                    opt.showUnit = true;
+                }
+                else if (t == "flag") {
+                    opt.showFlag = true;
+                }
             }
-            for (var i in values.values.fxSortDimension) {
-                var t = values.values.fxSortDimension[i];
+            for (var i in values.values.dimension_sort) {
+                var t = values.values.dimension_sort[i];
                 if (t.parent == "rows") {
                     opt.series[t.value] = true
                 }
@@ -540,17 +562,22 @@ console.log("convertDirty",FX,FXmod)
                     }
                 }
             }
-for(var i in FXmod.attributes)
-				{
-					
-					if (opt.y[FXmod.attributes[i].value]) {y.push( FXmod.attributes[i].value);}
-					else if(opt.x[FXmod.attributes[i].value]){x.push( FXmod.attributes[i].value);}
-					else if(opt.series[FXmod.attributes[i].value]){series.push( FXmod.attributes[i].value);}
-				}
-				
-				
+            for (var i in FXmod.attributes) {
+
+                if (opt.y[FXmod.attributes[i].value]) {
+                    y.push(FXmod.attributes[i].value);
+                }
+                else if (opt.x[FXmod.attributes[i].value]) {
+                    x.push(FXmod.attributes[i].value);
+                }
+                else if (opt.series[FXmod.attributes[i].value]) {
+                    series.push(FXmod.attributes[i].value);
+                }
+            }
+
+
             var retObj = {
-                aggregationFn:aggValue,
+                aggregationFn: aggValue,
                 formatter: "value",
                 decimals: 2,
                 hidden: hidden,
@@ -558,7 +585,7 @@ for(var i in FXmod.attributes)
                 x: x,
                 aggregations: aggregations,
                 y: y,
-				type:type
+                type: type
             };
 
             return retObj;
@@ -572,28 +599,40 @@ for(var i in FXmod.attributes)
             var series = [];
             var aggregations = [];
             var y = [];
-			var formatter=values.values.format[0];
-			var aggValue={value:values.values.aggregator_value[0],Value:values.values.aggregator_value[0]} 
+            var formatter = values.values.format[0];
+            var aggValue = {value: values.values.aggregator_value[0], Value: values.values.aggregator_value[0]}
             //convert to chart creator configuration here
             var opt = {x: {}, y: {}, series: {}, showUnit: false, showCode: false, showFlag: false};
             for (var i in values.values.show) {
                 var t = values.values.show[i];
-                if (t == "code") {opt.showCode = true}
-                else if (t == "unit") {opt.showUnit = true}
-                else if (t == "flag") {opt.showFlag = true}
-            }
-			
-			
-            for (var i in values.values.fxSortDimension) {
-                var t = values.values.fxSortDimension[i];
-                if (t.parent == "rows") {opt.series[t.value] = true;
+                if (t == "code") {
+                    opt.showCode = true
                 }
-                else if (t.parent == "columns") {opt.x[t.value] = true;}
-                else if (t.parent == "values") {opt.y[t.value] = true;}
-                else if (t.parent == "hidden") {/* to decide what we want to do*/}
+                else if (t == "unit") {
+                    opt.showUnit = true
+                }
+                else if (t == "flag") {
+                    opt.showFlag = true
+                }
             }
 
-console.log("FXmod",FXmod)
+
+            for (var i in values.values.dimension_sort) {
+                var t = values.values.dimension_sort[i];
+                if (t.parent == "rows") {
+                    opt.series[t.value] = true;
+                }
+                else if (t.parent == "columns") {
+                    opt.x[t.value] = true;
+                }
+                else if (t.parent == "values") {
+                    opt.y[t.value] = true;
+                }
+                else if (t.parent == "hidden") {/* to decide what we want to do*/
+                }
+            }
+
+            console.log("FXmod", FXmod)
             for (var i in FXmod.dimensions) {
                 if (opt.series[FXmod.dimensions[i].code]) {
                     series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
@@ -607,9 +646,11 @@ console.log("FXmod",FXmod)
                         x.push(FXmod.dimensions[i].code);
                     }
                 }
-				 if (opt.y[FXmod.dimensions[i].code]) {y.push( FXmod.dimensions[i].code);}	
+                if (opt.y[FXmod.dimensions[i].code]) {
+                    y.push(FXmod.dimensions[i].code);
+                }
             }
-			
+
             for (var i in FXmod.values) {
                 if (opt.y[FXmod.values[i].value]) {
                     y.push(FXmod.values[i].value)
@@ -625,19 +666,22 @@ console.log("FXmod",FXmod)
                 }
             }
 
-			for(var i in FXmod.attributes)
-				{
-					
-					if (opt.y[FXmod.attributes[i].value]) {y.push( FXmod.attributes[i].label || FXmod.attributes[i].value);}
-					else if(opt.x[FXmod.attributes[i].value]){x.push( FXmod.attributes[i].label || FXmod.attributes[i].value);}
-					else if(opt.series[FXmod.attributes[i].value]){series.push( FXmod.attributes[i].label || FXmod.attributes[i].value);}
-				}
-			
-			
-			
-			
+            for (var i in FXmod.attributes) {
+
+                if (opt.y[FXmod.attributes[i].value]) {
+                    y.push(FXmod.attributes[i].label || FXmod.attributes[i].value);
+                }
+                else if (opt.x[FXmod.attributes[i].value]) {
+                    x.push(FXmod.attributes[i].label || FXmod.attributes[i].value);
+                }
+                else if (opt.series[FXmod.attributes[i].value]) {
+                    series.push(FXmod.attributes[i].label || FXmod.attributes[i].value);
+                }
+            }
+
+
             var retObj = {
-                aggregationFn:aggValue,
+                aggregationFn: aggValue,
                 formatter: formatter,
                 decimals: 2,
                 showRowHeaders: true,
