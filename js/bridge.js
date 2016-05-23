@@ -203,8 +203,6 @@ define([
         var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER ,
             processesService = obj.metadataService || C.METADATA_SERVICE || DC.METADATA_SERVICE;
 
-        alert(serviceProvider)
-
         return Q($.ajax({
             url: serviceProvider + processesService + this._parseUidAndVersion(obj, true) + this._parseQueryParams(obj.params),
             type: obj.type || "GET",
