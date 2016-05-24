@@ -605,18 +605,12 @@ define([
             var opt = {x: {}, y: {}, series: {}, showUnit: false, showCode: false, showFlag: false};
             for (var i in values.values.show) {
                 var t = values.values.show[i];
-                if (t == "code") {
-                    opt.showCode = true
-                }
-                else if (t == "unit") {
-                    opt.showUnit = true
-                }
-                else if (t == "flag") {
-                    opt.showFlag = true
-                }
+                if (t == "code") {opt.showCode = true;}
+                else if (t == "unit") {opt.showUnit = true;}
+                else if (t == "flag") {opt.showFlag = true;}
             }
 
-
+console.log(" values.values.dimension_sort", values.values.dimension_sort)
             for (var i in values.values.dimension_sort) {
                 var t = values.values.dimension_sort[i];
                 if (t.parent == "rows") {
@@ -633,20 +627,23 @@ define([
             }
 
             console.log("FXmod", FXmod)
-            for (var i in FXmod.dimensions) {
-                if (opt.series[FXmod.dimensions[i].code]) {
+           // for (var i in FXmod.dimensions) { 
+		   for (var ii in values.values.dimension_sort) {
+			   var i=values.values.dimension_sort[ii].value;
+			   console.log(i);
+                if (FXmod.dimensions[i] && opt.series[FXmod.dimensions[i].code]) {
                     series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
                     if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
                         series.push(FXmod.dimensions[i].code)
                     }
                 }
-                if (opt.x[FXmod.dimensions[i].code]) {
+                if (FXmod.dimensions[i] && opt.x[FXmod.dimensions[i].code]) {
                     x.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
                     if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
                         x.push(FXmod.dimensions[i].code);
                     }
                 }
-                if (opt.y[FXmod.dimensions[i].code]) {
+                if (FXmod.dimensions[i] && opt.y[FXmod.dimensions[i].code]) {
                     y.push(FXmod.dimensions[i].code);
                 }
             }
