@@ -534,14 +534,17 @@ define([
             }
 
 
-            for (var i in FXmod.dimensions) {
-                if (opt.series[FXmod.dimensions[i].code]) {
+           // for (var i in FXmod.dimensions) {
+ for (var ii in values.values.dimension_sort) {
+			   var i=values.values.dimension_sort[ii].value;
+			           
+			 if (FXmod.dimensions[i] && opt.series[FXmod.dimensions[i].code]) {
                     series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
                     if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
                         series.push(FXmod.dimensions[i].code)
                     }
                 }
-                if (opt.x[FXmod.dimensions[i].code]) {
+                if (FXmod.dimensions[i] && opt.x[FXmod.dimensions[i].code]) {
                     x.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
                     if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
                         x.push(FXmod.dimensions[i].code);
@@ -610,7 +613,7 @@ define([
                 else if (t == "flag") {opt.showFlag = true;}
             }
 
-console.log(" values.values.dimension_sort", values.values.dimension_sort)
+//console.log(" values.values.dimension_sort", values.values.dimension_sort)
             for (var i in values.values.dimension_sort) {
                 var t = values.values.dimension_sort[i];
                 if (t.parent == "rows") {
@@ -626,7 +629,7 @@ console.log(" values.values.dimension_sort", values.values.dimension_sort)
                 }
             }
 
-            console.log("FXmod", FXmod)
+            //console.log("FXmod", FXmod)
            // for (var i in FXmod.dimensions) { 
 		   for (var ii in values.values.dimension_sort) {
 			   var i=values.values.dimension_sort[ii].value;
