@@ -633,7 +633,6 @@ define([
            // for (var i in FXmod.dimensions) { 
 		   for (var ii in values.values.dimension_sort) {
 			   var i=values.values.dimension_sort[ii].value;
-			   console.log(i);
                 if (FXmod.dimensions[i] && opt.series[FXmod.dimensions[i].code]) {
                     series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
                     if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {

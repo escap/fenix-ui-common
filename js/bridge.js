@@ -19,6 +19,7 @@ define([
         this.cache = {};
         this.environment = obj.environment || 'distribution';
         this.ENVIR = this.environment.toUpperCase();
+        this.USE_CACHE = obj.use_cache || C.use_cache || DC.use_cache;
         this.SERVICE_PROVIDER = C['SERVICE_PROVIDER_' + this.ENVIR] || DC['SERVICE_PROVIDER_' + this.ENVIR];
         if (!this.SERVICE_PROVIDER ) {
             alert(this.environment + " is not a valid FENIX environment: [develop, distribution]");
@@ -33,7 +34,8 @@ define([
             cached = this._getCacheItem(key),
             self = this;
 
-        if (cached) {
+        if (this.USE_CACHE && cached) {
+
             return Q.promise(function (resolve) {
                 return resolve(cached);
             });
@@ -74,7 +76,7 @@ define([
             cached = this._getCacheItem(key),
             self = this;
 
-        if (cached) {
+        if (this.USE_CACHE && cached) {
             return Q.promise(function (resolve) {
                 return resolve(cached);
             });
@@ -112,7 +114,7 @@ define([
             cached = this._getCacheItem(key),
             self = this;
 
-        if (cached) {
+        if (this.USE_CACHE && cached) {
             return Q.promise(function (resolve) {
                 return resolve(cached);
             });
@@ -154,7 +156,7 @@ define([
             cached = this._getCacheItem(key),
             self = this;
 
-        if (cached) {
+        if (this.USE_CACHE && cached) {
             return Q.promise(function (resolve) {
                 return resolve(cached);
             });
@@ -194,7 +196,7 @@ define([
             cached = this._getCacheItem(key),
             self = this;
 
-        if (cached) {
+        if (this.USE_CACHE && cached) {
             return Q.promise(function (resolve) {
                 return resolve(cached);
             });
@@ -271,10 +273,12 @@ define([
 
     };
 
-    Bridge.prototype._setCacheItem = function (key, value) {
+    Bridge.prototype._setCacheItem = function (obj, value) {
+
+        var key = this.getCacheKey(obj);
 
         try {
-            amplify.store.sessionStorage(this.getCacheKey(key), value)
+            amplify.store.sessionStorage(key, value)
         } catch (e) {
 
             this.cache[key] = value;
@@ -283,9 +287,10 @@ define([
         return this._getCacheItem(key);
     };
 
-    Bridge.prototype._getCacheItem = function (key) {
+    Bridge.prototype._getCacheItem = function (obj) {
 
-        var item = amplify.store.sessionStorage(this.getCacheKey(key));
+        var key = this.getCacheKey(obj),
+            item = amplify.store.sessionStorage(key);
 
         return item ? item : this.cache[key];
 
