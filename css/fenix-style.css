@@ -5773,7 +5773,6 @@ legend {
   .fx-md-viewer-wrapper .metadata-viewer-title {
     width: 30%;
     font-size: 12px;
-    font: normal normal 300 14px/normal "Roboto Condensed";
     font-weight: 500;
     padding-right: 25px;
     cursor: pointer; }
@@ -5795,15 +5794,11 @@ legend {
       transition: all 0.3s ease 0s; }
   .fx-md-viewer-wrapper .metadata-viewer-value {
     width: 70%;
-    font: normal normal 300 14px/normal "Roboto Condensed";
     font-size: 12px; }
   .fx-md-viewer-wrapper .popover-title {
-    background-color: transparent;
-    font: normal normal 300 14px/normal "Roboto Condensed"; }
+    background-color: transparent; }
     .fx-md-viewer-wrapper .popover-title .text-info {
       color: #0076ff; }
-  .fx-md-viewer-wrapper .popover-content {
-    font: normal normal 300 14px/normal "Roboto Condensed"; }
 
 /* Fenix - Modular Form Component */
 .fx-catalog-modular-form-holder {
