@@ -14,14 +14,14 @@ define([
 
     'use strict';
 
-    function Bridge( o ) {
+    function Bridge(o) {
         var obj = o || {};
         this.cache = {};
         this.environment = obj.environment || 'distribution';
         this.ENVIR = this.environment.toUpperCase();
         this.USE_CACHE = obj.use_cache || C.use_cache || DC.use_cache;
         this.SERVICE_PROVIDER = C['SERVICE_PROVIDER_' + this.ENVIR] || DC['SERVICE_PROVIDER_' + this.ENVIR];
-        if (!this.SERVICE_PROVIDER ) {
+        if (!this.SERVICE_PROVIDER) {
             alert(this.environment + " is not a valid FENIX environment: [develop, distribution]");
         }
     }
@@ -29,7 +29,8 @@ define([
     Bridge.prototype.find = function (obj) {
 
         var key = $.extend(true, {
-                type: "find"
+                type: "find",
+                environment: this.ENVIR
             }, obj),
             cached = this._getCacheItem(key),
             self = this;
@@ -41,7 +42,7 @@ define([
             });
         }
 
-        var serviceProvider = obj.SERVICE_PROVIDER || this.SERVICE_PROVIDER ,
+        var serviceProvider = obj.SERVICE_PROVIDER || this.SERVICE_PROVIDER,
             filterService = obj.FIND_SERVICE || C.FIND_SERVICE || DC.FIND_SERVICE,
             body = obj.body;
 
@@ -71,7 +72,8 @@ define([
     Bridge.prototype.getEnumeration = function (obj) {
 
         var key = $.extend(true, {
-                type: "enumeration"
+                type: "enumeration",
+                environment: this.ENVIR
             }, obj),
             cached = this._getCacheItem(key),
             self = this;
@@ -82,7 +84,7 @@ define([
             });
         }
 
-        var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER ,
+        var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER,
             enumerationService = obj.enumerationService || C.ENUMERATION_SERVICE || DC.ENUMERATION_SERVICE;
 
         return Q($.ajax({
@@ -109,7 +111,8 @@ define([
     Bridge.prototype.getCodeList = function (obj) {
 
         var key = $.extend(true, {
-                type: "codelist"
+                type: "codelist",
+                environment: this.ENVIR
             }, obj),
             cached = this._getCacheItem(key),
             self = this;
@@ -120,7 +123,7 @@ define([
             });
         }
 
-        var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER ,
+        var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER,
             codeListService = obj.codeListService || C.CODELIST_SERVICE || DC.CODELIST_SERVICE,
             body = obj.body;
 
@@ -151,7 +154,8 @@ define([
     Bridge.prototype.getResource = function (obj) {
 
         var key = $.extend(true, {
-                type: "resource"
+                type: "resource",
+                environment: this.ENVIR
             }, obj),
             cached = this._getCacheItem(key),
             self = this;
@@ -162,7 +166,7 @@ define([
             });
         }
 
-        var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER ,
+        var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER,
             processesService = obj.processesService || C.PROCESSES_SERVICE || DC.PROCESSES_SERVICE;
 
         return Q($.ajax({
@@ -191,7 +195,8 @@ define([
     Bridge.prototype.getMetadata = function (obj) {
 
         var key = $.extend(true, {
-                type: "metadata"
+                type: "metadata",
+                environment: this.ENVIR
             }, obj),
             cached = this._getCacheItem(key),
             self = this;
@@ -202,7 +207,7 @@ define([
             });
         }
 
-        var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER ,
+        var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER,
             processesService = obj.metadataService || C.METADATA_SERVICE || DC.METADATA_SERVICE;
 
         return Q($.ajax({
@@ -306,17 +311,17 @@ define([
 
     Bridge.prototype.exportResource = function (payload, successCallback, errorCallback, obj) {
 
-        var serviceprovider =(obj && obj.serviceProvider) || this.SERVICE_PROVIDER;
+        var serviceprovider = (obj && obj.serviceProvider) || this.SERVICE_PROVIDER;
         var url = serviceprovider + (C.EXPORT_ACCESS_POINT || DC.EXPORT_ACCESS_POINT);
 
         return Q($.ajax({
             url: url,
             type: "POST",
             contentType: "application/json",
-            data : JSON.stringify(payload)
+            data: JSON.stringify(payload)
 
         })).then(function (data) {
-            var object = {   'data':data, 'url':url };
+            var object = {'data': data, 'url': url};
             return Q.promise(function (resolve, reject, notify) {
                 return resolve(object);
             });
@@ -329,6 +334,6 @@ define([
 
     };
 
-    return new Bridge();
+    return Bridge;
 
 });
