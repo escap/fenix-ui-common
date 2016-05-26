@@ -321,8 +321,8 @@ define([
     /* processes for CODE FX column */
 
     Utils.prototype._processCustomCodeColumn = function (c) {
-        //return this._configTreeFromSource(c);
-        return this._configDropdownFromSource(c);
+        return this._configTreeFromSource(c);
+        //return this._configDropdownFromSource(c);
     };
 
     Utils.prototype._processEnumerationColumn = function (c) {
@@ -334,7 +334,7 @@ define([
         //configure selector
         //html selector configuration
         config.selector = {};
-        config.selector.id = "dropdown";
+        config.selector.id = "tree";
         config.selector.source = _.map(enumeration, function (obj) {
             return {
                 value: obj,
@@ -347,8 +347,8 @@ define([
 
     Utils.prototype._processCodeColumn = function (c) {
 
-        //return this._configTreeFromCodelist(c);
-        return this._configDropdownFromCodelist(c);
+        return this._configTreeFromCodelist(c);
+        //return this._configDropdownFromCodelist(c);
 
     };
 
@@ -367,7 +367,8 @@ define([
         }
 
         if (timelist) {
-            return this._configDropdownFromTimelist(c);
+            //return this._configDropdownFromTimelist(c);
+            return this._configTreeFromTimelist(c);
         }
 
         log.warn("Impossible to find process for column " + c.id);
@@ -517,6 +518,23 @@ define([
 
     };
 
+    Utils.prototype._configTreeFromPeriod = function (c) {
+
+        var config = {},
+            domain = c.domain || {},
+            period = domain.period;
+
+        //configure selector
+        //html selector configuration
+        config.selector = {};
+        config.selector.id = "tree";
+        config.selector.from = period.from;
+        config.selector.to = period.to;
+
+        return config;
+
+    };
+
     Utils.prototype._configDropdownFromTimelist = function (c) {
 
         var config = {},
@@ -527,6 +545,27 @@ define([
         //configure selector
         config.selector = {};
         config.selector.id = "dropdown";
+        config.selector.source = _.map(timelist, _.bind(function (obj) {
+            return {
+                value: obj,
+                label: new Moment(obj, format).format(this._getTimeLabelFormat(obj))
+            }
+        }, this));
+
+        return config;
+
+    };
+
+    Utils.prototype._configTreeFromTimelist = function (c) {
+
+        var config = {},
+            domain = c.domain || {},
+            timelist = domain.timeList || [],
+            format = this._getTimeFormat(timelist[0]);
+
+        //configure selector
+        config.selector = {};
+        config.selector.id = "tree";
         config.selector.source = _.map(timelist, _.bind(function (obj) {
             return {
                 value: obj,
@@ -642,7 +681,7 @@ define([
             config: {}
         };
 
-        config.selector.id = "dropdown";
+        config.selector.id = "tree";
         config.selector.from = parseInt(from, 10);
         config.selector.to = parseInt(to, 10);
 
@@ -697,12 +736,14 @@ define([
 
         if (period && period.from && period.to) {
             //return this._configRangeFromPeriod(c);
-            return this._configTimeFromPeriod(c);
+            //return this._configTimeFromPeriod(c);
             //return this._configDropdownFromPeriod(c);
+            return this._configTreeFromPeriod(c);
         }
 
         if (timelist) {
-            return this._configDropdownFromTimelist(c);
+            //return this._configDropdownFromTimelist(c);
+            return this._configTreeFromTimelist(c);
         }
 
         //Default set year range
