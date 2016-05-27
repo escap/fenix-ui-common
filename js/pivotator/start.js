@@ -250,7 +250,7 @@ function buildPivotResult(data, opt) {
 	
 	function toPivotData(FX,  userOptions){
 		var data = [];
-		console.log("userOptions toPivotDat",userOptions, userOptions.derived)
+		//console.log("userOptions toPivotDat",userOptions, userOptions.derived)
 //		var derivedAttributes=userOptions.derivedAttributes
 		for (var i in FX.data) {
 			var tmp = {}
@@ -260,12 +260,12 @@ function buildPivotResult(data, opt) {
 		}
 		for(var d in userOptions.derived)
 		{
-			console.log(userOptions.derived[d])
+			//console.log(userOptions.derived[d])
 			tmp[d]=userOptions.derived[d](tmp);
 		}
 			data.push(tmp);
 		}
-		console.log("pivotdata",data)
+		//console.log("pivotdata",data)
 
 		return  pivotData(data,  userOptions);
 	}
@@ -349,7 +349,7 @@ function buildPivotResult(data, opt) {
 	
 	
 	function toFXJson(FX,userOptions) {
-				console.log("toFXJson",FX,userOptions);
+				//console.log("toFXJson",FX,userOptions);
 
 		MYFINALRESULT = {data: [],unit:[],flag:[],attribute:[], rows: [], cols: [],cols2: [],cols2label: [], okline: [], nookline: [],rowname:[],colsname:[]};//to internal test and dataset function
 		var pivotdata = toPivotData(FX,  userOptions);

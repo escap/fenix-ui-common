@@ -53,7 +53,7 @@ define([
         }
 
         function convertFX(FX, opt) {
-            console.log("FX", FX)
+            //console.log("FX", FX)
             var lang = "EN";
             if (opt && opt.hasOwnProperty("lang")) {
                 lang = opt.lang;
@@ -141,7 +141,7 @@ define([
                 }
             }
 //			for()
-            console.log("structInter", structInter)
+            //console.log("structInter", structInter)
             return structInter;
         }
 
