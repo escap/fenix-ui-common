@@ -405,7 +405,7 @@ define([
             return retObj;
         }
 
-        function toFilter(model) {
+        function toFilter(model,opt) {
 
             var fxt = initFXT(model.metadata.dsd);
 
@@ -418,11 +418,11 @@ define([
                         config: { //SortableJS configuration
                             //disabled: true
                             groups: {
-                                rows: "Rows",
-                                columns: "Columns",
-                                hidden: "Hidden",
-                                aggregations: "Aggregation",
-                                values: "Values"
+                                rows: opt.rowLabel||"Rows",
+                                columns:opt.columnsLabel|| "Columns",
+                                hidden:opt.hiddenLabel|| "Hidden",
+                                aggregations:opt.aggregationsLabel|| "Aggregation",
+                                values:opt.valuesLabel|| "Values"
                             }
                         }
                     },
