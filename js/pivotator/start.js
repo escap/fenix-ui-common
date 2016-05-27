@@ -250,6 +250,7 @@ function buildPivotResult(data, opt) {
 	
 	function toPivotData(FX,  userOptions){
 		var data = [];
+//		var derivedAttributes=userOptions.derivedAttributes
 		for (var i in FX.data) {
 			var tmp = {}
 			for (var j in FX.metadata.dsd.columns)
@@ -338,7 +339,7 @@ function buildPivotResult(data, opt) {
 	
 	
 	function toFXJson(FX,userOptions) {
-				//console.log("toFXJson",FX,userOptions);
+				console.log("toFXJson",FX,userOptions);
 
 		MYFINALRESULT = {data: [],unit:[],flag:[],attribute:[], rows: [], cols: [],cols2: [],cols2label: [], okline: [], nookline: [],rowname:[],colsname:[]};//to internal test and dataset function
 		var pivotdata = toPivotData(FX,  userOptions);
