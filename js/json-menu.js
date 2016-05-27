@@ -114,7 +114,7 @@ define([
 
         Menu.prototype.showItem = function (item) {
 
-            var $item = this.$el.find("[data-tab='"+item+"']");
+            var $item = this.$el.find("[data-id='"+item+"']");
 
             $item.removeClass("hidden");
 
@@ -122,7 +122,7 @@ define([
 
         Menu.prototype.hideItem = function (item) {
 
-            var $item = this.$el.find("[data-tab='"+item+"']");
+            var $item = this.$el.find("[data-id='"+item+"']");
 
             $item.addClass("hidden");
 
