@@ -409,6 +409,24 @@ define([
 
             var fxt = initFXT(model.metadata.dsd);
 
+			
+			var groupName= {
+                                rows: "Rows",
+                                columns: "Columns",
+                                hidden :"Hidden",
+                                aggregations: "Aggregation",
+                                values: "Values"
+                            }
+							if(opt){ groupName= {
+                                rows: opt.rowLabel||"Rows",
+                                columns:opt.columnsLabel|| "Columns",
+                                hidden:opt.hiddenLabel|| "Hidden",
+                                aggregations:opt.aggregationsLabel|| "Aggregation",
+                                values:opt.valuesLabel|| "Values"
+                            }}
+			
+			
+			
             var configuration = {
 
                 dimension_sort: {
@@ -417,13 +435,7 @@ define([
                         source: [],
                         config: { //SortableJS configuration
                             //disabled: true
-                            groups: {
-                                rows: opt.rowLabel||"Rows",
-                                columns:opt.columnsLabel|| "Columns",
-                                hidden:opt.hiddenLabel|| "Hidden",
-                                aggregations:opt.aggregationsLabel|| "Aggregation",
-                                values:opt.valuesLabel|| "Values"
-                            }
+                            groups: groupName
                         }
                     },
 
