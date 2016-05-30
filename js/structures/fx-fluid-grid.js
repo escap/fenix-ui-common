@@ -9,6 +9,7 @@ define([
     'draggabilly',
     'loglevel'
 ], function (ERR, EVT, C, DC, $, Packery, Draggabilly, log) {
+
     'use strict';
 
     var s = {
@@ -168,7 +169,7 @@ define([
 
         this.id = this.initial.id;
         this.$el = this.initial.$el;
-        this.config = this.initial.config || DC.FLUID_GRID_CONFIG || C.FLUID_GRID_CONFIG;
+        this.config = $.extend(true, {}, this.initial.config, DC.FLUID_GRID_CONFIG || C.FLUID_GRID_CONFIG);
 
     };
 
