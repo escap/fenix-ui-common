@@ -145,7 +145,7 @@ define([
     };
 
     FxFluidGrid.prototype.getBlankContainer = function () {
-        return $('<div data-role="fx-grid-item" class="fx-grid-item"></div>');
+        return $('<div data-role="fx-grid-item" class="fx-grid-item" data-size="full"></div>');
     };
 
     // end API
