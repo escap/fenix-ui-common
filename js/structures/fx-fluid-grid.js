@@ -64,9 +64,9 @@ define([
         var toAppend = $(item);
 
         // append elements to container
-        this.$el.append(toAppend);
+        this.$el.prepend(toAppend);
         // add and lay out newly appended elements
-        this.pckry.appended(toAppend[0]);
+        this.pckry.prepended(toAppend[0]);
 
         if (this.config.drag) {
 
