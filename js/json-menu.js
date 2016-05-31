@@ -71,7 +71,11 @@ define([
             $.each(items, $.proxy(function (index, item) {
 
                 if (item && item.label) {
-                    var li = $("<li class='js-menu'>" + "<a href='" + item.url + "'>" + item.label + "</a></li>");
+                    var li = $("<li class='js-menu'>" + "<a>" + item.label + "</a></li>");
+
+                    if (item.url !== "") {
+                        li.find("a").attr("href", item.url);
+                    }
 
                     if (item.a_attrs) {
 
