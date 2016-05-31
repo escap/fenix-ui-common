@@ -31,7 +31,7 @@
   .metadata-viewer-title{
     width: 30%;
     font-size: 12px;
-    font: $standard-text;
+    //font: $standard-text;
     font-weight: 500;
     padding-right: 25px;
     cursor: pointer;
@@ -60,7 +60,7 @@
 
   .metadata-viewer-value{
     width: 70%;
-    font: $standard-text;
+    //font: $standard-text;
     font-size: 12px;
   }
 
@@ -71,11 +71,11 @@
       color: $fx-cool-blue;
     }
     //border-bottom-color: transparent ;
-    font: $standard-text;
+    //font: $standard-text;
   }
 
   .popover-content{
-    font: $standard-text;
+    //font: $standard-text;
   }
 
 }
