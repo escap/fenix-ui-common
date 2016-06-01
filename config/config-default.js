@@ -10,7 +10,7 @@ define(function () {
     return {
 
         //Bridge
-        SERVICE_PROVIDER_DISTRIBUTION : SERVER_DISTRIBUTION + "d3s/",
+        SERVICE_PROVIDER_PRODUCTION : SERVER_DISTRIBUTION + "d3s/",
         SERVICE_PROVIDER_DEVELOP : SERVER_DEVELOP + "d3s_dev/",
         EXPORT_ACCESS_POINT :"/fenix/export",
         FIND_SERVICE : "msd/resources/find",

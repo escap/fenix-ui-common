@@ -17,12 +17,12 @@ define([
     function Bridge(o) {
         var obj = o || {};
         this.cache = {};
-        this.environment = obj.environment || 'distribution';
+        this.environment = obj.environment || 'production';
         this.ENVIR = this.environment.toUpperCase();
         this.USE_CACHE = obj.use_cache || C.use_cache || DC.use_cache;
         this.SERVICE_PROVIDER = C['SERVICE_PROVIDER_' + this.ENVIR] || DC['SERVICE_PROVIDER_' + this.ENVIR];
         if (!this.SERVICE_PROVIDER) {
-            alert(this.environment + " is not a valid FENIX environment: [develop, distribution]");
+            alert(this.environment + " is not a valid FENIX environment: [develop, production]");
         }
     }
 
