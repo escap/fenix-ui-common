@@ -167,10 +167,51 @@ define([
         }
 
         var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER,
+            processesService = obj.processesService || C.RESOURCES_SERVICE || DC.RESOURCES_SERVICE,
+            url = serviceProvider + processesService + this._parseUidAndVersion(obj, true) + this._parseQueryParams(obj.params);
+
+        return Q($.ajax({
+            url: url,
+            type: obj.type || "GET",
+            contentType: obj.contentType || "application/json",
+            data: JSON.stringify(obj.body)
+        })).then(function (data) {
+
+            self._setCacheItem(key, data);
+
+            return Q.promise(function (resolve, reject, notify) {
+                return resolve(self._getCacheItem(key));
+            });
+
+        }, function (error) {
+
+            return Q.promise(function (resolve, reject, notify) {
+                return reject(error);
+            });
+
+        });
+    };
+
+    Bridge.prototype.getProcessedResource = function (obj) {
+
+        var key = $.extend(true, {
+                type: "resource",
+                environment: this.ENVIR
+            }, obj),
+            cached = this._getCacheItem(key),
+            self = this;
+
+        if (this.USE_CACHE && cached) {
+            return Q.promise(function (resolve) {
+                return resolve(cached);
+            });
+        }
+
+        var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER,
             processesService = obj.processesService || C.PROCESSES_SERVICE || DC.PROCESSES_SERVICE;
 
         return Q($.ajax({
-            url: serviceProvider + processesService + this._parseUidAndVersion(obj) + this._parseQueryParams(obj.params),
+            url: serviceProvider + processesService + this._parseUidAndVersion(obj, false) + this._parseQueryParams(obj.params),
             type: obj.type || "POST",
             dataType: obj.dataType || 'json',
             contentType: obj.contentType || "application/json",
@@ -269,9 +310,9 @@ define([
 
         result = result.concat(params.uid);
 
-        if (params.version) {
+        if (!!params.version) {
             result = result.concat("/").concat(params.version);
-            versionFound = true
+            versionFound = true;
         }
 
         return (appendUid === true && versionFound !== true) ? 'uid/' + result : result;
