@@ -311,8 +311,6 @@ define([
 
     Bridge.prototype.exportResource = function (payload, obj) {
 
-        console.log(obj)
-
         var serviceprovider = (obj && obj.serviceProvider) || this.SERVICE_PROVIDER;
         var url = serviceprovider + (C.EXPORT_ACCESS_POINT || DC.EXPORT_ACCESS_POINT);
 
