@@ -911,9 +911,10 @@ define([
             valid = false;
         }
 
-        if (valid && (!res.metadata.dsd.hasOwnProperty("columns") || !Array.isArray(res.metadata.dsd.columns))) {
-            errors.push({code: ERR.INVALID_COLUMNS});
-        }
+        //NOT need field for FENIX GEOGRAPHIC RESOURCE
+        //if (valid && (!res.metadata.dsd.hasOwnProperty("columns") || !Array.isArray(res.metadata.dsd.columns))) {
+        //    errors.push({code: ERR.INVALID_COLUMNS});
+        //}
 
         return errors.length > 0 ? errors : valid;
     };
