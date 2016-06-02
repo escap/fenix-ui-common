@@ -899,7 +899,8 @@ define([
     Utils.prototype._isFenixResource = function (res) {
 
         var valid = true,
-            errors = [];
+            errors = [],
+            resourceType = this.getNestedProperty("metadata.meContent.resourceRepresentationType", res);
 
         if (!res.hasOwnProperty("metadata")) {
             errors.push({code: ERR.INVALID_METADATA});
@@ -912,9 +913,9 @@ define([
         }
 
         //NOT need field for FENIX GEOGRAPHIC RESOURCE
-        //if (valid && (!res.metadata.dsd.hasOwnProperty("columns") || !Array.isArray(res.metadata.dsd.columns))) {
-        //    errors.push({code: ERR.INVALID_COLUMNS});
-        //}
+        if ( resourceType === "dataset" && valid && (!res.metadata.dsd.hasOwnProperty("columns") || !Array.isArray(res.metadata.dsd.columns))) {
+           errors.push({code: ERR.INVALID_COLUMNS});
+        }
 
         return errors.length > 0 ? errors : valid;
     };

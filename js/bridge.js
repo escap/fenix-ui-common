@@ -195,7 +195,7 @@ define([
     Bridge.prototype.getProcessedResource = function (obj) {
 
         var key = $.extend(true, {
-                type: "resource",
+                type: "process",
                 environment: this.ENVIR
             }, obj),
             cached = this._getCacheItem(key),
