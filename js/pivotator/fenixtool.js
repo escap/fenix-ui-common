@@ -694,7 +694,7 @@ define([
             var retObj = {
                 aggregationFn: aggValue,
                 formatter: formatter,
-                decimals: 2,
+                decimals: values.values.decimal_digit||2,
                 showRowHeaders: true,
                 hidden: hidden,
                 rows: series,
