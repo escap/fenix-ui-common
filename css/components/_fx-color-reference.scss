@@ -1,0 +1,11 @@
+/* Fenix Color Reference */
+
+
+.color-main{
+  background-color: $fx-cool-blue;
+}
+
+.color-main-light-10{
+  background-color: lighten($fx-cool-blue, 10%);
+}
+
