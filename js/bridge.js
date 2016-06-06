@@ -16,10 +16,10 @@ define([
 
     function Bridge(o) {
         var obj = o || {};
-        this.cache = {};
+        this.cache_db = {};
         this.environment = obj.environment || 'production';
         this.ENVIR = this.environment.toUpperCase();
-        this.USE_CACHE = obj.use_cache || C.use_cache || DC.use_cache;
+        this.USE_CACHE = obj.cache;
         this.SERVICE_PROVIDER = C['SERVICE_PROVIDER_' + this.ENVIR] || DC['SERVICE_PROVIDER_' + this.ENVIR];
         if (!this.SERVICE_PROVIDER) {
             alert(this.environment + " is not a valid FENIX environment: [develop, production]");
@@ -327,7 +327,7 @@ define([
             amplify.store.sessionStorage(key, value)
         } catch (e) {
 
-            this.cache[key] = value;
+            this.cache_db[key] = value;
         }
 
         return this._getCacheItem(key);
@@ -338,7 +338,7 @@ define([
         var key = this.getCacheKey(obj),
             item = amplify.store.sessionStorage(key);
 
-        return item ? item : this.cache[key];
+        return item ? item : this.cache_db[key];
 
     };
 
