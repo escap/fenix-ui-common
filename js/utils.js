@@ -160,23 +160,37 @@ define([
     Utils.prototype.createTimeFilter = function (id, values, config, key) {
 
         var time = [],
+            v,
+            couple = {from: null, to: null};
+
+        var firstValue = Array.isArray(values) ? values[0] : null;
+
+        if (typeof firstValue === 'object') {
+
+            var from = values.findWhere(values, {parent : "from"}),
+                to = values.findWhere(values, {parent : "to"});
+
+            couple.from = parseInt(from.value, 10);
+            couple.to = parseInt(from.to, 10);
+
+        } else {
+
             v = values.sort(function (a, b) {
                 return a - b;
             }).map(function (a) {
                 return parseInt(a, 10);
-            }),
-            couple = {from: null, to: null};
+            });
 
-        _.each(v, function (i) {
+            _.each(v, function (i) {
+                time.push({from: i, to: i});
+            });
 
-            time.push({from: i, to: i});
-
-        });
-
-        if (couple.from && !couple.to) {
-            couple.to = couple.from;
-            time.push($.extend({}, couple));
+            if (couple.from && !couple.to) {
+                couple.to = couple.from;
+            }
         }
+
+        time.push($.extend({}, couple));
 
         return {time: time};
     };
