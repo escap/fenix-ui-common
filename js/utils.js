@@ -162,16 +162,16 @@ define([
         var time = [],
             v,
             couple = {from: null, to: null};
-
+        
         var firstValue = Array.isArray(values) ? values[0] : null;
 
         if (typeof firstValue === 'object') {
 
-            var from = values.findWhere(values, {parent : "from"}),
-                to = values.findWhere(values, {parent : "to"});
+            var from = _.findWhere(values, {parent : "from"}),
+                to = _.findWhere(values, {parent : "to"});
 
             couple.from = parseInt(from.value, 10);
-            couple.to = parseInt(from.to, 10);
+            couple.to = parseInt(to.value, 10);
 
         } else {
 
