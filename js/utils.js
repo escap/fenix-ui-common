@@ -160,37 +160,23 @@ define([
     Utils.prototype.createTimeFilter = function (id, values, config, key) {
 
         var time = [],
-            v,
-            couple = {from: null, to: null};
-        
-        var firstValue = Array.isArray(values) ? values[0] : null;
-
-        if (typeof firstValue === 'object') {
-
-            var from = _.findWhere(values, {parent : "from"}),
-                to = _.findWhere(values, {parent : "to"});
-
-            couple.from = parseInt(from.value, 10);
-            couple.to = parseInt(to.value, 10);
-
-        } else {
-
             v = values.sort(function (a, b) {
                 return a - b;
             }).map(function (a) {
                 return parseInt(a, 10);
-            });
+            }),
+            couple = {from: null, to: null};
 
-            _.each(v, function (i) {
-                time.push({from: i, to: i});
-            });
+        _.each(v, function (i) {
 
-            if (couple.from && !couple.to) {
-                couple.to = couple.from;
-            }
+            time.push({from: i, to: i});
+
+        });
+
+        if (couple.from && !couple.to) {
+            couple.to = couple.from;
+            time.push($.extend({}, couple));
         }
-
-        time.push($.extend({}, couple));
 
         return {time: time};
     };
@@ -266,7 +252,7 @@ define([
 
                 if (config.hasOwnProperty(key)) {
                     config[key].selector.default = values[key];
-                } 
+                }
 
             }, this));
         }
@@ -422,7 +408,8 @@ define([
     /* processes for OTHER FX column */
 
     Utils.prototype._processNumberColumn = function (c) {
-        log.warn("TODO process");
+
+        return this._configInput(c, {type: "number", output : "time"});
     };
 
     Utils.prototype._processPercentageColumn = function (c) {
@@ -732,7 +719,7 @@ define([
         var config = {
             selector: {},
             format: {
-                output: "enumeration"
+                output: o.output || "enumeration"
             }
         };
 
@@ -928,7 +915,7 @@ define([
 
         //NOT need field for FENIX GEOGRAPHIC RESOURCE
         if ( resourceType === "dataset" && valid && (!res.metadata.dsd.hasOwnProperty("columns") || !Array.isArray(res.metadata.dsd.columns))) {
-           errors.push({code: ERR.INVALID_COLUMNS});
+            errors.push({code: ERR.INVALID_COLUMNS});
         }
 
         return errors.length > 0 ? errors : valid;
