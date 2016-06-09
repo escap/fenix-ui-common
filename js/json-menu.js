@@ -9,6 +9,7 @@ define([
         function Menu(o) {
 
             this.$el = $(o.el);
+            this.excludedItems = o.exclude || [];
 
             if (this.$el.length < 1) {
                 alert("Impossible to find menu container");
@@ -18,9 +19,10 @@ define([
                 alert("Impossible to find menu model");
             }
 
-            var $ul = $("<ul class='dropdown-menu json-menu'></ul>");
+            var $ul = $("<ul class='dropdown-menu json-menu'></ul>"),
+                data = this._buildData(o.model);
 
-            this._buildUL($ul, this._buildData(o.model));
+            this._buildUL($ul, data);
 
             this.$el.append($ul);
 
@@ -53,6 +55,7 @@ define([
                 }
                 else {
                     items[id] = {
+                        id : id,
                         parentid: parentid,
                         label: label,
                         url: url,
@@ -60,7 +63,7 @@ define([
                         action: action,
                         a_attrs: a_attrs
                     };
-                    source[id] = items[id];
+                    source.push(items[id]);
                 }
             }
             return source;
@@ -68,9 +71,12 @@ define([
 
         Menu.prototype._buildUL = function (parent, items) {
 
+            var self = this;
+
             $.each(items, $.proxy(function (index, item) {
 
-                if (item && item.label) {
+                if (item && ($.inArray(item.id, self.excludedItems) < 0) && item.label) {
+
                     var li = $("<li class='js-menu'>" + "<a>" + item.label + "</a></li>");
 
                     if (item.url !== "") {
