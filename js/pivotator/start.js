@@ -352,6 +352,9 @@ function buildPivotResult(data, opt) {
 	function toFXJson(FX,userOptions) {
 				//console.log("toFXJson",FX,userOptions);
 		MYFINALRESULT = {data: [],unit:[],flag:[],attribute:[], rows: [], cols: [],cols2: [],cols2label: [], okline: [], nookline: [],rowname:[],colsname:[]};//to internal test and dataset function
+		
+	
+		
 		var pivotdata = toPivotData(FX,  userOptions);
 		for (var ii in pivotdata.rows) {
 			var i=pivotdata.rows[ii];
@@ -410,6 +413,8 @@ function buildPivotResult(data, opt) {
 		for (var i in userOptions.rows) {
 			MYFINALRESULT.rowname.push({id: userOptions.rows[i], title: {EN: traduc[userOptions.rows[i]]}})
 		}
+		if(userOptions.rows.length==0){MYFINALRESULT.rowname.push({id: "row", title:{EN: "ROW"}})
+}
 		for (var i in userOptions.columns) {
 			MYFINALRESULT.colsname.push({id:  userOptions.columns[i], title: {EN: traduc[ userOptions.columns[i]]}})
 		}

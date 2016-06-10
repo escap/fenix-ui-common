@@ -5,40 +5,54 @@ define([
 
         var FXmod;
 
-        function parseInut(FX, opt) {// FX.metadata.dsd,options
+        function parseInput(FX, opt) {// FX.metadata.dsd,options
             var ret = $.extend(true, {}, opt);
-            if (opt.inputFormat == "fenixtool") {
-                var FXmod = convertFX(FX, opt);
-                var lang = "EN";
-                if (opt.lang) {
-                    lang = opt.lang;
+			  var FXmod = convertFX(FX, opt);
+			  
+			  function getDimension()
+			  {var ret=[];
+			  for(var i in FXmod.dimensions)
+				{
+					ret.push(i)
+				}
+				return ret
+			  }
+			  
+			      function getListDim(arr, opt, FXmod) {
+                    var showCode = opt.showCode;
+                    var ret = [];
+                    for (var i in arr) {
+                        if (showCode && FXmod.dimensions[arr[i]].label) {ret.push(FXmod.dimensions[arr[i]].code);}
+                    //    console.log(arr[i],FXmod.dimensions,FXmod.dimensions[arr[i]]);
+						
+						ret.push(FXmod.dimensions[arr[i]].label || FXmod.dimensions[arr[i]].code)
+                    }
+                    return ret
                 }
+			  
+            if (opt.inputFormat == "fenixtool") {
+              
+                var lang = "EN";
+                if (opt.lang) {lang = opt.lang;}
                 var aggregations = [],
                     hidden = [],
                     columns = [],
                     rows = [],
                     values = [];
 
-                function getListDim(arr, opt, FXmod) {
-                    var showCode = opt.showCode;
-                    var ret = [];
-                    for (var i in arr) {
-                        if (showCode && FXmod.dimensions[arr[i]].label) {
-                            ret.push(FXmod.dimensions[arr[i]].code)
-                        }
-                        ret.push(FXmod.dimensions[arr[i]].label || FXmod.dimensions[arr[i]].code)
-                    }
-                    return ret
-                }
-
+            
+				
+				console.log("initRow",opt)
+				
                 ret = {
                     "inputFormat": "fenixTool",
                     "aggregationFn": opt.aggregationFn || {"value": "sum"},
                     "aggregations": getListDim(opt.aggregations, opt, FXmod),
                     "hidden": getListDim(opt.hidden, opt, FXmod),
                     "columns": getListDim(opt.columns, opt, FXmod),
-                    "values": opt.values,
-                    "rows": getListDim(opt.rows, opt, FXmod),
+                    "values": opt.values||"value",
+					"groupedRow": opt.groupedRow,
+                    "rows":getListDim(opt.rows, opt, FXmod) ,
                     "formatter": opt.formatter || "value",
                     "showRowHeaders": opt.showRowHeaders || false,
                     "decimals": opt.decimals || 2,
@@ -49,6 +63,12 @@ define([
 
 
             }
+			if(ret.columns.length+ret.rows.length==0)
+			{
+				console.log("FXmod",getDimension())
+				ret.rows=getListDim(getDimension(),opt,FXmod)
+				
+			}
             return ret
         }
 
@@ -65,9 +85,7 @@ define([
                     structInter.dimensions[id] = {};
                 }
                 structInter.dimensions[id][att] = val;
-                if (subject) {
-                    structInter.dimensions[id]["subject"] = subject;
-                }
+                if (subject) {structInter.dimensions[id]["subject"] = subject;}
             }
 
             function setAttribute(id, att, val, subject) {
@@ -615,6 +633,8 @@ define([
             var aggregations = [];
             var y = [];
             var formatter = values.values.format[0];
+			//var groupedRow = values.values.groupedRow[0];
+console.log("values",values)
             var aggValue = {value: values.values.aggregator_value[0], Value: values.values.aggregator_value[0]}
             //convert to chart creator configuration here
             var opt = {x: {}, y: {}, series: {}, showUnit: false, showCode: false, showFlag: false};
@@ -628,15 +648,9 @@ define([
 //console.log(" values.values.dimension_sort", values.values.dimension_sort)
             for (var i in values.values.dimension_sort) {
                 var t = values.values.dimension_sort[i];
-                if (t.parent == "rows") {
-                    opt.series[t.value] = true;
-                }
-                else if (t.parent == "columns") {
-                    opt.x[t.value] = true;
-                }
-                else if (t.parent == "values") {
-                    opt.y[t.value] = true;
-                }
+                if (t.parent == "rows") {opt.series[t.value] = true;}
+                else if (t.parent == "columns") {opt.x[t.value] = true;}
+                else if (t.parent == "values") {opt.y[t.value] = true;}
                 else if (t.parent == "hidden") {/* to decide what we want to do*/
                 }
             }
@@ -713,7 +727,7 @@ define([
                 initFXT: initFXT,
                 initFXD: initFXD,
                 initFXDgraph: initFXDgraph,
-                parseInut: parseInut,
+                parseInput: parseInput,
                 toFilter: toFilter,
                 toChartConfig: toChartConfig,
                 toTableConfig: toTableConfig
