@@ -3,13 +3,12 @@ define([
     'fx-common/config/errors',
     'fx-common/config/events',
     'fx-common/config/config',
-    'fx-common/config/config-default',
     'jquery',
     'underscore',
     'loglevel',
     'handlebars',
     'amplify'
-], function (ERR, EVT, C, DC, $, _, log, Handlebars) {
+], function (ERR, EVT, C, $, _, log, Handlebars) {
 
     'use strict';
 
@@ -23,7 +22,7 @@ define([
 
     function Utils() {
 
-        $.extend(true, this, opts, DC, C);
+        $.extend(true, this, opts, C);
 
         return this;
     }
@@ -752,8 +751,8 @@ define([
 
         c.domain = {
             period: {
-                from: C.DEFAULT_PERIOD_FROM || DC.DEFAULT_PERIOD_FROM,
-                to: C.DEFAULT_PERIOD_TO || DC.DEFAULT_PERIOD_TO
+                from: C.defaultPeriodFrom,
+                to: C.defaultPeriodTo
             }
         };
 

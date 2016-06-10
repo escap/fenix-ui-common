@@ -3,12 +3,11 @@ define([
     'fx-common/config/errors',
     'fx-common/config/events',
     'fx-common/config/config',
-    'fx-common/config/config-default',
     'jquery',
     'packery',
     'draggabilly',
     'loglevel'
-], function (ERR, EVT, C, DC, $, Packery, Draggabilly, log) {
+], function (ERR, EVT, C, $, Packery, Draggabilly, log) {
 
     'use strict';
 
@@ -32,7 +31,7 @@ define([
         log.info("FENIX fluid grid");
         log.info(o);
 
-        $.extend(true, this, {initial: o}, DC, C);
+        $.extend(true, this, {initial: o}, C);
 
         this._parseInput();
 
@@ -169,7 +168,7 @@ define([
 
         this.id = this.initial.id;
         this.$el = this.initial.$el;
-        this.config = $.extend(true, {}, this.initial.config, DC.FLUID_GRID_CONFIG || C.FLUID_GRID_CONFIG);
+        this.config = $.extend(true, {}, this.initial.config, C.fluidGridConfig);
 
     };
 
