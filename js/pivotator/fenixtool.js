@@ -65,7 +65,7 @@ define([
             }
 			if(ret.columns.length+ret.rows.length==0)
 			{
-				console.log("FXmod",getDimension())
+					//console.log("FXmod",getDimension())
 				ret.rows=getListDim(getDimension(),opt,FXmod)
 				
 			}
@@ -634,7 +634,7 @@ define([
             var y = [];
             var formatter = values.values.format[0];
 			//var groupedRow = values.values.groupedRow[0];
-console.log("values",values)
+//console.log("values",values)
             var aggValue = {value: values.values.aggregator_value[0], Value: values.values.aggregator_value[0]}
             //convert to chart creator configuration here
             var opt = {x: {}, y: {}, series: {}, showUnit: false, showCode: false, showFlag: false};
