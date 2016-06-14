@@ -264,6 +264,7 @@ function buildPivotResult(data, opt) {
 			//console.log(userOptions.derived[d])
 			tmp[d]=userOptions.derived[d](tmp);
 		}
+		//console.log(tmp)
 			data.push(tmp);
 		}
 		//console.log("pivotdata",data)

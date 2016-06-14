@@ -7,7 +7,7 @@ define([
 
         function parseInput(FX, opt) {// FX.metadata.dsd,options
             var ret = $.extend(true, {}, opt);
-			  var FXmod = convertFX(FX, opt);
+			  var FXmod = convertFXDirty(FX, opt);
 			  
 			  function getDimension()
 			  {var ret=[];
@@ -300,6 +300,8 @@ define([
             for (var i in FXmod.dimensions) {
                 if (FXmod.dimensions[i].subject == "time") {
                     columns.push({value: FXmod.dimensions[i].code, label: FXmod.dimensions[i].title});
+					
+					
                 }
                 else {
                     rows.push({value: FXmod.dimensions[i].code, label: FXmod.dimensions[i].title});
@@ -311,7 +313,7 @@ define([
             }
             for (var i in FXmod.attributes) {
 
-                hidden.push({value: FXmod.attributes[i].value, label: FXmod.attributes[i].title});
+                aggregations.push({value: FXmod.attributes[i].value, label: FXmod.attributes[i].title});
             }
 
             var retObj = {
@@ -321,12 +323,12 @@ define([
                 aggregations: aggregations,
                 values: values
             }
-            //console.log(retObj)
+ //           console.log(retObj)
             return retObj;
         }
 
         function initFXD(FX, opt) {//for Data
-            var FXmod = convertFX(FX, opt);
+          /*  var FXmod = convertFX(FX, opt);
             var hidden = [];
             var columns = [];
             var rows = [];
@@ -368,11 +370,11 @@ define([
                 aggregations: aggregations,
                 values: values
             }
-            return retObj;
+            return retObj;*/
         }
 
         function initFXDgraph(FX, opt) {//for Data for chart
-            var FXmod = convertFX(FX, opt);
+          /*  var FXmod = convertFX(FX, opt);
             var hidden = [];
             var x = [];
             var series = [];
@@ -420,7 +422,7 @@ define([
                 aggregations: aggregations,
                 y: y
             }
-            return retObj;
+            return retObj;*/
         }
 
         function toFilter(model,opt) {
@@ -627,13 +629,16 @@ define([
         }
 
         function toTableConfig(values) {
+			//console.log("toTableValue",values)
             var hidden = [];
             var x = [];
             var series = [];
             var aggregations = [];
             var y = [];
             var formatter = values.values.format[0];
-			//var groupedRow = values.values.groupedRow[0];
+			//console.log("values",values)
+			var groupedRow = true;
+		if(values.values.hasOwnProperty("groupedRow")) { values.values.groupedRow.length>0?groupedRow=true:groupedRow=false}
 //console.log("values",values)
             var aggValue = {value: values.values.aggregator_value[0], Value: values.values.aggregator_value[0]}
             //convert to chart creator configuration here
@@ -659,21 +664,27 @@ define([
            // for (var i in FXmod.dimensions) { 
 		   for (var ii in values.values.dimension_sort) {
 			   var i=values.values.dimension_sort[ii].value;
-                if (FXmod.dimensions[i] && opt.series[FXmod.dimensions[i].code]) {
-                    series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
-                    if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
-                        series.push(FXmod.dimensions[i].code)
+                if (FXmod.dimensions[i] && opt.series[FXmod.dimensions[i].code]) { 
+				series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
+                  
+                    if (/*opt.showCode == true &&*/ FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
+                        series.push(FXmod.dimensions[i].code);
+						if (opt.showCode == false){ hidden.push(FXmod.dimensions[i].code);}
                     }
+					else{}
                 }
                 if (FXmod.dimensions[i] && opt.x[FXmod.dimensions[i].code]) {
                     x.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
-                    if (opt.showCode == true && FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
+                    if (/*opt.showCode == true &&*/ FXmod.dimensions[i].label != FXmod.dimensions[i].code && FXmod.dimensions[i].label != null) {
                         x.push(FXmod.dimensions[i].code);
-                    }
+						if (opt.showCode == false){ hidden.push(FXmod.dimensions[i].code);}
+                    }else{}
                 }
                 if (FXmod.dimensions[i] && opt.y[FXmod.dimensions[i].code]) {
                     y.push(FXmod.dimensions[i].code);
-                }
+                }else{ 
+				
+				}
             }
 
             for (var i in FXmod.values) {
@@ -705,7 +716,7 @@ define([
             }
 
 
-            var retObj = {
+            var retObj = {groupedRow:groupedRow,
                 aggregationFn: aggValue,
                 formatter: formatter,
                 decimals: values.values.decimal_digit||2,
@@ -716,6 +727,7 @@ define([
                 aggregations: aggregations,
                 values: y
             }
+			//console.log("rest",retObj)
             return retObj;
 
 
