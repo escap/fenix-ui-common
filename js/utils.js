@@ -160,35 +160,33 @@ define([
 
         var time = [],
             valuesAreObject = typeof values[0] === 'object',
-            v,
-            couple = {from: null, to: null};
+            v;
 
         if (valuesAreObject) {
 
             var from = _.findWhere(values, {parent: "from"}) || {},
-                to = _.findWhere(values, {parent: "to"}) || {};
+                to = _.findWhere(values, {parent: "to"}) || {},
+                couple = {from: null, to: null};
 
             couple.from = from.value;
             couple.to = to.value;
 
+            time.push($.extend({}, couple));
+
         } else {
 
-            v = values.sort(function (a, b) {
-                return a - b;
-            }).map(function (a) {
+            v = values.map(function (a) {
                 return parseInt(a, 10);
+            }).sort(function (a, b) {
+                return a - b;
             });
+
 
             _.each(v, function (i) {
                 time.push({from: i, to: i});
             });
 
-            if (couple.from && !couple.to) {
-                couple.to = couple.from;
-            }
         }
-
-        time.push($.extend({}, couple));
 
         return {time: time};
     };
