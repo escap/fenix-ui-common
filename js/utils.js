@@ -159,23 +159,36 @@ define([
     Utils.prototype.createTimeFilter = function (id, values, config, key) {
 
         var time = [],
+            valuesAreObject = typeof values[0] === 'object',
+            v,
+            couple = {from: null, to: null};
+
+        if (valuesAreObject) {
+
+            var from = _.findWhere(values, {parent: "from"}) || {},
+                to = _.findWhere(values, {parent: "to"}) || {};
+
+            couple.from = from.value;
+            couple.to = to.value;
+
+        } else {
+
             v = values.sort(function (a, b) {
                 return a - b;
             }).map(function (a) {
                 return parseInt(a, 10);
-            }),
-            couple = {from: null, to: null};
+            });
 
-        _.each(v, function (i) {
+            _.each(v, function (i) {
+                time.push({from: i, to: i});
+            });
 
-            time.push({from: i, to: i});
-
-        });
-
-        if (couple.from && !couple.to) {
-            couple.to = couple.from;
-            time.push($.extend({}, couple));
+            if (couple.from && !couple.to) {
+                couple.to = couple.from;
+            }
         }
+
+        time.push($.extend({}, couple));
 
         return {time: time};
     };
@@ -408,7 +421,7 @@ define([
 
     Utils.prototype._processNumberColumn = function (c) {
 
-        return this._configInput(c, {type: "number", output : "time"});
+        return this._configInput(c, {type: "number", output: "time"});
     };
 
     Utils.prototype._processPercentageColumn = function (c) {
@@ -426,8 +439,8 @@ define([
 
         var config = {
             template: {},
-            format : {
-                dimension : c.id
+            format: {
+                dimension: c.id
             }
         };
 
@@ -686,7 +699,7 @@ define([
         config.selector.to = parseInt(to, 10);
 
         config.format = {
-            output : "time"
+            output: "time"
         };
 
         return config;
@@ -913,7 +926,7 @@ define([
         }
 
         //NOT need field for FENIX GEOGRAPHIC RESOURCE
-        if ( resourceType === "dataset" && valid && (!res.metadata.dsd.hasOwnProperty("columns") || !Array.isArray(res.metadata.dsd.columns))) {
+        if (resourceType === "dataset" && valid && (!res.metadata.dsd.hasOwnProperty("columns") || !Array.isArray(res.metadata.dsd.columns))) {
             errors.push({code: ERR.INVALID_COLUMNS});
         }
 
@@ -935,7 +948,7 @@ define([
 
     /* COMMONS */
 
-    Utils.prototype.assign = function(obj, prop, value) {
+    Utils.prototype.assign = function (obj, prop, value) {
         if (typeof prop === "string")
             prop = prop.split(".");
 
