@@ -206,18 +206,25 @@ define([
                 }
                 else if (myColumns.id.split("_" + lang).length == 2) {//label
                     setDirty(myColumns.id.split("_" + lang)[0], "label", myColumns.id);
-
                     //setDimension(myColumns.id.split("_" + lang)[0], "label", myColumns.id)
 
                 }
                 else if (myColumns.dataType == "number" && myColumns.subject == "value") {
 
-                    setDirty(myColumns.id.toLowerCase(), "type", "value");
+                   /* setDirty(myColumns.id.toLowerCase(), "type", "value");
                     setDirty(myColumns.id.toLowerCase(), "value", myColumns.id);
                     setDirty(myColumns.id.toLowerCase(), "title", myColumns.id);
-                    if (myColumns.subject) {
-                        setDirty(myColumns.id.toLowerCase(), "subject", myColumns.subject);
-                    }
+                    */
+					//console.log(myColumns)
+					 setDirty("value", "type", "value");
+                    setDirty("value", "value", myColumns.id);
+                    setDirty("value", "title", "value" || myColumns.title[lang] || myColumns.id);
+                    
+					if (myColumns.subject) {
+                       // setDirty(myColumns.id.toLowerCase(), "subject", myColumns.subject);
+                     setDirty("value", "subject", myColumns.subject);
+                    
+					}
                 }
                 else if (myColumns.id.split("|*").length == 2) {//attribut d une valeur X
                     if (myColumns.subject == "um") {
@@ -231,11 +238,12 @@ define([
                     }
                 }
                 else {//attribut de value
+				
                     if (myColumns.subject == "um") {
                         //setValue("value", "unit", myColumns.id);
                         setDirty(myColumns.id, "type", "attribute");
                         setDirty(myColumns.id, "value", myColumns.id);
-                        setDirty(myColumns.id, "title", myColumns.title[lang] || myColumns.id);
+                        setDirty(myColumns.id, "title", "unit");
                         if (myColumns.subject) {
                             setDirty(myColumns.id, "subject", myColumns.subject);
                         }
@@ -265,16 +273,25 @@ define([
                     }
                 }
             }
-            //console.log("FXDIRTY interm ",JSON.stringify(structDirty));
+            //console.log("FXDIRTY interm ",structDirty);
             for (var i in structDirty) {
                 if (structDirty[i].type == "dimension") {
                     structInter.dimensions[i] = structDirty[i];
                 }
                 else if (structDirty[i].type == "value") {
                     structInter.values[i] = structDirty[i];
-                }
+                } 
+				
                 else {
                     structInter.attributes[i] = structDirty[i];
+					if ( structDirty[i].subject == "um") {
+					
+					//console.log("strucInter",structInter,structDirty)
+					structInter.values.value.unit= structDirty[i].label || structDirty[i].value;
+                  //setDirty("value", "unit", myColumns.id);
+				  //structInter.values[i].unit = structDirty[i];
+                }
+					
                 }
 
             }	//console.log("structInterDirty",structDirty,"structInter",structInter);
