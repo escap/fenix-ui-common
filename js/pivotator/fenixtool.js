@@ -732,7 +732,7 @@ define([
                 }
             }
 
-
+console.log("V",values.values)
             var retObj = {groupedRow:groupedRow,
                 aggregationFn: aggValue,
                 formatter: formatter,
@@ -744,7 +744,7 @@ define([
                 aggregations: aggregations,
                 values: y
             }
-			//console.log("rest",retObj)
+			console.log("rest",retObj)
             return retObj;
 
 
