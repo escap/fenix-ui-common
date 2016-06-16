@@ -420,12 +420,19 @@ function buildPivotResult(data, opt) {
 			MYFINALRESULT.colsname.push({id:  userOptions.columns[i], title: {EN: traduc[ userOptions.columns[i]]}})
 		}
 		
+		//console.log("userOptions",userOptions)
+		var hidden2={};	
+			for(var i in userOptions.hidden){hidden2[userOptions.hidden[i]]=true}
+
 		
 		for (var ii in pivotdata.columns) {
 			var i=pivotdata.columns[ii];
 			MYFINALRESULT.cols.push({id: i.replace(/\|\*/g, "_"),title: {EN: i.replace(/\|\*/g, "\n")}});
 			MYFINALRESULT.cols2.push(i.split("|*"))
+			
+			
 			MYFINALRESULT.cols2label.push(i.split("|*"))
+			
 		}
 		
 		return MYFINALRESULT;
