@@ -211,10 +211,12 @@ define([
         }
 
         var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER,
-            processesService = obj.processesService || C.processesService;
+            processesService = obj.processesService || C.processesService,
+            isMultiResource = obj.hasOwnProperty("uid"),
+            url = ( serviceProvider + processesService) + (isMultiResource ? this._parseUidAndVersion(obj, false) : "") + this._parseQueryParams(obj.params);
 
         return Q($.ajax({
-            url: serviceProvider + processesService + this._parseUidAndVersion(obj, false) + this._parseQueryParams(obj.params),
+            url: url,
             type: obj.type || "POST",
             dataType: obj.dataType || 'json',
             contentType: obj.contentType || "application/json",
