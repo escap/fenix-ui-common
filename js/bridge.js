@@ -278,6 +278,73 @@ define([
 
     };
 
+    Bridge.prototype.exportResource = function (payload, obj) {
+
+        var serviceProvider = (obj && obj.serviceProvider) || this.SERVICE_PROVIDER;
+        var url = serviceProvider + (C.exportService);
+
+        return Q($.ajax({
+            url: url,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(payload)
+
+        })).then(function (data) {
+            var object = {'data': data, 'url': url};
+            return Q.promise(function (resolve, reject, notify) {
+                return resolve(object);
+            });
+
+        }, function (error) {
+            return Q.promise(function (resolve, reject, notify) {
+                return resolve(error);
+            });
+        });
+
+    };
+
+    Bridge.prototype.getMDSD = function (opts) {
+
+        var obj = opts || {},
+            key = $.extend(true, {
+                type: "mdsd",
+                environment: this.ENVIR
+            }, obj),
+            cached = this._getCacheItem(key),
+            self = this;
+
+        if (this.USE_CACHE && cached) {
+            return Q.promise(function (resolve) {
+                return resolve(cached);
+            });
+        }
+
+        var serviceProvider = obj.serviceProvider || this.SERVICE_PROVIDER,
+            mdsdService = obj.mdsdService || C.mdsdService,
+            url = serviceProvider + mdsdService + this._parseQueryParams(obj.params);
+
+        return Q($.ajax({
+            url: url,
+            type: obj.type || "GET",
+            dataType: obj.dataType || 'json'
+        })).then(function (data) {
+
+            self._setCacheItem(key, data);
+
+            return Q.promise(function (resolve, reject, notify) {
+                return resolve(self._getCacheItem(key));
+            });
+
+        }, function (error) {
+
+            return Q.promise(function (resolve, reject, notify) {
+                return reject(error);
+            });
+
+        });
+
+    };
+
     Bridge.prototype.all = function (promises) {
 
         return Q.all(promises);
@@ -352,31 +419,6 @@ define([
         var key = Hash(obj);
 
         return key;
-
-    };
-
-    Bridge.prototype.exportResource = function (payload, obj) {
-
-        var serviceprovider = (obj && obj.serviceProvider) || this.SERVICE_PROVIDER;
-        var url = serviceprovider + (C.exportService);
-
-        return Q($.ajax({
-            url: url,
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(payload)
-
-        })).then(function (data) {
-            var object = {'data': data, 'url': url};
-            return Q.promise(function (resolve, reject, notify) {
-                return resolve(object);
-            });
-
-        }, function (error) {
-            return Q.promise(function (resolve, reject, notify) {
-                return resolve(error);
-            });
-        });
 
     };
 

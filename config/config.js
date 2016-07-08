@@ -18,6 +18,7 @@ define(function () {
         processesService : "processes/",
         metadataService : "msd/resources/metadata/",
         resourcesService : "msd/resources/",
+        mdsdService : "mdsd/",
 
         //Grid
         fluidGridConfig : {
