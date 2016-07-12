@@ -278,7 +278,7 @@ define([
 
     };
 
-    Bridge.prototype.exportResource = function (payload, obj) {
+    Bridge.prototype.export = function (payload, obj) {
 
         var serviceProvider = (obj && obj.serviceProvider) || this.SERVICE_PROVIDER;
         var url = serviceProvider + (C.exportService);
