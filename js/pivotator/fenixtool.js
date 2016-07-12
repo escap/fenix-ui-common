@@ -466,7 +466,7 @@ define([
 			
             var configuration = {
 
-                dimension_sort: {
+                dimensionsSort: {
                     selector: {
                         id: "sortable",
                         source: [],
@@ -483,7 +483,7 @@ define([
                         title: "Sort dimension"
                     }
                 },
-                aggregator_value: {
+                aggregatorValue: {
                     selector: {
                         id: 'dropdown',
                         source: [
@@ -534,7 +534,7 @@ define([
                     return item
                 });
 
-            configuration.dimension_sort.selector.source = _.union(aggregations, hidden, columns, rows, values);
+            configuration.dimensionsSort.selector.source = _.union(aggregations, hidden, columns, rows, values);
 
             return configuration
 
@@ -548,9 +548,9 @@ define([
             var y = [];
             var type = Array.isArray(values.values.typeOfChart) ? values.values.typeOfChart[0] : "line";
             var aggValue = {
-                value: values.values.aggregator_value[0],
-                Value: values.values.aggregator_value[0],
-                VALUE: values.values.aggregator_value[0]
+                value: values.values.aggregatorValue[0],
+                Value: values.values.aggregatorValue[0],
+                VALUE: values.values.aggregatorValue[0]
             };
 
             //convert to chart creator configuration here
@@ -567,8 +567,8 @@ define([
                     opt.showFlag = true;
                 }
             }
-            for (var i in values.values.dimension_sort) {
-                var t = values.values.dimension_sort[i];
+            for (var i in values.values.dimensionsSort) {
+                var t = values.values.dimensionsSort[i];
                 if (t.parent == "rows") {
                     opt.series[t.value] = true
                 }
@@ -584,8 +584,8 @@ define([
 
 
            // for (var i in FXmod.dimensions) {
- for (var ii in values.values.dimension_sort) {
-			   var i=values.values.dimension_sort[ii].value;
+ for (var ii in values.values.dimensionsSort) {
+			   var i=values.values.dimensionsSort[ii].value;
 			           
 			 if (FXmod.dimensions[i] && opt.series[FXmod.dimensions[i].code]) {
                     series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
@@ -657,7 +657,7 @@ define([
 			var groupedRow = true;
 		if(values.values.hasOwnProperty("groupedRow")) { values.values.groupedRow.length>0?groupedRow=true:groupedRow=false}
 //console.log("values",values)
-            var aggValue = {value: values.values.aggregator_value[0], Value: values.values.aggregator_value[0]}
+            var aggValue = {value: values.values.aggregatorValue[0], Value: values.values.aggregatorValue[0]}
             //convert to chart creator configuration here
             var opt = {x: {}, y: {}, series: {}, showUnit: false, showCode: false, showFlag: false};
             for (var i in values.values.show) {
@@ -667,9 +667,9 @@ define([
                 else if (t == "flag") {opt.showFlag = true;}
             }
 
-//console.log(" values.values.dimension_sort", values.values.dimension_sort)
-            for (var i in values.values.dimension_sort) {
-                var t = values.values.dimension_sort[i];
+//console.log(" values.values.dimensionsSort", values.values.dimensionsSort)
+            for (var i in values.values.dimensionsSort) {
+                var t = values.values.dimensionsSort[i];
                 if (t.parent == "rows") {opt.series[t.value] = true;}
                 else if (t.parent == "columns") {opt.x[t.value] = true;}
                 else if (t.parent == "values") {opt.y[t.value] = true;}
@@ -679,8 +679,8 @@ define([
 
             //console.log("FXmod", FXmod)
            // for (var i in FXmod.dimensions) { 
-		   for (var ii in values.values.dimension_sort) {
-			   var i=values.values.dimension_sort[ii].value;
+		   for (var ii in values.values.dimensionsSort) {
+			   var i=values.values.dimensionsSort[ii].value;
                 if (FXmod.dimensions[i] && opt.series[FXmod.dimensions[i].code]) { 
 				series.push(FXmod.dimensions[i].label || FXmod.dimensions[i].code)
                   
@@ -736,7 +736,7 @@ define([
             var retObj = {groupedRow:groupedRow,
                 aggregationFn: aggValue,
                 formatter: formatter,
-                decimals: values.values.decimal_digit||2,
+                decimals: values.values.decimals||2,
                 showRowHeaders: true,
                 hidden: hidden,
                 rows: series,
