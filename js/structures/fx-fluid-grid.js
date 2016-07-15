@@ -1,179 +1,344 @@
-/*global define, amplify*/
-
+/*global define*/
 define([
+    'fx-common/config/errors',
+    'fx-common/config/events',
+    'fx-common/config/config',
     'jquery',
     'packery',
     'draggabilly',
-    'amplify'
-], function ($, Packery, Draggabilly) {
+    'loglevel'
+], function (ERR, EVT, C, $, Packery, Draggabilly, log) {
 
     'use strict';
 
-    var defaultOptions = {
-        css: {
-            FIT: "fit"
-        },
-        s: {
-            COURTESY_MESSAGE: ".fx-courtesy"
-        }
+    var s = {
+        CATALOG: "[data-role='catalog']",
+        MENU: "[data-role='menu']",
+        MENU_GROUPS: "[data-role='menu-group']",
+        MENU_ITEMS: "[data-role='menu-item']",
+        FILTER: "[data-role='filter']",
+        SUMMARY: "[data-role='summary']",
+        BOTTOM: "[data-role='bottom']",
+        RESULTS_CONTAINER: "[data-role='results-container']",
+        RESULTS: "[data-role='results']",
+        RESULT: "[data-role='result']",
+        PAGINATION: "[data-role='pagination']",
+        ERROR_CONTAINER: "[data-role='error-container']",
+        ACTIONS: "[data-role='actions']"
     };
 
-    function Fx_Fluid_Grid() {
-        this.o = {};
-        this.bindEventListeners();
+    function FxFluidGrid(o) {
+        log.info("FENIX fluid grid");
+        log.info(o);
+
+        $.extend(true, this, {initial: o}, C);
+
+        this._parseInput();
+
+        var valid = this._validateInput();
+
+        log.info("Fx Fluid Grid has valid input? " + JSON.stringify(valid));
+
+        if (valid === true) {
+
+            this._attach();
+
+            //this._setStatus('intro');
+
+            this._initVariables();
+
+            this._initComponents();
+
+            this._bindEventListeners();
+
+            return this;
+
+        } else {
+            log.error("Impossible to create Fx Fluid Grid");
+            log.error(valid)
+        }
     }
 
-    Fx_Fluid_Grid.prototype.bindEventListeners = function () {
+    FxFluidGrid.prototype.add = function ( item ){
 
-        var self = this;
-        amplify.subscribe("fx.window.resize", function () {
-            if (self.pckry && self.pckry.layout) {
-                self.pckry.layout();
-            }
-        });
-
-    };
-
-    Fx_Fluid_Grid.prototype.resize = function (item) {
-
-        var $item = $(item);
-
-        if ($item.hasClass(this.o.css.FIT)) {
-            this.setItemWidth(item, 'half');
-        } else {
-            this.setItemWidth(item, 'full');
-        }
-
-        return $item.get(0);
-    };
-
-    Fx_Fluid_Grid.prototype.setItemWidth = function (item, width) {
-
-        var $item = $(item);
-
-        if (width === 'full') {
-            $item.addClass(this.o.css.FIT);
-            this.pckry.fit($item.get(0));
-        } else {
-            $item.removeClass(this.o.css.FIT);
-        }
-
-        this.pckry.layout();
-
-    };
-
-    Fx_Fluid_Grid.prototype.getElementsCounts = function () {
-        return this.pckry.getItemElements().length;
-    };
-
-    Fx_Fluid_Grid.prototype.addItem = function (item) {
-
-        var self = this;
+        var toAppend = $(item);
 
         // append elements to container
-        this.o.container.appendChild(item);
+        this.$el.prepend(toAppend);
         // add and lay out newly appended elements
-        this.pckry.appended(item);
+        this.pckry.prepended(toAppend[0]);
 
-        if (this.o.drag) {
+        if (this.config.drag) {
 
-            var draggie = new Draggabilly(item, this.o.drag);
+            var draggie = new Draggabilly(toAppend[0], this.config.drag);
             // bind Draggabilly events to Packery
             this.pckry.bindDraggabillyEvents(draggie);
         }
 
-
-        this.pckry.layout();
-
-        setTimeout(function () {
-            self.pckry.layout();
-        }, 100);
+        this.redraw();
 
     };
 
-    Fx_Fluid_Grid.prototype.removeItem = function (item) {
-        // remove clicked element
-        this.pckry.remove(item);
-        // layout remaining item elements
+    FxFluidGrid.prototype.remove = function ( item ){
+
+        var self = this;
+
+        $(item).each(function( index, $item ) {
+            self.pckry.remove($item);
+        });
+
+        this.redraw();
+
+    };
+
+    FxFluidGrid.prototype.redraw = function (){
         this.pckry.layout();
     };
 
-    Fx_Fluid_Grid.prototype.initStructure = function () {
+    /**
+     * Reset the view content
+     * @return {null}
+     */
+    FxFluidGrid.prototype.reset = function () {
 
-        this.pckry = new Packery(this.o.container, this.o.config);
+        this._emptyGrid();
+
+        this._setStatus('intro');
+
+        log.info("FxFluidGrid reset");
+    };
+
+    /**
+     * pub/sub
+     * @return {Object} component instance
+     */
+    FxFluidGrid.prototype.on = function (channel, fn, context) {
+        var _context = context || this;
+        if (!this.channels[channel]) {
+            this.channels[channel] = [];
+        }
+        this.channels[channel].push({context: _context, callback: fn});
+        return this;
+    };
+
+    /**
+     * Dispose
+     * @return {null}
+     */
+    FxFluidGrid.prototype.dispose = function () {
+
+        this._emptyGrid();
+
+        this._unbindEventListeners();
+
+        log.info("FxFluidGrid disposed successfully");
+
+    };
+
+    FxFluidGrid.prototype.getItemsAmount = function () {
+
+        var items = this.getElements() || [];
+        return items.length;
+    };
+
+    FxFluidGrid.prototype.getItems = function () {
+        return this.pckry.getItemElements();
+    };
+
+    FxFluidGrid.prototype.getBlankContainer = function () {
+        return $('<div data-role="fx-grid-item" class="fx-grid-item" data-size="full"></div>');
+    };
+
+    // end API
+
+    FxFluidGrid.prototype._trigger = function (channel) {
+
+        if (!this.channels[channel]) {
+            return false;
+        }
+        var args = Array.prototype.slice.call(arguments, 1);
+        for (var i = 0, l = this.channels[channel].length; i < l; i++) {
+            var subscription = this.channels[channel][i];
+            subscription.callback.apply(subscription.context, args);
+        }
+
+        return this;
+    };
+
+    FxFluidGrid.prototype._parseInput = function () {
+
+        this.id = this.initial.id;
+        this.$el = this.initial.$el;
+        this.config = $.extend(true, {}, this.initial.config, C.fluidGridConfig);
+
+    };
+
+    FxFluidGrid.prototype._validateInput = function () {
+
+        var valid = true,
+            errors = [];
+
+        //set filter id
+        if (!this.id) {
+
+            window.fx_catalog_id >= 0 ? window.fx_catalog_id++ : window.fx_catalog_id = 0;
+
+            this.id = "fx-catalog-" + String(window.fx_catalog_id);
+
+            log.warn("Impossible to find catalog id. Set auto id to: " + this.id);
+        }
+
+
+        if (!this.$el) {
+            errors.push({code: ERR.MISSING_CONTAINER});
+
+            log.warn("Impossible to find filter container");
+        }
+
+        this.$el = $(this.$el);
+
+        //Check if $el exist
+        if (this.$el.length === 0) {
+
+            errors.push({code: ERR.MISSING_CONTAINER});
+
+            log.warn("Impossible to find box container");
+
+        }
+
+        return errors.length > 0 ? errors : valid;
+    };
+
+    FxFluidGrid.prototype._attach = function () {
+
+        log.info("template attached successfully");
+
+    };
+
+    FxFluidGrid.prototype._initVariables = function () {
+
+        //pub/sub
+        this.channels = {};
+
+    };
+
+    FxFluidGrid.prototype._bindEventListeners = function () {
+
+    };
+
+    FxFluidGrid.prototype._addSelector = function (selector) {
+
+        var config = this._getSelectorConfiguration(selector);
+
+        this.filter.add(config);
+    };
+
+    FxFluidGrid.prototype._getSelectorConfiguration = function (selector) {
+
+        if (!SelectorsRegistry.hasOwnProperty(selector)) {
+            log.error("Impossible to find selector in registry: " + selector);
+            return;
+        }
+
+        var config = {};
+        config[selector] = $.extend(true, {}, SelectorsRegistry[selector]);
+
+        if (!config[selector].template) {
+            config[selector].template = {};
+        }
+
+        config[selector].template.title = i18nLabels[selector] || "Missing title";
+
+        return $.extend(true, {}, config);
+
+    };
+
+    FxFluidGrid.prototype._refreshResults = function () {
+
+        if (this.filter && !$.isFunction(this.filter.getValues)) {
+            log.error("Filter.getValues is not a fn()");
+            return;
+        }
+
+        this.current.values = this.filter.getValues();
+        this.current.filter = this.filter.getValues("catalog");
+
+        var valid = this._validateQuery();
+
+        if (valid === true) {
+            this._search();
+            this._hideError();
+        } else {
+
+            if (Array.isArray(valid) && valid[0] === ERR.empty_values) {
+                this._setStatus("intro")
+            }
+            else {
+                this._showError(valid);
+            }
+        }
+    };
+
+    FxFluidGrid.prototype._validateQuery = function () {
+
+        var valid = true,
+            errors = [];
+
+        if ($.isEmptyObject(this.current.filter)) {
+            errors.push(ERR.empty_values);
+            log.error(ERR.empty_values);
+            return errors;
+        }
+
+        return errors.length > 0 ? errors : valid;
+    };
+
+    FxFluidGrid.prototype._initComponents = function () {
+
+
+        var config = $.extend(true, {}, this.config);
+
+        config.drag.containment = this.$el[0];
+
+        this.pckry = new Packery(this.$el[0], config);
 
         var itemElems = this.pckry.getItemElements();
 
         for (var i = 0; i < itemElems.length; i++) {
             var elem = itemElems[i];
             // make element draggable with Draggabilly
-            var draggie = new Draggabilly(elem, this.o.drag);
+            var draggie = new Draggabilly(elem, this.config.drag);
             // bind Draggabilly events to Packery
             this.pckry.bindDraggabillyEvents(draggie);
         }
-    };
-
-    Fx_Fluid_Grid.prototype.preValidation = function () {
-
-        if ($(this.o.container).length === 0) {
-            throw new Error("Fluid Grid: INVALID_CONTAINER.");
-        }
-
-        this.o.container = $(this.o.container)[0];
-
-        if (!this.o.hasOwnProperty("config")) {
-            throw new Error("Fluid Grid: NO CONFIG");
-        }
-
-        if (this.o.drag && !this.o.drag.hasOwnProperty("handle")) {
-            throw new Error("Fluid Grid: NO HANDLER SELECTOR");
-        }
 
     };
 
-    Fx_Fluid_Grid.prototype.clear = function () {
-        this.pckry.remove(this.pckry.getItemElements());
+    FxFluidGrid.prototype._emptyGrid = function () {
+
+        this.remove(this.getItems());
     };
 
-    Fx_Fluid_Grid.prototype.render = function (options) {
+    FxFluidGrid.prototype._setStatus = function (status) {
 
-        $.extend(this.o, options);
+        log.info("Set status to: " + status);
 
-        this.preValidation();
+        this.$el.find(s.BOTTOM).attr('data-status', status);
 
-        this.initStructure();
-
-        return this;
     };
 
-    Fx_Fluid_Grid.prototype.init = function (options) {
+    FxFluidGrid.prototype._getEventName = function (evt, excludeId) {
 
-        $.extend(this.o, defaultOptions);
-        $.extend(this.o, options);
+        var baseEvent = EVT[evt] ? EVT[evt] : evt;
 
-        return this;
+        return excludeId === true ? baseEvent : baseEvent + "." + this.id;
     };
 
-    Fx_Fluid_Grid.prototype.getElementsCounts = function () {
+    //disposition
 
-        return this.pckry.getItemElements().length;
+    FxFluidGrid.prototype._unbindEventListeners = function () {
+
     };
 
-    Fx_Fluid_Grid.prototype.showCourtesyMessage = function () {
-
-        $("#fx-analysis-container").find(this.o.s.COURTESY_MESSAGE).fadeIn();
-    };
-
-    Fx_Fluid_Grid.prototype.hideCourtesyMessage = function () {
-
-        $("#fx-analysis-container").find(this.o.s.COURTESY_MESSAGE).hide();
-    };
-
-    Fx_Fluid_Grid.prototype.destroy = function () {
-
-        this.pckry.destroy();
-    };
-
-    return Fx_Fluid_Grid;
-
+    return FxFluidGrid;
 });

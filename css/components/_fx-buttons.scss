@@ -23,29 +23,51 @@ input[type="button"]::-moz-focus-inner{
   border:0;
 }
 
-.btn {
-  @include fx-btn-filled;
+/**  end of **/
+
+.btn-round{
+  padding: 3px;
+  height: 24px;
+  @include fx-border-radius(50%);
+
+
+
+  &:last-child:not(:first-child), &:not(:first-child){
+    @include fx-border-radius(50%);
+  }
+
 }
 
-.fx-button-reset{
-  @include fx-btn-reset;
+
+/* Visualization Box btns */
+
+.btn-default.meta-btn{
+
+  background-color: $fenix-secondary-text;
+  font-size: 11px;
+  color: white;
+  padding: 1px 5px;
+  border-color: transparent;
+  @include fx-border-radius(5px);
+
+  &.active, &:active{
+
+
+  }
+
+  &.focus, &:focus{
+
+  }
+
+  &[disabled]{
+
+  }
+
+  &:hover{
+    background-color: lighten($fenix-secondary-text, 10%) ;
+    border-color: transparent;
+  }
+
+
 }
 
-.btn-primary.disabled
-, .btn-primary[disabled]
-, fieldset[disabled] .btn-primary
-, .btn-primary.disabled:hover
-, .btn-primary[disabled]:hover
-, fieldset[disabled] .btn-primary:hover
-, .btn-primary.disabled:focus
-, .btn-primary[disabled]:focus
-, fieldset[disabled] .btn-primary:focus
-, .btn-primary.disabled:active
-, .btn-primary[disabled]:active
-, fieldset[disabled] .btn-primary:active
-, .btn-primary.disabled.active
-, .btn-primary[disabled].active
-, fieldset[disabled] .btn-primary.active{
-  background-color: desaturate( $fx-cool-blue, 50% );
-  border-color: desaturate( $fx-cool-blue, 50% );
-}

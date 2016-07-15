@@ -2,7 +2,7 @@
 define(function () {
 
     var placeholders = {
-        "FENIX_CDN": "//fenixapps.fao.org",
+        "FENIX_CDN": "//fenixrepo.fao.org/cdn",
         "HOST": "//fenix.fao.org"
     };
 
