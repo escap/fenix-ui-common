@@ -475,6 +475,7 @@ define([
         //html selector configuration
         config.selector = {};
         config.selector.id = "tree";
+        config.selector.lazy = true;
 
         return config;
 
