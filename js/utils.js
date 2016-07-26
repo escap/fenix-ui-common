@@ -475,8 +475,8 @@ define([
         //html selector configuration
         config.selector = {};
         config.selector.id = "tree";
-        //config.selector.lazy = true;
-        //config.selector.hideFilter = true;
+        config.selector.lazy = true;
+        config.selector.hideFilter = true;
 
         return config;
 
