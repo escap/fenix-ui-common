@@ -345,6 +345,7 @@ define([
         //html selector configuration
         config.selector = {};
         config.selector.id = "tree";
+        config.selector.hideFilter = true;
         config.selector.source = _.map(enumeration, function (obj) {
             return {
                 value: obj,
