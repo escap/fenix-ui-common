@@ -33,8 +33,8 @@ define(function () {
         },
 
         //Utils
-        defaultPeriodFrom: 2000,
-        defaultPeriodTo: 2016,
+        defaultPeriodFrom: 1970,
+        defaultPeriodTo: 2017,
 
         cache : true
     }
