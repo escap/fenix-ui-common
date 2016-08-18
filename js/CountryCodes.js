@@ -2,8 +2,17 @@
 
 USAGE:
 
+require('fx-common/countrycodes', function(CountryCodes) {
+
 var countryGaul0 = 1,
-	countryIso2 = CountryCodes(countryGaul0).from('gaul').to('iso2');
+
+	countryIso2 = CountryCodes(countryGaul0).from('gaul').to('iso2'),
+
+	countryIso3 = CountryCodes(countryIso2).from('iso2').to('iso3');
+
+	countryGaul = CountryCodes(countryIso3).from('iso3').to('gaul');
+
+});
 
 */
 define(['underscore'],function(_) {
