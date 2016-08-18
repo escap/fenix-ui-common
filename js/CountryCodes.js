@@ -1,4 +1,11 @@
-/*global define*/
+/*
+
+USAGE:
+
+var countryGaul0 = 1,
+	countryIso2 = CountryCodes(countryGaul0).from('gaul').to('iso2');
+
+*/
 define(['underscore'],function(_) {
 	
     'use strict';
