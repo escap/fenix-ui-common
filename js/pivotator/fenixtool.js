@@ -42,7 +42,7 @@ define([
 
             
 				
-				console.log("initRow",opt)
+				//console.log("initRow",opt)
 				
                 ret = {
                     "inputFormat": "fenixTool",
@@ -273,7 +273,7 @@ define([
                     }
                 }
             }
-            //console.log("FXDIRTY interm ",structDirty);
+           console.log("FXDIRTY interm ",structDirty);
             for (var i in structDirty) {
                 if (structDirty[i].type == "dimension") {
                     structInter.dimensions[i] = structDirty[i];
@@ -295,7 +295,7 @@ define([
                 }
 
             }	//console.log("structInterDirty",structDirty,"structInter",structInter);
-            //console.log("FXDIRTY return ",structInter);
+            console.log("FXDIRTY return ",structInter);
 
             return structInter;
         }
