@@ -53,7 +53,28 @@ var Aggregator={
 					count:function(cell,format,nbDec){var a= cell;return format(a.length,nbDec)},
 					concat:function(cell,format,nbDec){var a= cell;return a.join(" - ")}
 					},
+				ObsValue:{
 				
+					"default":function(cell,format,nbDec){
+					//console.log(cell.length)
+					var cell2=[];
+					for(var i in cell)
+					{if(!Number.isNaN(cell[i]))
+					cell2.push(cell[i]);	
+					}
+					
+					var a= jStat(cell2);
+					if(cell2.length==0){return NaN}
+					return format(a.sum(),nbDec)},
+					"sum":function(cell,format,nbDec){
+					
+					var a= jStat(cell);return format(a.sum(),nbDec)},
+					avg:function(cell,format,nbDec){var a= jStat(cell);return format(a.mean(),nbDec)},
+					median:function(cell,format,nbDec){var a= jStat(cell);return format(a.median(),nbDec)},
+					stdev:function(cell,format,nbDec){var a= jStat(cell);return format(a.stdev(),nbDec)},
+					count:function(cell,format,nbDec){var a= cell;return format(a.length,nbDec)},
+					concat:function(cell,format,nbDec){var a= cell;return a.join(" - ")}
+					},
 				
 				
 				
@@ -135,7 +156,7 @@ return ret;
 	}
 	
 var getAgg=function(champ,choix){
-
+//console.log(champ,choix);
 if(!Aggregator[champ]){if(!Aggregator.default[choix]){return Aggregator.default.default}
 else{return Aggregator.default[choix]}
 }

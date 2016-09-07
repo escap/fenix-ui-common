@@ -346,6 +346,40 @@ function buildPivotResult(data, opt) {
 
 	}
 	
+	function exportCSV(dataset){
+		
+		console.log("data",dataset);
+	var link = document.createElement("a");
+	var CSV="\""+dataset.fieldsName.join("\",\"")+"\"\n";
+	
+	for(var i in dataset.data)
+	{CSV+="\""+dataset.data[i].join("\",\"")+"\"\n"}
+	CSV=[CSV];
+if (navigator.msSaveBlob) { // IE 10+
+   link.addEventListener("click", function (event) {
+     var blob = new Blob(CSV, {
+       "type": "text/csv;charset=utf-8;"
+     });
+   navigator.msSaveBlob(blob, "data.csv");
+  }, false);
+} else if (link.download !== undefined) { // feature detection
+    // Browsers that support HTML5 download attribute
+    var blob = new Blob(CSV, { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);            
+    link.setAttribute("href", url);
+    link.setAttribute("download", "data.csv");
+    try{link.style = "visibility:hidden";}catch(er){}
+}
+
+
+
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+
+		
+		}
+	
 	
 	function toFXJson(FX,userOptions) {
 			//	console.log("toFXJson",FX,userOptions);
@@ -449,7 +483,7 @@ function buildPivotResult(data, opt) {
 			toFXJson:toFXJson,
 			toPivotData:toPivotData,
 			toFX:toFX,
-			
+			exportCSV:exportCSV,
 			
 			identity: identity,
 			toTree:toTree

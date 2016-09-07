@@ -47,7 +47,7 @@ define(function () {
             'draggabilly': '{FENIX_CDN}/js/draggabilly/2.1.0/dist/draggabilly.pkgd.min',
             'packery': '{FENIX_CDN}/js/packery/1.4.3/dist/packery.pkgd.min',
             'handlebars': "{FENIX_CDN}/js/handlebars/4.0.5/handlebars",
-
+xmlToJson:'pivotator/xml2json'
 
         },
 
