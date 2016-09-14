@@ -61,7 +61,7 @@ define([
 		//  console.log("toPivotData",myPivot.toPivotData(Model,optGr));
         //console.log("ToFX",myPivot.toFX(Model,optGr));
 		 
-		  console.log("toFXJson",optGr,myPivot.toFXJson(Model,optGr));
+		  console.log("toFXJson",optGr,myPivot.pivot(Model,optGr));
 		
       //  log.info(Pivotator);
         //log.info(PivotatorFunctions);
