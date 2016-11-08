@@ -24,6 +24,7 @@
     left: 250px;
     width: 0;
     height: 100%;
+    overflow-x: hidden;
     margin-left: -250px;
     overflow-y: auto;
     background: #000;
@@ -58,6 +59,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
+
 }
 
 .sidebar-nav li {
